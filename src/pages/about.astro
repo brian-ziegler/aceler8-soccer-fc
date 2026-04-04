@@ -1,0 +1,84 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Aceler8 Soccer FC',
+  url: `${siteConfig.url}/about/`,
+  mainEntity: {
+    '@type': 'SportsOrganization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+  },
+};
+---
+
+<BaseLayout
+  title="About — Mission, vision & values"
+  description="Aceler8 Soccer FC is a family- and community-driven competitive club rooted in honesty, integrity, respect, and humility — with a clear path for tournament-level play."
+  jsonLd={jsonLd}
+>
+  <article class="page-intro wrap">
+    <p class="tag">About</p>
+    <h1>Mission with receipts.</h1>
+    <p class="lead">
+      We are dedicated to building an inclusive and supportive environment where young players can
+      grow, feel valued, and thrive both personally and athletically — the same conviction that
+      anchors the wider Aceler8 academy family.
+    </p>
+  </article>
+
+  <section class="wrap prose">
+    <h2>Vision</h2>
+    <p>
+      Our vision is to build a family- and community-driven program founded on honesty, integrity,
+      respect, and humility — expressed through modern training, disciplined habits, and
+      tournament-ready standards.
+    </p>
+
+    <h2>What this site is — and is not</h2>
+    <p>
+      <strong>This website</strong> introduces our <strong>competitive U11 girls team</strong> for
+      tournament directors, scouts, and the soccer community. It is designed for credibility and
+      clarity — not player acquisition.
+    </p>
+    <p>
+      <strong>Youth camps, open training sessions, and academy programming</strong> are hosted on
+      our training brand at{' '}
+      <a href={siteConfig.trainingCampUrl}>aceler8soccer.com</a> — a separate lane that feeds our
+      culture but does not replace the competitive team identity.
+    </p>
+
+    <h2>Development philosophy</h2>
+    <p>
+      We believe development is long arc: technical clarity, tactical courage, and emotional
+      resilience — taught by coaches who have lived the game at serious levels and who treat the
+      classroom and the field as one continuum.
+    </p>
+
+    <h2>Home base</h2>
+    <p>
+      Our programming is rooted in the Rochester, New York soccer community. Facility details for
+      training blocks are shared directly with enrolled families and event partners.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .prose {
+    max-width: 40rem;
+    padding-bottom: 4rem;
+  }
+
+  .prose h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  .prose p {
+    color: var(--color-text-muted);
+  }
+</style>

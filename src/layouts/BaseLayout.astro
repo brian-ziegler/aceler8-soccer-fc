@@ -1,0 +1,65 @@
+---
+import '@/styles/global.css';
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import Seo from '@/components/Seo.astro';
+import { siteConfig } from '@/data/site';
+
+type Props = {
+  title: string;
+  description: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+};
+
+const { title, description, ogImage, jsonLd } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <Seo
+      title={title}
+      description={description}
+      canonicalUrl={canonicalUrl}
+      image={ogImage}
+      jsonLd={jsonLd}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    padding: 0.5rem 1rem;
+    background: var(--color-accent);
+    color: #0a0f0e;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    z-index: 100;
+    transition: top 0.2s var(--ease-out);
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+</style>

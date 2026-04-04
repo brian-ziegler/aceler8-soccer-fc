@@ -1,0 +1,104 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact Aceler8 Soccer FC',
+  url: `${siteConfig.url}/contact/`,
+  mainEntity: {
+    '@type': 'SportsOrganization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+    email: siteConfig.contactEmail,
+  },
+};
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Aceler8 Soccer FC for tournament verification, media inquiries, and general club questions. No open tryout or recruitment requests."
+  jsonLd={jsonLd}
+>
+  <article class="page-intro wrap">
+    <p class="tag">Contact</p>
+    <h1>Reach the club directly.</h1>
+    <p class="lead">
+      We route tournament and scout questions to a single club inbox so responses stay fast and
+      accountable. We do not collect player applications on this site.
+    </p>
+  </article>
+
+  <section class="wrap contact">
+    <div class="card card--pad contact__card">
+      <h2>Email</h2>
+      <p>
+        <a class="contact__link" href={`mailto:${siteConfig.contactEmail}`}>
+          {siteConfig.contactEmail}
+        </a>
+      </p>
+
+      <h2>Phone</h2>
+      <p>
+        <a class="contact__link" href={`tel:${siteConfig.phoneTel}`}>
+          {siteConfig.phoneDisplay}
+        </a>
+        <span class="muted"> — update in <code>src/data/site.ts</code></span>
+      </p>
+
+      <h2>Social</h2>
+      <p>
+        <a href={siteConfig.instagram} rel="noopener noreferrer">Instagram — @aceler8_soccer</a>
+      </p>
+
+      <h2>Mailing / training brand</h2>
+      <p class="muted">
+        Camp and academy programming inquiries should continue through{' '}
+        <a href={siteConfig.trainingCampUrl}>aceler8soccer.com</a> so competitive team
+        communication stays uncluttered.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    padding-bottom: 4rem;
+    max-width: 36rem;
+  }
+
+  .contact__card h2 {
+    margin: 1.5rem 0 0.35rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .contact__card h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .contact__link {
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .contact__link:hover {
+    text-decoration: underline;
+  }
+
+  .muted {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  code {
+    font-size: 0.88em;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: var(--color-surface);
+  }
+</style>

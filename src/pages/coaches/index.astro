@@ -1,0 +1,126 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { coaches } from '@/data/coaches';
+import { siteConfig } from '@/data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Coaching staff',
+  url: `${siteConfig.url}/coaches/`,
+  hasPart: coaches.map((c) => ({
+    '@type': 'Person',
+    name: c.name,
+    jobTitle: c.role,
+    url: `${siteConfig.url}/coaches/${c.slug}/`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Coaching staff"
+  description="Meet the licensed and professional staff leading Aceler8 Soccer FC — Connally Edozien, Betsy Jones, and Carmen Stagnitta."
+  jsonLd={jsonLd}
+>
+  <article class="page-intro wrap">
+    <p class="tag">Staff</p>
+    <h1>Coaches you can verify.</h1>
+    <p class="lead">
+      Tournament desks and scouts look for names, licenses, and playing backgrounds. We publish ours
+      openly — pulled from the same staff who lead our competitive environment.
+    </p>
+  </article>
+
+  <section class="wrap grid">
+    {
+      coaches.map((c) => (
+        <article class="card coach-card">
+          <a href={`/coaches/${c.slug}/`} class="coach-card__image-link">
+            <img src={c.imageSrc} alt={c.imageAlt} width="800" height="520" loading="lazy" />
+          </a>
+          <div class="coach-card__body">
+            <h2>
+              <a href={`/coaches/${c.slug}/`}>{c.name}</a>
+            </h2>
+            <p class="coach-card__role">{c.role}</p>
+            <p class="coach-card__title">{c.title}</p>
+            <p class="coach-card__summary">{c.summary}</p>
+            <a class="coach-card__more" href={`/coaches/${c.slug}/`}>
+              Full bio →
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding-bottom: 4rem;
+  }
+
+  .coach-card h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.5rem;
+  }
+
+  .coach-card h2 a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .coach-card h2 a:hover {
+    color: var(--color-accent);
+  }
+
+  .coach-card__image-link {
+    display: block;
+    line-height: 0;
+  }
+
+  .coach-card__image-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .coach-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .coach-card__body {
+    padding: 1.25rem 1.2rem 1.4rem;
+  }
+
+  .coach-card__role {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .coach-card__title {
+    margin: 0.35rem 0 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .coach-card__summary {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .coach-card__more {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+  }
+</style>

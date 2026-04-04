@@ -1,0 +1,140 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { coaches, getCoachBySlug } from '@/data/coaches';
+import { siteConfig } from '@/data/site';
+
+export function getStaticPaths() {
+  return coaches.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const coach = getCoachBySlug(slug!);
+
+if (!coach) throw new Error(`Unknown coach: ${slug}`);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: coach.name,
+  jobTitle: coach.role,
+  worksFor: { '@type': 'SportsOrganization', name: siteConfig.name, url: siteConfig.url },
+  image: coach.imageSrc,
+  description: coach.summary,
+  url: `${siteConfig.url}/coaches/${coach.slug}/`,
+};
+---
+
+<BaseLayout
+  title={coach.name}
+  description={coach.summary}
+  ogImage={coach.imageSrc}
+  jsonLd={jsonLd}
+>
+  <article class="wrap coach-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/coaches/">Coaches</a>
+      <span aria-hidden="true">/</span>
+      <span>{coach.name}</span>
+    </nav>
+
+    <div class="coach-page__grid">
+      <figure class="card coach-page__figure">
+        <img src={coach.imageSrc} alt={coach.imageAlt} width="800" height="1000" loading="lazy" />
+        <figcaption class="media-caption">
+          Placeholder photography — replace with official headshot ({coach.name}).
+        </figcaption>
+      </figure>
+      <div>
+        <p class="tag">{coach.role}</p>
+        <h1>{coach.name}</h1>
+        <p class="coach-page__title">{coach.title}</p>
+        {coach.credentials && (
+          <ul class="credentials">
+            {coach.credentials.map((line) => (
+              <li>{line}</li>
+            ))}
+          </ul>
+        )}
+        <div class="bio">
+          {coach.bio.map((p) => (
+            <p>{p}</p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .coach-page {
+    padding-bottom: 4rem;
+  }
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    padding-block: 1.5rem 1rem;
+  }
+
+  .breadcrumb a {
+    font-weight: 600;
+  }
+
+  .coach-page__grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
+  }
+
+  .coach-page__figure {
+    margin: 0;
+  }
+
+  .coach-page__figure img {
+    width: 100%;
+    object-fit: cover;
+    max-height: 520px;
+  }
+
+  .media-caption {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .coach-page h1 {
+    margin: 0 0 0.5rem;
+  }
+
+  .coach-page__title {
+    margin: 0 0 1.25rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .credentials {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .credentials li {
+    padding: 0.45rem 0.65rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .bio p {
+    color: var(--color-text-muted);
+  }
+</style>

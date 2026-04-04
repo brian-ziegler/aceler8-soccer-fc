@@ -1,0 +1,349 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+import { coaches } from '@/data/coaches';
+
+const heroImage =
+  'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&q=80';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SportsOrganization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+    sport: 'Soccer',
+    areaServed: {
+      '@type': 'City',
+      name: siteConfig.city,
+      containedInPlace: { '@type': 'State', name: siteConfig.region },
+    },
+    sameAs: [siteConfig.instagram],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SportsTeam',
+    name: `${siteConfig.name} — ${siteConfig.tagline}`,
+    sport: 'Soccer',
+    memberOf: { '@type': 'SportsOrganization', name: siteConfig.name, url: siteConfig.url },
+    coach: coaches.map((c) => ({
+      '@type': 'Person',
+      name: c.name,
+      jobTitle: c.role,
+      url: `${siteConfig.url}/coaches/${c.slug}/`,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Aceler8 Soccer FC — U11 Girls Competitive Soccer"
+  description="Aceler8 Soccer FC is a U11 girls competitive club built on elite development, character, and professionalism — trusted by families and tournament organizers."
+  ogImage={heroImage}
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="hero__media">
+      <img
+        src={heroImage}
+        alt="Placeholder hero: women’s soccer match action — replace with Aceler8 FC team photography"
+        width="1600"
+        height="1000"
+        fetchpriority="high"
+      />
+      <div class="hero__scrim" aria-hidden="true"></div>
+    </div>
+    <div class="wrap hero__content">
+      <p class="tag reveal">National tournament circuit</p>
+      <h1 class="reveal reveal-delay-1">Built for the next level.</h1>
+      <p class="hero__lead reveal reveal-delay-2">
+        Aceler8 Soccer FC is a U11 girls competitive team establishing a disciplined, family-driven
+        presence on the youth tournament stage — with a staff rooted in professional and licensed
+        coaching.
+      </p>
+      <div class="hero__actions reveal reveal-delay-3">
+        <a class="btn btn--primary" href="/tournament-directors/">Tournament desk</a>
+        <a class="btn btn--ghost" href="/coaches/">Meet the staff</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip wrap" aria-label="Club facts">
+    <ul class="strip__list">
+      <li><strong>U11 girls</strong> competitive team identity</li>
+      <li><strong>Licensed staff</strong> with professional &amp; classroom backgrounds</li>
+      <li><strong>Rochester, NY</strong> home training base</li>
+      <li><strong>No open recruitment</strong> — roster is closed at this time</li>
+    </ul>
+  </section>
+
+  <section class="section wrap">
+    <div class="section__head">
+      <p class="tag">Identity</p>
+      <h2>Editorial clarity. Competitive standards.</h2>
+      <p class="section__lead">
+        We present like the programs we aspire to play — precise communication, visible coaching
+        credentials, and a development model that respects both the game and the person.
+      </p>
+    </div>
+    <div class="grid-3">
+      <article class="card card--pad">
+        <h3>For tournament desks</h3>
+        <p>
+          Quick verification contacts, staff backgrounds, and a transparent note on affiliation —
+          so directors can confirm who we are without chasing threads.
+        </p>
+        <a href="/tournament-directors/">Open tournament desk →</a>
+      </article>
+      <article class="card card--pad">
+        <h3>For the soccer community</h3>
+        <p>
+          Our mission mirrors the wider Aceler8 academy: honesty, integrity, respect, and humility —
+          expressed through modern, purposeful training.
+        </p>
+        <a href="/about/">Read our story →</a>
+      </article>
+      <article class="card card--pad">
+        <h3>Training &amp; camps</h3>
+        <p>
+          Looking for camps, sessions, or academy programming? That lives on our training brand
+          site — separate from this competitive team page.
+        </p>
+        <a href={siteConfig.trainingCampUrl} rel="noopener noreferrer">Visit aceler8soccer.com →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="wrap coach-preview">
+      <div>
+        <p class="tag">Staff</p>
+        <h2>Coaches you can look up.</h2>
+        <p class="section__lead">
+          Credentials matter. Our leadership blends professional playing experience, classroom
+          pedagogy, and U.S. Soccer licensing.
+        </p>
+        <a class="btn btn--primary" href="/coaches/">Full coaching staff</a>
+      </div>
+      <ul class="coach-preview__list">
+        {
+          coaches.map((c) => (
+            <li>
+              <a href={`/coaches/${c.slug}/`} class="coach-preview__link">
+                <span class="coach-preview__name">{c.name}</span>
+                <span class="coach-preview__role">{c.role}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(78vh, 720px);
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 15, 14, 0.2) 0%,
+      rgba(10, 15, 14, 0.75) 55%,
+      rgba(10, 15, 14, 0.92) 100%
+    );
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .hero__scrim {
+      background: linear-gradient(
+        180deg,
+        rgba(10, 15, 14, 0.5) 0%,
+        rgba(10, 15, 14, 0.82) 50%,
+        rgba(10, 15, 14, 0.95) 100%
+      );
+    }
+  }
+
+  :global(:root[data-theme='dark']) .hero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 15, 14, 0.5) 0%,
+      rgba(10, 15, 14, 0.82) 50%,
+      rgba(10, 15, 14, 0.95) 100%
+    );
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 40rem;
+  }
+
+  .hero h1 {
+    color: #f6f3ec;
+    margin: 0 0 1rem;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero .tag {
+    color: #8ef0e6;
+  }
+
+  .hero__lead {
+    color: rgba(246, 243, 236, 0.92);
+    font-size: 1.15rem;
+    margin: 0 0 1.75rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hero__actions .btn--primary {
+    background: var(--color-accent);
+    color: #0a0f0e;
+  }
+
+  .hero__actions .btn--ghost {
+    border-color: rgba(246, 243, 236, 0.45);
+    color: #f6f3ec;
+  }
+
+  .hero__actions .btn--ghost:hover {
+    background: rgba(246, 243, 236, 0.1);
+  }
+
+  .strip {
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .strip__list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .strip__list strong {
+    display: block;
+    color: var(--color-text);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .section {
+    padding-block: clamp(3.5rem, 9vw, 5.5rem);
+  }
+
+  .section--surface {
+    background: var(--color-surface);
+    border-block: 1px solid var(--color-border);
+  }
+
+  .section__head {
+    max-width: 40rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section__lead {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .card--pad {
+    padding: 1.5rem 1.35rem;
+  }
+
+  .card--pad h3 {
+    margin-top: 0;
+  }
+
+  .card--pad p {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .coach-preview {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .coach-preview__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .coach-preview__link {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.25s var(--ease-out),
+      transform 0.25s var(--ease-out);
+  }
+
+  .coach-preview__link:hover {
+    border-color: var(--color-primary-muted);
+    transform: translateX(4px);
+  }
+
+  .coach-preview__name {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.15rem;
+  }
+
+  .coach-preview__role {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>

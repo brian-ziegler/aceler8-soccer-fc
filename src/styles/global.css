@@ -1,0 +1,311 @@
+/*
+  Theme & brand tokens — swap in final club colors in :root and [data-theme] blocks.
+  Primary: deep pine teal · Accent: electric coral (premium athletic, easy to replace)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..900;1,9..144,200..900&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap');
+
+:root {
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+  --color-primary: #0c3d3d;
+  --color-primary-muted: #134f4f;
+  --color-accent: #ff5c4d;
+  --color-accent-soft: rgba(255, 92, 77, 0.12);
+
+  --color-bg: #f6f3ec;
+  --color-bg-elevated: #ffffff;
+  --color-surface: #ebe6dc;
+  --color-text: #141816;
+  --color-text-muted: #3d4540;
+  --color-border: rgba(12, 61, 61, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(12, 24, 22, 0.06);
+  --shadow-md: 0 12px 40px rgba(12, 24, 22, 0.12);
+  --btn-on-primary: #f6f3ec;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --header-h: 4.25rem;
+  --max-w: 72rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-primary: #5ee4d4;
+    --color-primary-muted: #8ef0e6;
+    --color-accent: #ff7a6e;
+    --color-accent-soft: rgba(255, 122, 110, 0.15);
+
+    --color-bg: #0a0f0e;
+    --color-bg-elevated: #121a18;
+    --color-surface: #1a2422;
+    --color-text: #eef3f1;
+    --color-text-muted: #b5c4be;
+    --color-border: rgba(94, 228, 212, 0.12);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.45);
+    --btn-on-primary: #0a0f0e;
+  }
+}
+
+:root[data-theme='light'] {
+  --color-primary: #0c3d3d;
+  --color-primary-muted: #134f4f;
+  --color-accent: #ff5c4d;
+  --color-accent-soft: rgba(255, 92, 77, 0.12);
+
+  --color-bg: #f6f3ec;
+  --color-bg-elevated: #ffffff;
+  --color-surface: #ebe6dc;
+  --color-text: #141816;
+  --color-text-muted: #3d4540;
+  --color-border: rgba(12, 61, 61, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(12, 24, 22, 0.06);
+  --shadow-md: 0 12px 40px rgba(12, 24, 22, 0.12);
+  --btn-on-primary: #f6f3ec;
+}
+
+:root[data-theme='dark'] {
+  --color-primary: #5ee4d4;
+  --color-primary-muted: #8ef0e6;
+  --color-accent: #ff7a6e;
+  --color-accent-soft: rgba(255, 122, 110, 0.15);
+
+  --color-bg: #0a0f0e;
+  --color-bg-elevated: #121a18;
+  --color-surface: #1a2422;
+  --color-text: #eef3f1;
+  --color-text-muted: #b5c4be;
+  --color-border: rgba(94, 228, 212, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --btn-on-primary: #0a0f0e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+a {
+  color: var(--color-primary-muted);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color 0.2s var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrap {
+  width: min(100% - 2rem, var(--max-w));
+  margin-inline: auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.35rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease-out),
+    background 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--btn-on-primary);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-primary-muted);
+  background: var(--color-accent-soft);
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+}
+
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .btn--primary:hover {
+    transform: none;
+  }
+}
+
+.page-intro {
+  padding-block: clamp(3rem, 8vw, 5rem);
+}
+
+.page-intro p.lead {
+  font-size: 1.2rem;
+  max-width: 42rem;
+  color: var(--color-text-muted);
+}
+
+.reveal {
+  animation: reveal-up 0.85s var(--ease-out) both;
+}
+
+.reveal-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.reveal-delay-2 {
+  animation-delay: 0.16s;
+}
+
+.reveal-delay-3 {
+  animation-delay: 0.24s;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-delay-1,
+  .reveal-delay-2,
+  .reveal-delay-3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

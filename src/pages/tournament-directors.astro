@@ -1,0 +1,130 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Tournament director resources',
+  url: `${siteConfig.url}/tournament-directors/`,
+  description:
+    'Verification contacts and club facts for tournament organizers working with Aceler8 Soccer FC.',
+};
+---
+
+<BaseLayout
+  title="Tournament desk — verification & facts"
+  description="Quick facts and verification contacts for tournament directors and event organizers working with Aceler8 Soccer FC (U11 girls)."
+  jsonLd={jsonLd}
+>
+  <article class="page-intro wrap">
+    <p class="tag">Tournament desk</p>
+    <h1>Everything you need to check us in.</h1>
+    <p class="lead">
+      We built this page for the people running brackets: fast answers, a single verification lane,
+      and staff credentials linked in one place.
+    </p>
+  </article>
+
+  <section class="wrap panels">
+    <div class="panel card card--pad">
+      <h2>Primary verification contact</h2>
+      <p>
+        For roster checks, coaching staff confirmation, and competition paperwork, email{' '}
+        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>.
+      </p>
+      <p class="muted">
+        Replace the placeholder email and phone in <code>src/data/site.ts</code> before your first
+        major event window.
+      </p>
+    </div>
+
+    <div class="panel card card--pad">
+      <h2>Club facts (update as confirmed)</h2>
+      <dl class="facts">
+        <dt>Official name</dt>
+        <dd>{siteConfig.name}</dd>
+        <dt>Age group</dt>
+        <dd>U11 girls competitive team</dd>
+        <dt>Home market</dt>
+        <dd>
+          {siteConfig.city}, {siteConfig.region}
+        </dd>
+        <dt>Public staff roster</dt>
+        <dd>
+          <a href="/coaches/">Coaching staff page</a> with bios and licenses
+        </dd>
+        <dt>Affiliation summary</dt>
+        <dd>{siteConfig.governingBodyNote}</dd>
+      </dl>
+    </div>
+
+    <div class="panel card card--pad">
+      <h2>What we will not use this site for</h2>
+      <p>
+        We are <strong>not</strong> recruiting players through this property. You will not find
+        tryout forms, “join us” funnels, or open roster calls — intentional, so families and
+        directors know this URL is about competitive identity and operations — not acquisition.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .panels {
+    display: grid;
+    gap: 1.25rem;
+    padding-bottom: 4rem;
+    max-width: 48rem;
+  }
+
+  .card--pad {
+    padding: 1.35rem 1.4rem;
+  }
+
+  .panel h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+  }
+
+  .panel p {
+    color: var(--color-text-muted);
+  }
+
+  .muted {
+    font-size: 0.9rem;
+  }
+
+  .panel code {
+    font-size: 0.88em;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: var(--color-surface);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: minmax(8rem, 32%) 1fr;
+    gap: 0.65rem 1rem;
+    margin: 0;
+  }
+
+  .facts dt {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .facts dd {
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 520px) {
+    .facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

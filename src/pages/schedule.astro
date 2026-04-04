@@ -1,0 +1,131 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+---
+
+<BaseLayout
+  title="Schedule — competitions & events"
+  description="Competition calendar for Aceler8 Soccer FC. Tournament blocks and league play are listed here for directors, families, and scouts."
+>
+  <article class="page-intro wrap">
+    <p class="tag">Schedule</p>
+    <h1>Where we’re competing.</h1>
+    <p class="lead">
+      This page is the public home for our competition calendar. Dates and venues are updated as
+      events are confirmed — a lightweight pattern that can later connect to CMS or sports APIs.
+    </p>
+  </article>
+
+  <section class="wrap schedule">
+    <div class="schedule__note card card--pad">
+      <h2>Editorial workflow</h2>
+      <p>
+        To update this section, edit <code>src/pages/schedule.astro</code> or move rows into a
+        content collection (see README). Each row should include event name, age group, location,
+        and sanctioning body when available — those details increase trust with tournament desks.
+      </p>
+    </div>
+
+    <div class="table-wrap" role="region" aria-label="Upcoming events" tabindex="0">
+      <table class="schedule-table">
+        <caption class="sr-only">Upcoming competitions and placeholders</caption>
+        <thead>
+          <tr>
+            <th scope="col">Window</th>
+            <th scope="col">Event</th>
+            <th scope="col">Location</th>
+            <th scope="col">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TBD</td>
+            <td>Spring showcase block</td>
+            <td>TBD</td>
+            <td>Placeholder — add sanctioning ID &amp; field address when assigned</td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Regional tournament weekend</td>
+            <td>TBD</td>
+            <td>Placeholder — link to official event page when live</td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>League play — match block</td>
+            <td>{siteConfig.city}, {siteConfig.region}</td>
+            <td>Placeholder — list league acronym &amp; division</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .schedule {
+    padding-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .card--pad {
+    padding: 1.25rem 1.35rem;
+  }
+
+  .schedule__note h2 {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+
+  .schedule__note p {
+    color: var(--color-text-muted);
+    margin-bottom: 0;
+  }
+
+  .schedule__note code {
+    font-size: 0.88em;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: var(--color-surface);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+  }
+
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+    font-size: 0.95rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: top;
+  }
+
+  .schedule-table th {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+  }
+
+  .schedule-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .schedule-table td {
+    color: var(--color-text-muted);
+  }
+</style>

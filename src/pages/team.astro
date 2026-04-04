@@ -1,0 +1,119 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsTeam',
+  name: `${siteConfig.name} — ${siteConfig.tagline}`,
+  sport: 'Soccer',
+  description:
+    'U11 girls competitive team focused on technical excellence, tactical understanding, and character-first development.',
+  url: `${siteConfig.url}/team/`,
+  memberOf: { '@type': 'SportsOrganization', name: siteConfig.name, url: siteConfig.url },
+};
+---
+
+<BaseLayout
+  title="Team — U11 competitive identity"
+  description="Program identity for Aceler8 Soccer FC: technical foundation, tactical growth, and character-first development on the national youth tournament path."
+  jsonLd={jsonLd}
+>
+  <article class="page-intro wrap">
+    <p class="tag">Team</p>
+    <h1>U11 girls. Competitive lane.</h1>
+    <p class="lead">
+      We are establishing our club on the national youth tournament scene with a roster built for
+      development first — and standards that travel.
+    </p>
+  </article>
+
+  <section class="wrap split">
+    <figure class="split__media card">
+      <img
+        src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=900&q=80"
+        alt="Placeholder: youth team huddle on field — replace with Aceler8 FC U11 team photo"
+        width="900"
+        height="600"
+        loading="lazy"
+      />
+      <figcaption class="media-caption">
+        Placeholder image — swap for official team photography when available.
+      </figcaption>
+    </figure>
+    <div class="split__body prose">
+      <h2>Program focus</h2>
+      <ul>
+        <li>
+          Enhancing each player’s technical foundation through enjoyable and purposeful training.
+        </li>
+        <li>
+          Introducing advanced tactical concepts when appropriate — with intensity that supports
+          competitive growth.
+        </li>
+        <li>
+          Building a pathway toward elite youth competition and sustainable long-term habits.
+        </li>
+        <li>Training in structured environments with access to quality facilities.</li>
+      </ul>
+
+      <h2>Key features</h2>
+      <ul>
+        <li>A development philosophy centered on character — on and off the field.</li>
+        <li>
+          Early support for high-potential talent within a competitive, accountable team culture.
+        </li>
+        <li>A clear progression model from fundamentals toward elite performance standards.</li>
+      </ul>
+
+      <p class="note">
+        {siteConfig.governingBodyNote}
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding-bottom: 4rem;
+  }
+
+  .split__media {
+    margin: 0;
+  }
+
+  .split__media img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .media-caption {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .prose ul {
+    color: var(--color-text-muted);
+    padding-left: 1.2rem;
+  }
+
+  .prose li + li {
+    margin-top: 0.5rem;
+  }
+
+  .note {
+    margin-top: 2rem;
+    padding: 1rem 1.1rem;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-accent-soft);
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+</style>
