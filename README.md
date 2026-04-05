@@ -113,49 +113,30 @@ npx cdk bootstrap aws://YOUR_ACCOUNT_ID/us-east-1
 
 ### Local deploy (first time / admin)
 
+All config lives in [`infra/cdk/cdk.json`](infra/cdk/cdk.json) (`context` block). No `-c` flags needed.
+
 ```bash
 cd infra/cdk
 export CDK_DEFAULT_ACCOUNT=YOUR_ACCOUNT_ID   # PowerShell: $env:CDK_DEFAULT_ACCOUNT="..."
 export CDK_DEFAULT_REGION=us-east-1
-
-npx cdk deploy \
-  -c bucketName=YOUR_GLOBAL_BUCKET_NAME \
-  -c siteDomain=www.example.com \
-  -c githubOwner=YOUR_GH_USER_OR_ORG \
-  -c githubRepository=aceler8-soccer-fc
+npx cdk deploy
 ```
-
-Optional: `-c acmCertificateArn=arn:aws:acm:us-east-1:...:certificate/...` (certificate **must** be in **us-east-1** for CloudFront). If the account already has a GitHub OIDC provider, add `-c createGithubOidcProvider=false -c githubOidcProviderArn=arn:aws:iam::ACCOUNT:oidc-provider/token.actions.githubusercontent.com`.
-
-See [`infra/cdk/cdk.context.example.json`](infra/cdk/cdk.context.example.json) for all context keys.
 
 **Stack outputs** (for GitHub): `BucketName`, `CloudFrontDistributionId`, `PublicSiteUrl`, `GitHubActionsDeployRoleArn`, `GitHubActionsCdkRoleArn`.
 
 ### CI: CDK workflow
 
-[`.github/workflows/infra.yml`](.github/workflows/infra.yml) runs **`npm ci`** and **`cdk deploy`** when **`infra/**`** changes on `main` (or via **workflow_dispatch**).
+[`.github/workflows/infra.yml`](.github/workflows/infra.yml) runs **`npm ci`** and **`cdk deploy`** when **`infra/**`** changes on `main` (or via **workflow_dispatch**). Config is read from `cdk.json` — no extra repository variables needed beyond the role ARN.
 
 **Repository variables** (required for CI)
 
 | Variable | Purpose |
 | --- | --- |
-| `AWS_CDK_ROLE_ARN` | Output **`GitHubActionsCdkRoleArn`** — OIDC role used only by this workflow |
-| `CDK_BUCKET_NAME` | Passed as `-c bucketName` |
-| `CDK_SITE_DOMAIN` | Passed as `-c siteDomain` (comment + optional alias) |
-| `CDK_GITHUB_OWNER` | `-c githubOwner` |
-| `CDK_GITHUB_REPO` | `-c githubRepository` |
-
-**Optional repository variables**
-
-| Variable | Purpose |
-| --- | --- |
-| `CDK_ACM_CERTIFICATE_ARN` | ACM cert in us-east-1 for HTTPS on `CDK_SITE_DOMAIN` |
-| `CDK_SKIP_GITHUB_OIDC` | Set to `true` if the OIDC provider already exists |
-| `CDK_EXISTING_GITHUB_OIDC_ARN` | Required when skipping create; full OIDC provider ARN |
+| `AWS_CDK_ROLE_ARN` | Output **`GitHubActionsCdkRoleArn`** — OIDC role assumed by this workflow |
 
 After deploy, copy stack outputs into **`S3_BUCKET`**, **`CLOUDFRONT_DISTRIBUTION_ID`**, **`PUBLIC_SITE_URL`**, **`AWS_DEPLOY_ROLE_ARN`**, and **`AWS_CDK_ROLE_ARN`** (e.g. with `gh secret set` / `gh variable set`).
 
-**Custom domain**: Same as above — ACM in **us-east-1**, then set `CDK_ACM_CERTIFICATE_ARN`.
+**Custom domain**: Add `acmCertificateArn` to the `context` block in `cdk.json` (cert must be in **us-east-1**).
 
 **404 behavior**: CloudFront maps 403/404 to `/404.html` (same as before).
 

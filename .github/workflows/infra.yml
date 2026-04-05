@@ -54,22 +54,5 @@ jobs:
       - name: CDK deploy
         env:
           CDK_DEFAULT_ACCOUNT: ${{ steps.acct.outputs.account }}
-        run: |
-          set -e
-          export CDK_DEFAULT_REGION=us-east-1
-          EXTRA=""
-          if [ -n "${{ vars.CDK_ACM_CERTIFICATE_ARN }}" ]; then
-            EXTRA="$EXTRA -c acmCertificateArn=${{ vars.CDK_ACM_CERTIFICATE_ARN }}"
-          fi
-          if [ "${{ vars.CDK_SKIP_GITHUB_OIDC }}" = "true" ]; then
-            EXTRA="$EXTRA -c createGithubOidcProvider=false"
-            if [ -n "${{ vars.CDK_EXISTING_GITHUB_OIDC_ARN }}" ]; then
-              EXTRA="$EXTRA -c githubOidcProviderArn=${{ vars.CDK_EXISTING_GITHUB_OIDC_ARN }}"
-            fi
-          fi
-          npx cdk deploy --require-approval never \
-            -c bucketName="${{ vars.CDK_BUCKET_NAME }}" \
-            -c siteDomain="${{ vars.CDK_SITE_DOMAIN }}" \
-            -c githubOwner="${{ vars.CDK_GITHUB_OWNER }}" \
-            -c githubRepository="${{ vars.CDK_GITHUB_REPO }}" \
-            $EXTRA
+          CDK_DEFAULT_REGION: us-east-1
+        run: npx cdk deploy --require-approval never

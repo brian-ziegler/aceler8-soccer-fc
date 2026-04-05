@@ -1,9 +1,0 @@
-{
-  "bucketName": "aceler8-fc-prod-site-UNIQUE",
-  "siteDomain": "www.aceler8fc.org",
-  "githubOwner": "brian-ziegler",
-  "githubRepository": "aceler8-soccer-fc",
-  "acmCertificateArn": "",
-  "createGithubOidcProvider": true,
-  "githubOidcProviderArn": ""
-}

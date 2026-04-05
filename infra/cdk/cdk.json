@@ -5,6 +5,10 @@
     "exclude": ["README.md", "cdk*.json", "**/*.d.ts", "**/*.js", "tsconfig.json", "package*.json", "yarn.lock", "node_modules", "cdk.out"]
   },
   "context": {
-    "@aws-cdk/core:newStyleStackSynthesis": true
+    "@aws-cdk/core:newStyleStackSynthesis": true,
+    "bucketName": "aceler8-fc-prod-site",
+    "siteDomain": "www.aceler8fc.org",
+    "githubOwner": "brian-ziegler",
+    "githubRepository": "aceler8-soccer-fc"
   }
 }

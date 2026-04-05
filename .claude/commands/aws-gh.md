@@ -71,29 +71,22 @@ aws cloudformation describe-stack-events \
 ```
 
 ### CDK (run from infra/cdk/)
+
+Config lives in `cdk.json` context — no `-c` flags needed.
+
 ```bash
 cd infra/cdk
 
 # Synth (renders CloudFormation template, no AWS calls)
-npx cdk synth \
-  -c bucketName=<bucket> \
-  -c siteDomain=<domain> \
-  -c githubOwner=<owner> \
-  -c githubRepository=<repo>
+npx cdk synth
 
 # Diff against deployed stack
-npx cdk diff \
-  -c bucketName=<bucket> \
-  -c siteDomain=<domain>
+npx cdk diff
 
 # Deploy (requires CDK_DEFAULT_ACCOUNT set)
 export CDK_DEFAULT_ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 export CDK_DEFAULT_REGION=us-east-1
-npx cdk deploy --require-approval never \
-  -c bucketName=<bucket> \
-  -c siteDomain=<domain> \
-  -c githubOwner=<owner> \
-  -c githubRepository=<repo>
+npx cdk deploy --require-approval never
 ```
 
 ---
@@ -156,8 +149,8 @@ gh issue create --title "..." --body "..."
 
 ## Typical workflow: deploy infra changes
 
-1. Edit `infra/cdk/lib/aceler8-site-stack.ts`
-2. `cd infra/cdk && npx cdk diff -c bucketName=... -c siteDomain=...` — review changes
+1. Edit `infra/cdk/lib/aceler8-site-stack.ts` or `infra/cdk/cdk.json`
+2. `cd infra/cdk && npx cdk diff` — review changes
 3. Commit and push to `main` — the `infra.yml` workflow runs automatically
 4. `gh run watch` — monitor the CDK deploy
 5. If new stack outputs appeared, update repo variables:
