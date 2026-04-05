@@ -21,7 +21,13 @@ function isActive(href: string) {
 <header class="site-header">
   <div class="wrap site-header__inner">
     <a class="site-header__brand" href="/">
-      <span class="site-header__mark" aria-hidden="true">A8</span>
+      <img
+        src="/logo-soccer-ball.png"
+        alt="Aceler8 Soccer FC"
+        class="site-header__logo"
+        width="40"
+        height="40"
+      />
       <span class="site-header__wordmark">
         <span class="site-header__name">Aceler8</span>
         <span class="site-header__sub">Soccer FC</span>
@@ -89,18 +95,12 @@ function isActive(href: string) {
     color: inherit;
   }
 
-  .site-header__mark {
-    display: grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: var(--radius-sm);
-    background: var(--color-primary);
-    color: var(--btn-on-primary);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: -0.03em;
+  .site-header__logo {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
   }
 
   .site-header__wordmark {
