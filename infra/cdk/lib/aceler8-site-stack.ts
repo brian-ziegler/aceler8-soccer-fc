@@ -56,6 +56,21 @@ export class Aceler8SiteStack extends cdk.Stack {
       originAccessControl: oac,
     });
 
+    const rewriteFn = new cloudfront.Function(this, 'SubdirIndexRewrite', {
+      code: cloudfront.FunctionCode.fromInline(`
+function handler(event) {
+  var uri = event.request.uri;
+  if (uri.endsWith('/')) {
+    event.request.uri += 'index.html';
+  } else if (!uri.split('/').pop().includes('.')) {
+    event.request.uri += '/index.html';
+  }
+  return event.request;
+}
+      `.trim()),
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+    });
+
     const distribution = new cloudfront.Distribution(this, 'SiteDistribution', {
       comment: siteDomain,
       defaultRootObject: 'index.html',
@@ -65,6 +80,12 @@ export class Aceler8SiteStack extends cdk.Stack {
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
         compress: true,
+        functionAssociations: [
+          {
+            function: rewriteFn,
+            eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+          },
+        ],
       },
       errorResponses: [
         {
