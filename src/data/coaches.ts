@@ -17,10 +17,8 @@ export const coaches: Coach[] = [
     name: 'Connally Edozien',
     role: 'Head of Academy',
     title: 'Founder · Professional playing background',
-    imageSrc:
-      'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
-    imageAlt:
-      'Placeholder: professional soccer player controlling ball on pitch — replace with Connally Edozien headshot',
+    imageSrc: '/coaches/connally.jpg',
+    imageAlt: 'Connally Edozien — Head of Academy, Aceler8 Soccer FC',
     summary:
       'Former professional player bringing MLS and European experience to player development.',
     bio: [
@@ -39,10 +37,8 @@ export const coaches: Coach[] = [
     name: 'Betsy Jones',
     role: 'Assistant Coach',
     title: 'Youth development · Fundamentals & character',
-    imageSrc:
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80',
-    imageAlt:
-      'Placeholder: youth soccer coach with players — replace with Betsy Jones headshot',
+    imageSrc: '/coaches/betsy.jpg',
+    imageAlt: 'Betsy Jones — Assistant Coach, Aceler8 Soccer FC',
     summary:
       'Known for deep knowledge of the game and an ability to help every player grow with confidence.',
     bio: [
@@ -57,10 +53,8 @@ export const coaches: Coach[] = [
     name: 'Carmen Stagnitta',
     role: 'Assistant Coach',
     title: 'Educator · U.S. Soccer licensed',
-    imageSrc:
-      'https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=800&q=80',
-    imageAlt:
-      'Placeholder: coach instructing young athletes — replace with Carmen Stagnitta headshot',
+    imageSrc: '/coaches/carmen.jpg',
+    imageAlt: 'Carmen Stagnitta — Assistant Coach, Aceler8 Soccer FC',
     summary:
       'Educator and licensed coach emphasizing long-term development and player-centered training.',
     bio: [

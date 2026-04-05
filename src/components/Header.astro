@@ -66,6 +66,15 @@ function isActive(href: string) {
     top: 0;
     z-index: 50;
     height: var(--header-h);
+  }
+
+  /* Use ::before for backdrop-filter so position:fixed children
+     (the mobile nav) are not trapped in a new containing block. */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: color-mix(in srgb, var(--color-bg-elevated) 88%, transparent);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
@@ -210,6 +219,7 @@ function isActive(href: string) {
 
     .site-nav {
       position: fixed;
+      z-index: 49;
       inset: var(--header-h) 0 0 0;
       flex-direction: column;
       align-items: stretch;
