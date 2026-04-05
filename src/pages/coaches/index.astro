@@ -31,36 +31,68 @@ const jsonLd = {
     </p>
   </article>
 
-  <section class="wrap grid">
-    {
-      coaches.map((c) => (
-        <article class="card coach-card">
-          <a href={`/coaches/${c.slug}/`} class="coach-card__image-link">
-            <img src={c.imageSrc} alt={c.imageAlt} width="800" height="520" loading="lazy" />
+  <section class="wrap coaches-layout">
+    {coaches.map((c, i) => (
+      <article class:list={['card coach-card', { 'coach-card--featured': i === 0 }]}>
+        <a href={`/coaches/${c.slug}/`} class="coach-card__image-link">
+          <img src={c.imageSrc} alt={c.imageAlt} width="800" height="520" loading="lazy" />
+        </a>
+        <div class="coach-card__body">
+          <h2>
+            <a href={`/coaches/${c.slug}/`}>{c.name}</a>
+          </h2>
+          <p class="coach-card__role">{c.role}</p>
+          <p class="coach-card__title">{c.title}</p>
+          <p class="coach-card__summary">{c.summary}</p>
+          {c.credentials && i === 0 && (
+            <ul class="coach-card__credentials">
+              {c.credentials.map((cr) => <li>{cr}</li>)}
+            </ul>
+          )}
+          <a class="coach-card__more" href={`/coaches/${c.slug}/`}>
+            Full bio →
           </a>
-          <div class="coach-card__body">
-            <h2>
-              <a href={`/coaches/${c.slug}/`}>{c.name}</a>
-            </h2>
-            <p class="coach-card__role">{c.role}</p>
-            <p class="coach-card__title">{c.title}</p>
-            <p class="coach-card__summary">{c.summary}</p>
-            <a class="coach-card__more" href={`/coaches/${c.slug}/`}>
-              Full bio →
-            </a>
-          </div>
-        </article>
-      ))
-    }
+        </div>
+      </article>
+    ))}
   </section>
 </BaseLayout>
 
 <style>
-  .grid {
+  .coaches-layout {
     display: grid;
     gap: 1.5rem;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     padding-bottom: 4rem;
+  }
+
+  .coach-card--featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .coach-card--featured .coach-card__image-link img {
+    height: 100%;
+    aspect-ratio: unset;
+  }
+
+  .coach-card--featured .coach-card__body {
+    padding: 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .coach-card--featured h2 {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .coach-card--featured {
+      grid-template-columns: 1fr;
+    }
   }
 
   .coach-card h2 {
@@ -115,6 +147,17 @@ const jsonLd = {
   .coach-card__summary {
     margin: 0 0 1rem;
     color: var(--color-text-muted);
+  }
+
+  .coach-card__credentials {
+    margin: 0 0 1rem;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  .coach-card__credentials li + li {
+    margin-top: 0.25rem;
   }
 
   .coach-card__more {

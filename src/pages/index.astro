@@ -127,11 +127,21 @@ const jsonLd = [
       </div>
       <ul class="coach-preview__list">
         {
-          coaches.map((c) => (
+          coaches.map((c, i) => (
             <li>
-              <a href={`/coaches/${c.slug}/`} class="coach-preview__link">
-                <span class="coach-preview__name">{c.name}</span>
-                <span class="coach-preview__role">{c.role}</span>
+              <a href={`/coaches/${c.slug}/`} class:list={['coach-preview__link', { 'coach-preview__link--lead': i === 0 }]}>
+                <img
+                  src={c.imageSrc}
+                  alt={c.name}
+                  class="coach-preview__photo"
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                />
+                <span class="coach-preview__info">
+                  <span class="coach-preview__name">{c.name}</span>
+                  <span class="coach-preview__role">{c.role}</span>
+                </span>
               </a>
             </li>
           ))
@@ -317,8 +327,9 @@ const jsonLd = [
 
   .coach-preview__link {
     display: flex;
-    flex-direction: column;
-    padding: 1rem 1.1rem;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
     background: var(--color-bg-elevated);
@@ -329,21 +340,50 @@ const jsonLd = [
       transform 0.25s var(--ease-out);
   }
 
+  .coach-preview__link--lead {
+    border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg-elevated));
+  }
+
   .coach-preview__link:hover {
     border-color: var(--color-primary-muted);
     transform: translateX(4px);
   }
 
+  .coach-preview__photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .coach-preview__link--lead .coach-preview__photo {
+    width: 3.5rem;
+    height: 3.5rem;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .coach-preview__info {
+    display: flex;
+    flex-direction: column;
+  }
+
   .coach-preview__name {
     font-family: var(--font-display);
     font-weight: 650;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
 
   .coach-preview__role {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+
+  .coach-preview__link--lead .coach-preview__role {
+    color: var(--color-accent);
   }
 </style>
