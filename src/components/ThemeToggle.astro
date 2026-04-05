@@ -4,14 +4,13 @@
 <button
   type="button"
   class="theme-toggle"
-  aria-label="Switch color theme"
   id="theme-toggle"
+  aria-label="Switch color theme"
+  title="Switch color theme"
 >
-  <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
+  <span class="theme-toggle__icon theme-toggle__icon--sun"  aria-hidden="true">☀</span>
   <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☾</span>
-</button>
-<button type="button" class="theme-system" id="theme-system" aria-label="Use system theme">
-  Auto
+  <span class="theme-toggle__icon theme-toggle__icon--auto" aria-hidden="true">Auto</span>
 </button>
 
 <style>
@@ -19,23 +18,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    padding: 0;
+    height: 1.75rem;
+    min-width: 1.75rem;
+    padding: 0 0.4rem;
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
-    background: var(--color-bg-elevated);
-    color: var(--color-text);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
     cursor: pointer;
     transition:
-      border-color 0.2s var(--ease-out),
-      background 0.2s var(--ease-out),
-      transform 0.2s var(--ease-out);
+      color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out);
   }
 
   .theme-toggle:hover {
+    color: var(--color-text);
     border-color: var(--color-primary-muted);
-    transform: scale(1.04);
   }
 
   .theme-toggle:focus-visible {
@@ -44,91 +43,57 @@
   }
 
   .theme-toggle__icon {
-    font-size: 1.15rem;
     line-height: 1;
   }
 
-  .theme-toggle__icon--moon {
-    display: none;
-  }
+  /* Default (system): show "Auto" */
+  .theme-toggle__icon--sun,
+  .theme-toggle__icon--moon { display: none; }
+  .theme-toggle__icon--auto  { display: inline; font-weight: 600; letter-spacing: 0.04em; }
 
-  :global(:root[data-theme='dark']) .theme-toggle__icon--sun {
-    display: none;
-  }
+  /* Explicit light */
+  :global(:root[data-theme='light']) .theme-toggle__icon--sun  { display: inline; }
+  :global(:root[data-theme='light']) .theme-toggle__icon--auto { display: none; }
 
-  :global(:root[data-theme='dark']) .theme-toggle__icon--moon {
-    display: inline;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme])) .theme-toggle__icon--sun {
-      display: none;
-    }
-    :global(:root:not([data-theme])) .theme-toggle__icon--moon {
-      display: inline;
-    }
-  }
-
-  .theme-system {
-    margin-left: 0.35rem;
-    padding: 0.35rem 0.6rem;
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    border-radius: var(--radius-sm);
-    border: 1px dashed var(--color-border);
-    background: transparent;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition:
-      color 0.2s var(--ease-out),
-      border-color 0.2s var(--ease-out);
-  }
-
-  .theme-system:hover {
-    color: var(--color-text);
-    border-color: var(--color-primary-muted);
-  }
-
-  .theme-system:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-  }
+  /* Explicit dark */
+  :global(:root[data-theme='dark']) .theme-toggle__icon--moon { display: inline; }
+  :global(:root[data-theme='dark']) .theme-toggle__icon--auto { display: none; }
 </style>
 
 <script>
   const STORAGE_KEY = 'aceler8-theme';
 
-  function effectiveTheme(): 'light' | 'dark' {
-    const attr = document.documentElement.getAttribute('data-theme');
-    if (attr === 'light' || attr === 'dark') return attr;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  function getStored(): 'light' | 'dark' | null {
+    const v = localStorage.getItem(STORAGE_KEY);
+    return v === 'light' || v === 'dark' ? v : null;
   }
 
   function applyStored() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark') {
+    const stored = getStored();
+    if (stored) {
       document.documentElement.setAttribute('data-theme', stored);
     } else {
       document.documentElement.removeAttribute('data-theme');
     }
   }
 
-  function toggleTheme() {
-    const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem(STORAGE_KEY, next);
-  }
-
-  function useSystem() {
-    localStorage.removeItem(STORAGE_KEY);
-    document.documentElement.removeAttribute('data-theme');
+  function cycle() {
+    const current = getStored();
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Cycle: system → light → dark → system
+    if (current === null) {
+      const next = systemDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEY, next);
+    } else if (current === 'light') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem(STORAGE_KEY, 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.removeItem(STORAGE_KEY);
+    }
   }
 
   applyStored();
-
-  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-  document.getElementById('theme-system')?.addEventListener('click', useSystem);
+  document.getElementById('theme-toggle')?.addEventListener('click', cycle);
 </script>
