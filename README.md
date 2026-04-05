@@ -49,7 +49,7 @@ Canonical URLs, Open Graph URLs, and the sitemap use `PUBLIC_SITE_URL` (no trail
 $env:PUBLIC_SITE_URL="https://www.your-domain.com"; npm run build
 ```
 
-Copy `.env.example` to `.env` for local persistence. In GitHub Actions, set repository variable **`PUBLIC_SITE_URL`** to the same value.
+Copy `.env.example` to `.env` for local persistence. In GitHub Actions, set repository variable **`PUBLIC_SITE_URL`** to the stack output **`PublicSiteUrl`** (or your custom domain once DNS points at CloudFront).
 
 ### Swap placeholder images
 
@@ -71,52 +71,97 @@ Copy `.env.example` to `.env` for local persistence. In GitHub Actions, set repo
 
 Workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 
-**Repository secrets**
-
-| Secret | Description |
-| --- | --- |
-| `AWS_ACCESS_KEY_ID` | IAM user or role access key |
-| `AWS_SECRET_ACCESS_KEY` | IAM secret |
-| `AWS_REGION` | e.g. `us-east-1` |
-| `S3_BUCKET` | Bucket name from Terraform output |
-| `CLOUDFRONT_DISTRIBUTION_ID` | Distribution ID from Terraform output |
+AWS access uses **[GitHub OIDC](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)** (no long‑lived `AWS_ACCESS_KEY_*` in GitHub). The CDK stack in [`infra/cdk`](infra/cdk) creates the GitHub OIDC provider and IAM roles.
 
 **Repository variables**
 
 | Variable | Example |
 | --- | --- |
-| `PUBLIC_SITE_URL` | `https://www.aceler8fc.org` |
+| `AWS_DEPLOY_ROLE_ARN` | CloudFormation output **`GitHubActionsDeployRoleArn`** from stack `Aceler8SoccerSite` |
+| `PUBLIC_SITE_URL` | Output **`PublicSiteUrl`**, or your custom domain when DNS is ready |
+
+**Repository secrets**
+
+| Secret | Description |
+| --- | --- |
+| `S3_BUCKET` | Output **`BucketName`** |
+| `CLOUDFRONT_DISTRIBUTION_ID` | Output **`CloudFrontDistributionId`** |
+
+Workflow permissions include **`id-token: write`** so `aws-actions/configure-aws-credentials` can assume the deploy role via OIDC. STS calls use **`us-east-1`**.
 
 On every push to `main`, the workflow runs `npm ci`, `npm run build`, `aws s3 sync dist/ s3://$S3_BUCKET/ --delete`, and invalidates `/*` on CloudFront.
+
+**Bootstrap:** Run the first **`cdk deploy`** from your machine with an admin-capable AWS identity so the stack (including OIDC + roles) exists. Copy outputs into GitHub variables/secrets (`AWS_DEPLOY_ROLE_ARN`, `AWS_CDK_ROLE_ARN`, `S3_BUCKET`, etc.). After that, the **infra** workflow can manage the stack via OIDC.
 
 ### `robots.txt` and sitemap URL
 
 Update [`public/robots.txt`](public/robots.txt) so the `Sitemap:` line matches your real domain (it must align with `PUBLIC_SITE_URL` for consistency).
 
-## AWS infrastructure (Terraform)
+## AWS infrastructure (AWS CDK)
 
-Configuration lives in [`infra/terraform/`](infra/terraform/).
+Infrastructure lives in [`infra/cdk`](infra/cdk) (TypeScript, **AWS CDK v2** → CloudFormation). **Why CDK:** typed constructs, reuse and tests in TypeScript, and AWS-managed stack state (no separate Terraform backend). The stack provisions the **site S3 bucket**, **CloudFront + S3 OAC**, **custom error mapping** to `/404.html`, optional **ACM + alternate domain names**, and **GitHub OIDC** with two roles: least-privilege **deploy** (S3 sync + invalidation) and **CDK** (`AdministratorAccess` for `cdk deploy` in CI — replace with a scoped policy when you harden).
 
-**Recommendation**: Terraform over CDK for this footprint — a single distribution, one bucket, and OAC are a few resources; HCL stays easy for volunteers to read and tweak.
+### One-time: CDK bootstrap
+
+Once per account/region:
 
 ```bash
-cd infra/terraform
-cp terraform.tfvars.example terraform.tfvars
-# Edit terraform.tfvars — bucket name must be globally unique
-
-terraform init
-terraform apply
+cd infra/cdk
+npm install
+npx cdk bootstrap aws://YOUR_ACCOUNT_ID/us-east-1
 ```
 
-**Outputs**: `s3_bucket_name`, `cloudfront_distribution_id`, `cloudfront_domain_name`.
+### Local deploy (first time / admin)
 
-**Custom domain**: Request an ACM certificate in **us-east-1**, validate (usually DNS), set `acm_certificate_arn` in `terraform.tfvars`. Leave it empty to use the default `*.cloudfront.net` hostname first.
+```bash
+cd infra/cdk
+export CDK_DEFAULT_ACCOUNT=YOUR_ACCOUNT_ID   # PowerShell: $env:CDK_DEFAULT_ACCOUNT="..."
+export CDK_DEFAULT_REGION=us-east-1
 
-**404 behavior**: CloudFront serves `/404.html` for 403/404 responses (common for S3 REST origins when a key is missing).
+npx cdk deploy \
+  -c bucketName=YOUR_GLOBAL_BUCKET_NAME \
+  -c siteDomain=www.example.com \
+  -c githubOwner=YOUR_GH_USER_OR_ORG \
+  -c githubRepository=aceler8-soccer-fc
+```
 
-### Bucket policy note
+Optional: `-c acmCertificateArn=arn:aws:acm:us-east-1:...:certificate/...` (certificate **must** be in **us-east-1** for CloudFront). If the account already has a GitHub OIDC provider, add `-c createGithubOidcProvider=false -c githubOidcProviderArn=arn:aws:iam::ACCOUNT:oidc-provider/token.actions.githubusercontent.com`.
 
-The policy allows `s3:GetObject` for objects when the request comes from your CloudFront distribution (OAC). The policy references the distribution ARN; Terraform resolves apply order in one run, but if you ever see a transient failure, run `terraform apply` again.
+See [`infra/cdk/cdk.context.example.json`](infra/cdk/cdk.context.example.json) for all context keys.
+
+**Stack outputs** (for GitHub): `BucketName`, `CloudFrontDistributionId`, `PublicSiteUrl`, `GitHubActionsDeployRoleArn`, `GitHubActionsCdkRoleArn`.
+
+### CI: CDK workflow
+
+[`.github/workflows/infra.yml`](.github/workflows/infra.yml) runs **`npm ci`** and **`cdk deploy`** when **`infra/**`** changes on `main` (or via **workflow_dispatch**).
+
+**Repository variables** (required for CI)
+
+| Variable | Purpose |
+| --- | --- |
+| `AWS_CDK_ROLE_ARN` | Output **`GitHubActionsCdkRoleArn`** — OIDC role used only by this workflow |
+| `CDK_BUCKET_NAME` | Passed as `-c bucketName` |
+| `CDK_SITE_DOMAIN` | Passed as `-c siteDomain` (comment + optional alias) |
+| `CDK_GITHUB_OWNER` | `-c githubOwner` |
+| `CDK_GITHUB_REPO` | `-c githubRepository` |
+
+**Optional repository variables**
+
+| Variable | Purpose |
+| --- | --- |
+| `CDK_ACM_CERTIFICATE_ARN` | ACM cert in us-east-1 for HTTPS on `CDK_SITE_DOMAIN` |
+| `CDK_SKIP_GITHUB_OIDC` | Set to `true` if the OIDC provider already exists |
+| `CDK_EXISTING_GITHUB_OIDC_ARN` | Required when skipping create; full OIDC provider ARN |
+
+After deploy, copy stack outputs into **`S3_BUCKET`**, **`CLOUDFRONT_DISTRIBUTION_ID`**, **`PUBLIC_SITE_URL`**, **`AWS_DEPLOY_ROLE_ARN`**, and **`AWS_CDK_ROLE_ARN`** (e.g. with `gh secret set` / `gh variable set`).
+
+**Custom domain**: Same as above — ACM in **us-east-1**, then set `CDK_ACM_CERTIFICATE_ARN`.
+
+**404 behavior**: CloudFront maps 403/404 to `/404.html` (same as before).
+
+### OAC / bucket access
+
+CDK’s **S3 origin + OAC** grants CloudFront read access via the generated bucket policy; the bucket stays private to the public internet.
 
 ## Content source
 

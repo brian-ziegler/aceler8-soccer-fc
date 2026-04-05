@@ -1,3 +1,5 @@
+# Deploy targets: S3_BUCKET and CLOUDFRONT_DISTRIBUTION_ID match CDK stack outputs.
+# AWS auth: OIDC — set repository variable AWS_DEPLOY_ROLE_ARN (stack output GitHubActionsDeployRoleArn).
 name: Deploy to S3 and invalidate CloudFront
 
 on:
@@ -6,6 +8,7 @@ on:
       - main
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
@@ -28,12 +31,10 @@ jobs:
           npm ci
           npm run build
 
-      # STS region (not necessarily your bucket region). Use us-east-1 unless you standardize elsewhere.
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           aws-region: us-east-1
 
       - name: Sync site to S3

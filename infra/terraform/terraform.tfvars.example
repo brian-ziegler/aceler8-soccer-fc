@@ -1,8 +1,0 @@
-aws_region   = "us-east-1"
-site_domain  = "www.aceler8fc.org"
-bucket_name  = "aceler8-fc-prod-site-UNIQUE"
-price_class  = "PriceClass_100"
-# Request ACM cert in us-east-1, validate via DNS, then set:
-# acm_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-
-acm_certificate_arn = ""

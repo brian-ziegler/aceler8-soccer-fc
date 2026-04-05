@@ -1,0 +1,75 @@
+# AWS auth: OIDC — set repository variable AWS_CDK_ROLE_ARN to stack output GitHubActionsCdkRoleArn.
+# Also set CDK_* repository variables (see README).
+name: Deploy infrastructure (CDK)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "infra/**"
+  workflow_dispatch:
+
+concurrency:
+  group: cdk-infra-main
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  cdk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/cdk
+    env:
+      AWS_REGION: us-east-1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: infra/cdk/package-lock.json
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_CDK_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve AWS account for CDK
+        id: acct
+        run: echo "account=$(aws sts get-caller-identity --query Account --output text)" >> "$GITHUB_OUTPUT"
+
+      - name: CDK deploy
+        env:
+          CDK_DEFAULT_ACCOUNT: ${{ steps.acct.outputs.account }}
+        run: |
+          set -e
+          export CDK_DEFAULT_REGION=us-east-1
+          EXTRA=""
+          if [ -n "${{ vars.CDK_ACM_CERTIFICATE_ARN }}" ]; then
+            EXTRA="$EXTRA -c acmCertificateArn=${{ vars.CDK_ACM_CERTIFICATE_ARN }}"
+          fi
+          if [ "${{ vars.CDK_SKIP_GITHUB_OIDC }}" = "true" ]; then
+            EXTRA="$EXTRA -c createGithubOidcProvider=false"
+            if [ -n "${{ vars.CDK_EXISTING_GITHUB_OIDC_ARN }}" ]; then
+              EXTRA="$EXTRA -c githubOidcProviderArn=${{ vars.CDK_EXISTING_GITHUB_OIDC_ARN }}"
+            fi
+          fi
+          npx cdk deploy --require-approval never \
+            -c bucketName="${{ vars.CDK_BUCKET_NAME }}" \
+            -c siteDomain="${{ vars.CDK_SITE_DOMAIN }}" \
+            -c githubOwner="${{ vars.CDK_GITHUB_OWNER }}" \
+            -c githubRepository="${{ vars.CDK_GITHUB_REPO }}" \
+            $EXTRA

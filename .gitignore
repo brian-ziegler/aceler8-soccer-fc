@@ -5,7 +5,8 @@ dist/
 .env.*
 !.env.example
 *.log
-.terraform/
-*.tfstate
-*.tfstate.*
-.terraform.lock.hcl
+infra/cdk/node_modules/
+infra/cdk/cdk.out/
+infra/cdk/*.js
+infra/cdk/*.d.ts
+infra/cdk/dist/
