@@ -7,8 +7,6 @@
   "context": {
     "@aws-cdk/core:newStyleStackSynthesis": true,
     "bucketName": "aceler8-fc-prod-site",
-    "siteDomain": "www.aceler8fc.org",
-    "githubOwner": "brian-ziegler",
-    "githubRepository": "aceler8-soccer-fc"
+    "siteDomain": "www.aceler8fc.org"
   }
 }
