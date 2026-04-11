@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh run:*)",
+      "Bash(gh workflow:*)",
+      "Bash(aws cloudformation:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh variable:*)",
+      "Bash(npm run:*)",
+      "WebSearch",
+      "Bash(npm install:*)",
+      "Bash(agent-browser install:*)",
+      "Bash(gh api:*)",
+      "Bash(agent-browser open:*)",
+      "Bash(agent-browser wait:*)",
+      "Bash(agent-browser screenshot:*)",
+      "Bash(aws s3:*)",
+      "Bash(agent-browser snapshot:*)",
+      "Bash(agent-browser click:*)",
+      "Bash(agent-browser set:*)",
+      "Bash(agent-browser close:*)",
+      "Bash(agent-browser scroll:*)",
+      "Bash(agent-browser eval:*)",
+      "Bash(pkill -f \"serve dist\")",
+      "Bash(agent-browser find:*)",
+      "Bash(agent-browser --version)",
+      "Bash(npx agent-browser:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321)",
+      "Bash(node -e \"require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
+      "Bash(magick -version)",
+      "Bash(node -e ':*)",
+      "Bash"
+    ]
+  }
+}
