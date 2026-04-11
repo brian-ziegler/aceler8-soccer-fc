@@ -209,13 +209,25 @@ img {
 }
 
 .btn--primary {
-  background: var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-muted) 100%
+  );
   color: var(--btn-on-primary);
+  box-shadow: 0 2px 12px rgba(12, 61, 61, 0.25);
 }
 
 .btn--primary:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(12, 61, 61, 0.35);
+  filter: brightness(1.08);
+}
+
+.btn--primary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 1px 4px rgba(12, 61, 61, 0.2);
+  transition-duration: 0.08s;
 }
 
 .btn--ghost {
@@ -243,16 +255,52 @@ img {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow:
+    0 1px 2px rgba(12, 24, 22, 0.06),
+    0 4px 16px rgba(12, 24, 22, 0.06);
   overflow: hidden;
+  position: relative;
+  /* 3D tilt driven by JS via --tilt-x / --tilt-y CSS vars */
+  transform: perspective(900px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translateY(0);
   transition:
-    transform 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out);
+    transform 0.18s ease,
+    box-shadow 0.4s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+
+/* Shimmer sweep on hover */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    108deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.09) 50%,
+    transparent 70%
+  );
+  transform: translateX(-220%) skewX(-18deg);
+}
+
+.card:hover::before {
+  animation: shimmer-sweep 0.65s var(--ease-out) forwards;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--color-border) 40%, var(--color-primary-muted) 60%);
+  box-shadow:
+    0 2px 4px rgba(12, 24, 22, 0.04),
+    0 12px 32px rgba(12, 24, 22, 0.12),
+    0 32px 56px rgba(12, 24, 22, 0.1);
+  transform: perspective(900px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translateY(-6px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -273,30 +321,60 @@ img {
 }
 
 .reveal {
-  animation: reveal-up 0.85s var(--ease-out) both;
+  animation: reveal-up 0.9s var(--ease-out) both;
 }
 
 .reveal-delay-1 {
-  animation-delay: 0.08s;
+  animation-delay: 0.1s;
 }
 
 .reveal-delay-2 {
-  animation-delay: 0.16s;
+  animation-delay: 0.2s;
 }
 
 .reveal-delay-3 {
-  animation-delay: 0.24s;
+  animation-delay: 0.32s;
 }
 
 @keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(44px) scale(0.96);
+    filter: blur(4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
+}
+
+/* Scroll-triggered reveal — driven by IntersectionObserver in BaseLayout */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(36px) scale(0.97);
+  filter: blur(3px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out),
+    filter 0.6s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@keyframes shimmer-sweep {
+  from { transform: translateX(-220%) skewX(-18deg); }
+  to   { transform: translateX(340%) skewX(-18deg); }
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.09) translate(-1.5%, 1%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -307,5 +385,13 @@ img {
     animation: none;
     opacity: 1;
     transform: none;
+    filter: none;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
   }
 }

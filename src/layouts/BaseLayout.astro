@@ -42,6 +42,50 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
     </main>
     <Footer />
   </body>
+
+  <script>
+    // Scroll-triggered reveals
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
+
+    // 3D card tilt on mousemove
+    const MAX_TILT = 7; // degrees
+    document.querySelectorAll('.card').forEach((card) => {
+      let raf: number;
+
+      card.addEventListener('mousemove', (e) => {
+        const evt = e as MouseEvent;
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (evt.clientX - cx) / (rect.width / 2);
+        const dy = (evt.clientY - cy) / (rect.height / 2);
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          (card as HTMLElement).style.setProperty('--tilt-x', `${dy * -MAX_TILT}deg`);
+          (card as HTMLElement).style.setProperty('--tilt-y', `${dx * MAX_TILT}deg`);
+          (card as HTMLElement).style.transition = 'transform 0.08s ease, box-shadow 0.4s var(--ease-out), border-color 0.3s var(--ease-out)';
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        cancelAnimationFrame(raf);
+        (card as HTMLElement).style.setProperty('--tilt-x', '0deg');
+        (card as HTMLElement).style.setProperty('--tilt-y', '0deg');
+        (card as HTMLElement).style.transition = 'transform 0.5s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s var(--ease-out)';
+      });
+    });
+  </script>
 </html>
 
 <style is:global>

@@ -33,7 +33,7 @@ const jsonLd = {
 
   <section class="wrap coaches-layout">
     {coaches.map((c, i) => (
-      <article class:list={['card coach-card', { 'coach-card--featured': i === 0 }]}>
+      <article class:list={['card coach-card', { 'coach-card--featured': i === 0 }]} data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
         <a href={`/coaches/${c.slug}/`} class="coach-card__image-link">
           <img src={c.imageSrc} alt={c.imageAlt} width="800" height="520" loading="lazy" />
         </a>
@@ -117,6 +117,8 @@ const jsonLd = {
   .coach-card__image-link {
     display: block;
     line-height: 0;
+    overflow: hidden;
+    position: relative;
   }
 
   .coach-card__image-link:focus-visible {
@@ -124,10 +126,33 @@ const jsonLd = {
     outline-offset: 2px;
   }
 
+  /* Gradient overlay that slides up on hover */
+  .coach-card__image-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(12, 61, 61, 0.55) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+  }
+
+  .coach-card:hover .coach-card__image-link::after {
+    opacity: 1;
+  }
+
   .coach-card img {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    transition: transform 0.55s var(--ease-out);
+  }
+
+  .coach-card:hover img {
+    transform: scale(1.06);
   }
 
   .coach-card__body {
