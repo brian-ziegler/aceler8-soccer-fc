@@ -1,6 +1,6 @@
 # Deploys all CDK stacks (prod + next).
 # On the next branch, captures Aceler8SoccerSiteNext outputs and writes them
-# back as repo variables so deploy.yml can consume them immediately.
+# back as repo variables (using GH_VARIABLES_TOKEN) so deploy.yml can use them.
 name: Deploy infrastructure (CDK)
 
 on:
@@ -19,7 +19,6 @@ concurrency:
 permissions:
   id-token: write
   contents: read
-  variables: write   # allows gh variable set to update repo variables
 
 jobs:
   cdk:
@@ -29,7 +28,6 @@ jobs:
         working-directory: infra/cdk
     env:
       AWS_REGION: us-east-1
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
@@ -61,11 +59,12 @@ jobs:
           CDK_DEFAULT_REGION: us-east-1
         run: npx cdk deploy --all --require-approval never
 
-      # After a successful deploy on the next branch, write the new stack
-      # outputs back as repo variables so deploy.yml can use them right away.
-      - name: Capture next stack outputs → repo variables
+      # After deploy on the next branch, read the new stack outputs and write
+      # them back as repo variables using a PAT (GITHUB_TOKEN cannot write variables).
+      - name: Capture next stack outputs and update repo variables
         if: github.ref_name == 'next'
-        working-directory: .
+        env:
+          GH_TOKEN: ${{ secrets.GH_VARIABLES_TOKEN }}
         run: |
           STACK=Aceler8SoccerSiteNext
           REGION=us-east-1
@@ -81,12 +80,12 @@ jobs:
           CF_URL=$(get_output PublicSiteUrl)
           DEPLOY_ROLE=$(get_output GitHubActionsDeployRoleArn)
 
-          echo "CloudFront distribution: $CF_DIST_ID"
-          echo "Public URL:              $CF_URL"
-          echo "Deploy role:             $DEPLOY_ROLE"
+          echo "Distribution ID : $CF_DIST_ID"
+          echo "Public URL      : $CF_URL"
+          echo "Deploy role     : $DEPLOY_ROLE"
 
           gh variable set NEXT_CLOUDFRONT_DISTRIBUTION_ID --body "$CF_DIST_ID" --repo "$GITHUB_REPOSITORY"
-          gh variable set NEXT_PUBLIC_SITE_URL             --body "$CF_URL"      --repo "$GITHUB_REPOSITORY"
+          gh variable set NEXT_PUBLIC_SITE_URL             --body "$CF_URL"     --repo "$GITHUB_REPOSITORY"
           gh variable set NEXT_AWS_DEPLOY_ROLE_ARN         --body "$DEPLOY_ROLE" --repo "$GITHUB_REPOSITORY"
 
           echo "### Next environment variables updated" >> "$GITHUB_STEP_SUMMARY"
