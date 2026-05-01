@@ -2,6 +2,39 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { siteConfig } from '@/data/site';
 
+const values = [
+  {
+    icon: '🎯',
+    title: 'Excellence',
+    desc: 'We hold ourselves and every player to the highest standard — in training, in competition, and in conduct.',
+  },
+  {
+    icon: '🤝',
+    title: 'Integrity',
+    desc: 'We do what is right even when no one is watching. Honesty and accountability are non-negotiable.',
+  },
+  {
+    icon: '🌱',
+    title: 'Development',
+    desc: 'We believe in the long arc. Every session, every rep, every conversation is an investment in who this player will become.',
+  },
+  {
+    icon: '🏘️',
+    title: 'Community',
+    desc: 'We are rooted in Rochester. Our success is measured by the impact we make in the lives of local families.',
+  },
+  {
+    icon: '💡',
+    title: 'Innovation',
+    desc: 'We stay current with modern coaching methodology — PDI frameworks, LTAD principles, and data-informed practice.',
+  },
+  {
+    icon: '🙏',
+    title: 'Humility',
+    desc: 'Great players and great coaches never stop learning. We approach the game and each other with respect and an open mind.',
+  },
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
@@ -17,68 +50,253 @@ const jsonLd = {
 
 <BaseLayout
   title="About — Mission, vision & values"
-  description="Aceler8 Soccer FC is a family- and community-driven competitive club rooted in honesty, integrity, respect, and humility — with a clear path for tournament-level play."
+  description="Aceler8 Soccer FC is a player-first development club rooted in Rochester, NY. We develop technically excellent, mentally resilient, and community-minded young athletes."
   jsonLd={jsonLd}
 >
   <article class="page-intro wrap">
-    <p class="tag">About</p>
-    <h1>Mission with receipts.</h1>
-    <p class="lead">
-      We are dedicated to building an inclusive and supportive environment where young players can
-      grow, feel valued, and thrive both personally and athletically — the same conviction that
-      anchors the wider Aceler8 academy family.
+    <p class="tag">About the Club</p>
+    <h1 class="reveal">More than a team.</h1>
+    <p class="lead reveal reveal-delay-1">
+      Aceler8 Soccer FC is a player-first development club dedicated to building technically
+      excellent, mentally resilient, and community-minded athletes in Rochester, New York.
     </p>
   </article>
 
-  <section class="wrap prose">
-    <h2>Vision</h2>
-    <p>
-      Our vision is to build a family- and community-driven program founded on honesty, integrity,
-      respect, and humility — expressed through modern training, disciplined habits, and
-      tournament-ready standards.
-    </p>
+  <section class="wrap mission-section" data-reveal>
+    <div class="mission-card card">
+      <p class="tag">Our Mission</p>
+      <blockquote>
+        "To provide every young player in our community access to elite coaching, a structured
+        development pathway, and the mindset to compete at the highest levels of the game — and
+        life."
+      </blockquote>
+    </div>
+  </section>
 
-    <h2>What this site is — and is not</h2>
-    <p>
-      <strong>This website</strong> introduces our <strong>competitive U11 girls team</strong> for
-      tournament directors, scouts, and the soccer community. It is designed for credibility and
-      clarity — not player acquisition.
+  <section class="wrap values-section">
+    <h2 data-reveal>Core Values</h2>
+    <p class="lead" data-reveal style="--reveal-delay: 0.1s">
+      Six principles that guide everything we do.
     </p>
-    <p>
-      <strong>Youth camps, open training sessions, and academy programming</strong> are hosted on
-      our training brand at{' '}
-      <a href={siteConfig.trainingCampUrl}>aceler8soccer.com</a> — a separate lane that feeds our
-      culture but does not replace the competitive team identity.
-    </p>
+    <div class="values-grid">
+      {
+        values.map((v, i) => (
+          <div
+            class="card value-card"
+            data-reveal
+            style={`--reveal-delay: ${0.05 * i}s`}
+          >
+            <span class="value-icon" aria-hidden="true">{v.icon}</span>
+            <h3>{v.title}</h3>
+            <p>{v.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 
-    <h2>Development philosophy</h2>
-    <p>
-      We believe development is long arc: technical clarity, tactical courage, and emotional
-      resilience — taught by coaches who have lived the game at serious levels and who treat the
-      classroom and the field as one continuum.
-    </p>
+  <section class="wrap philosophy-section">
+    <div class="philosophy-content">
+      <div data-reveal>
+        <p class="tag">Development Philosophy</p>
+        <h2>Built on PDI & LTAD</h2>
+        <p>
+          Our coaching model is grounded in <strong>Player Development Initiatives (PDI)</strong>
+          and <strong>Long-Term Athlete Development (LTAD)</strong> — frameworks used by top
+          academies and national federations worldwide.
+        </p>
+        <p>
+          We train the whole player: technical skill, tactical understanding, physical literacy,
+          and psychological resilience. We emphasize decision-making over rote repetition, and
+          fun over fear.
+        </p>
+        <p>
+          <strong>Short-term results never outweigh long-term growth.</strong> We measure success
+          by the player each athlete becomes — not just the scoreline.
+        </p>
+      </div>
+      <div class="philosophy-pillars" data-reveal style="--reveal-delay: 0.15s">
+        <div class="pillar">
+          <span class="pillar__num">01</span>
+          <div>
+            <strong>Technical Mastery</strong>
+            <p>Ball manipulation, first touch, and 1v1 skill at the foundation.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar__num">02</span>
+          <div>
+            <strong>Tactical Intelligence</strong>
+            <p>Reading the game, positional awareness, and decision-making under pressure.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar__num">03</span>
+          <div>
+            <strong>Physical Development</strong>
+            <p>Age-appropriate athleticism, injury prevention, and long-term durability.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar__num">04</span>
+          <div>
+            <strong>Mental Resilience</strong>
+            <p>Confidence, composure, grit, and a growth mindset on and off the field.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <h2>Home base</h2>
-    <p>
-      Our programming is rooted in the Rochester, New York soccer community. Facility details for
-      training blocks are shared directly with enrolled families and event partners.
+  <section class="wrap vision-section" data-reveal>
+    <p class="tag">Vision</p>
+    <h2>Rochester's Premier Development Club</h2>
+    <p class="lead">
+      We are building a club that Rochester families trust — where every player has a clear
+      pathway from first touch to their full potential, and where elite development is accessible
+      regardless of background.
     </p>
+    <a href="/pathway/" class="btn btn--primary">Explore the Pathway Program</a>
   </section>
 </BaseLayout>
 
 <style>
-  .prose {
-    max-width: 40rem;
-    padding-bottom: 4rem;
+  .mission-section {
+    padding-bottom: 3rem;
   }
 
-  .prose h2 {
-    margin-top: 2.5rem;
+  .mission-card {
+    padding: 2.5rem 3rem;
+    max-width: 52rem;
+  }
+
+  .mission-card blockquote {
+    margin: 0.75rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+
+  .values-section {
+    padding-block: 3rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .value-card {
+    padding: 1.75rem;
+  }
+
+  .value-icon {
+    font-size: 1.75rem;
+    display: block;
     margin-bottom: 0.75rem;
-    font-size: 1.5rem;
   }
 
-  .prose p {
+  .value-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .value-card p {
+    margin: 0;
     color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .philosophy-section {
+    padding-block: 3rem 4rem;
+  }
+
+  .philosophy-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .philosophy-content p {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .philosophy-content h2 {
+    margin-bottom: 1.25rem;
+  }
+
+  .philosophy-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 3.5rem;
+  }
+
+  .pillar {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .pillar__num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.5rem;
+  }
+
+  .pillar strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pillar p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .vision-section {
+    padding-block: 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .vision-section h2 {
+    margin: 0;
+  }
+
+  .vision-section .lead {
+    margin: 0;
+    max-width: 42rem;
+  }
+
+  @media (max-width: 720px) {
+    .philosophy-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .philosophy-pillars {
+      padding-top: 0;
+    }
+
+    .mission-card {
+      padding: 1.5rem;
+    }
   }
 </style>

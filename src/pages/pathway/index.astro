@@ -1,0 +1,274 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+
+const phases = [
+  {
+    num: '01',
+    title: 'Foundation',
+    subtitle: 'Ages 6–9 · U8 / U10',
+    icon: '🌱',
+    focus: 'Love of the game',
+    desc: 'We introduce fundamental movement skills, basic ball manipulation, and a genuine love of the game. Training is play-heavy, exploratory, and joyful. There are no wrong answers — only discovery.',
+    bullets: [
+      'Small-sided games (2v2, 3v3, 4v4)',
+      'Dribbling, first touch, and basic passing',
+      'Creative expression over tactical instruction',
+      'Positive, low-pressure environment',
+    ],
+  },
+  {
+    num: '02',
+    title: 'Development',
+    subtitle: 'Ages 10–12 · U11 / U12',
+    icon: '⚽',
+    focus: 'Technical mastery',
+    desc: 'Players begin to develop serious technical habits alongside an introduction to positional awareness and team tactics. Training density increases, and players experience structured league and tournament play.',
+    bullets: [
+      '7v7 and 9v9 competitive formats',
+      'Positional play and shape introduction',
+      'Technical: receiving, turning, 1v1 defending',
+      'Structured league and regional tournament play',
+    ],
+  },
+  {
+    num: '03',
+    title: 'Performance',
+    subtitle: 'Ages 13–14 · U13 / U14',
+    icon: '🏆',
+    focus: 'Compete & advance',
+    desc: 'Players compete at the highest regional level available to their age group. Training focuses on full 11v11 tactical systems, physical preparation, and the mental demands of high-pressure competition.',
+    bullets: [
+      'Full 11v11 format and tactical systems',
+      'Higher weekly training volume',
+      'Physical conditioning and injury prevention',
+      'State and regional championship pathways',
+    ],
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Pathway Program — Aceler8 Soccer FC',
+  url: `${siteConfig.url}/pathway/`,
+};
+---
+
+<BaseLayout
+  title="Pathway Program — Player Development"
+  description="Aceler8 Soccer FC's Pathway Program gives every player a clear roadmap from first touch to competitive excellence. Three phases: Foundation, Development, and Performance."
+  jsonLd={jsonLd}
+>
+  <article class="page-intro wrap">
+    <p class="tag">The Pathway Program</p>
+    <h1 class="reveal">A clear road from first touch<br />to full potential.</h1>
+    <p class="lead reveal reveal-delay-1">
+      The Pathway Program is our structured, age-by-age development model — built on PDI and LTAD
+      principles — that gives every Aceler8 player a roadmap from their first session to
+      competitive excellence.
+    </p>
+  </article>
+
+  <section class="wrap phases-section">
+    {phases.map((phase, i) => (
+      <div class="phase card" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
+        <div class="phase__header">
+          <span class="phase__num">{phase.num}</span>
+          <span class="phase__icon" aria-hidden="true">{phase.icon}</span>
+        </div>
+        <div class="phase__content">
+          <p class="tag">{phase.subtitle}</p>
+          <h2>{phase.title}</h2>
+          <p class="phase__focus">Focus: <strong>{phase.focus}</strong></p>
+          <p class="phase__desc">{phase.desc}</p>
+          <ul class="phase__bullets">
+            {phase.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="wrap principles-section">
+    <div class="principles-inner" data-reveal>
+      <p class="tag">Our Methodology</p>
+      <h2>Why PDI & LTAD?</h2>
+      <p>
+        <strong>Player Development Initiatives (PDI)</strong> are the curriculum used by U.S. Soccer
+        to guide coaching at every level of the game. <strong>Long-Term Athlete Development (LTAD)
+        </strong> is the globally recognized model for ensuring players develop optimally at every
+        age — without burning out or specializing too early.
+      </p>
+      <p>
+        Together, they ensure our players get the right training at the right time — not adult
+        tactics forced onto 8-year-olds, and not watered-down content for teenagers who are ready
+        to compete.
+      </p>
+    </div>
+    <div class="principles-quote card" data-reveal style="--reveal-delay: 0.15s">
+      <blockquote>
+        "The goal is not to win next Saturday. The goal is to develop a player who is still
+        competing at 22 and beyond."
+      </blockquote>
+      <cite>— Connally Edozien, Co-Founder & Head of Coaching</cite>
+    </div>
+  </section>
+
+  <section class="wrap cta-section" data-reveal>
+    <h2>Ready to start your pathway?</h2>
+    <p class="lead">
+      Registration and tryout information is released seasonally. Contact us to learn about
+      current openings and upcoming evaluation dates.
+    </p>
+    <div class="cta-actions">
+      <a href="/contact/" class="btn btn--primary">Contact Us</a>
+      <a href="/camps/" class="btn btn--ghost">Camps & Clinics</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .phases-section {
+    padding-block: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .phase {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    padding: 2.5rem;
+    align-items: start;
+  }
+
+  .phase__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.25rem;
+  }
+
+  .phase__num {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-accent);
+    letter-spacing: -0.03em;
+  }
+
+  .phase__icon {
+    font-size: 1.5rem;
+  }
+
+  .phase__content h2 {
+    margin: 0.25rem 0 0.5rem;
+    font-size: 1.75rem;
+  }
+
+  .phase__focus {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .phase__desc {
+    margin: 0 0 1.25rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 46rem;
+  }
+
+  .phase__bullets {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--color-text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+  }
+
+  .principles-section {
+    padding-block: 1rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .principles-inner p {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .principles-inner h2 {
+    margin: 0.25rem 0 1.25rem;
+  }
+
+  .principles-quote {
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-muted) 100%);
+    border: none;
+  }
+
+  .principles-quote blockquote {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #f6f3ec;
+  }
+
+  .principles-quote cite {
+    font-size: 0.85rem;
+    color: rgba(246, 243, 236, 0.7);
+    font-style: normal;
+    letter-spacing: 0.02em;
+  }
+
+  .cta-section {
+    padding-block: 2rem 5rem;
+  }
+
+  .cta-section h2 {
+    margin: 0 0 0.75rem;
+  }
+
+  .cta-section .lead {
+    margin: 0 0 1.5rem;
+    max-width: 40rem;
+    color: var(--color-text-muted);
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 720px) {
+    .phase {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .phase__header {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .principles-section {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

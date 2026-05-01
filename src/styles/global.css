@@ -1,6 +1,5 @@
 /*
-  Theme & brand tokens — swap in final club colors in :root and [data-theme] blocks.
-  Primary: deep pine teal · Accent: electric coral (premium athletic, easy to replace)
+  Theme & brand tokens — Brand: deep navy · Accent: electric orange
 */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..900;1,9..144,200..900&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap');
 
@@ -8,20 +7,20 @@
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body: 'Source Sans 3', system-ui, sans-serif;
 
-  --color-primary: #0c3d3d;
-  --color-primary-muted: #134f4f;
-  --color-accent: #ff5c4d;
-  --color-accent-soft: rgba(255, 92, 77, 0.12);
+  --color-primary: #0d2b5e;
+  --color-primary-muted: #1a3d7a;
+  --color-accent: #f97316;
+  --color-accent-soft: rgba(249, 115, 22, 0.12);
 
   --color-bg: #f6f3ec;
   --color-bg-elevated: #ffffff;
   --color-surface: #ebe6dc;
-  --color-text: #141816;
-  --color-text-muted: #3d4540;
-  --color-border: rgba(12, 61, 61, 0.12);
+  --color-text: #141416;
+  --color-text-muted: #3d3f52;
+  --color-border: rgba(13, 43, 94, 0.12);
 
-  --shadow-sm: 0 1px 2px rgba(12, 24, 22, 0.06);
-  --shadow-md: 0 12px 40px rgba(12, 24, 22, 0.12);
+  --shadow-sm: 0 1px 2px rgba(13, 43, 94, 0.06);
+  --shadow-md: 0 12px 40px rgba(13, 43, 94, 0.12);
   --btn-on-primary: #f6f3ec;
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -34,58 +33,58 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --color-primary: #5ee4d4;
-    --color-primary-muted: #8ef0e6;
-    --color-accent: #ff7a6e;
-    --color-accent-soft: rgba(255, 122, 110, 0.15);
+    --color-primary: #6b9fff;
+    --color-primary-muted: #93b4ff;
+    --color-accent: #fb923c;
+    --color-accent-soft: rgba(251, 146, 60, 0.15);
 
-    --color-bg: #0a0f0e;
-    --color-bg-elevated: #121a18;
-    --color-surface: #1a2422;
-    --color-text: #eef3f1;
-    --color-text-muted: #b5c4be;
-    --color-border: rgba(94, 228, 212, 0.12);
+    --color-bg: #0a0d14;
+    --color-bg-elevated: #111726;
+    --color-surface: #192038;
+    --color-text: #eef1f8;
+    --color-text-muted: #b5bed8;
+    --color-border: rgba(107, 159, 255, 0.12);
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.45);
-    --btn-on-primary: #0a0f0e;
+    --btn-on-primary: #0a0d14;
   }
 }
 
 :root[data-theme='light'] {
-  --color-primary: #0c3d3d;
-  --color-primary-muted: #134f4f;
-  --color-accent: #ff5c4d;
-  --color-accent-soft: rgba(255, 92, 77, 0.12);
+  --color-primary: #0d2b5e;
+  --color-primary-muted: #1a3d7a;
+  --color-accent: #f97316;
+  --color-accent-soft: rgba(249, 115, 22, 0.12);
 
   --color-bg: #f6f3ec;
   --color-bg-elevated: #ffffff;
   --color-surface: #ebe6dc;
-  --color-text: #141816;
-  --color-text-muted: #3d4540;
-  --color-border: rgba(12, 61, 61, 0.12);
+  --color-text: #141416;
+  --color-text-muted: #3d3f52;
+  --color-border: rgba(13, 43, 94, 0.12);
 
-  --shadow-sm: 0 1px 2px rgba(12, 24, 22, 0.06);
-  --shadow-md: 0 12px 40px rgba(12, 24, 22, 0.12);
+  --shadow-sm: 0 1px 2px rgba(13, 43, 94, 0.06);
+  --shadow-md: 0 12px 40px rgba(13, 43, 94, 0.12);
   --btn-on-primary: #f6f3ec;
 }
 
 :root[data-theme='dark'] {
-  --color-primary: #5ee4d4;
-  --color-primary-muted: #8ef0e6;
-  --color-accent: #ff7a6e;
-  --color-accent-soft: rgba(255, 122, 110, 0.15);
+  --color-primary: #6b9fff;
+  --color-primary-muted: #93b4ff;
+  --color-accent: #fb923c;
+  --color-accent-soft: rgba(251, 146, 60, 0.15);
 
-  --color-bg: #0a0f0e;
-  --color-bg-elevated: #121a18;
-  --color-surface: #1a2422;
-  --color-text: #eef3f1;
-  --color-text-muted: #b5c4be;
-  --color-border: rgba(94, 228, 212, 0.12);
+  --color-bg: #0a0d14;
+  --color-bg-elevated: #111726;
+  --color-surface: #192038;
+  --color-text: #eef1f8;
+  --color-text-muted: #b5bed8;
+  --color-border: rgba(107, 159, 255, 0.12);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.45);
-  --btn-on-primary: #0a0f0e;
+  --btn-on-primary: #0a0d14;
 }
 
 *,
@@ -215,18 +214,18 @@ img {
     var(--color-primary-muted) 100%
   );
   color: var(--btn-on-primary);
-  box-shadow: 0 2px 12px rgba(12, 61, 61, 0.25);
+  box-shadow: 0 2px 12px rgba(13, 43, 94, 0.25);
 }
 
 .btn--primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 24px rgba(12, 61, 61, 0.35);
+  box-shadow: 0 6px 24px rgba(13, 43, 94, 0.35);
   filter: brightness(1.08);
 }
 
 .btn--primary:active {
   transform: translateY(0) scale(0.97);
-  box-shadow: 0 1px 4px rgba(12, 61, 61, 0.2);
+  box-shadow: 0 1px 4px rgba(13, 43, 94, 0.2);
   transition-duration: 0.08s;
 }
 
@@ -256,8 +255,8 @@ img {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow:
-    0 1px 2px rgba(12, 24, 22, 0.06),
-    0 4px 16px rgba(12, 24, 22, 0.06);
+    0 1px 2px rgba(10, 20, 40, 0.06),
+    0 4px 16px rgba(10, 20, 40, 0.06);
   overflow: hidden;
   position: relative;
   /* 3D tilt driven by JS via --tilt-x / --tilt-y CSS vars */
@@ -294,9 +293,9 @@ img {
 .card:hover {
   border-color: color-mix(in srgb, var(--color-border) 40%, var(--color-primary-muted) 60%);
   box-shadow:
-    0 2px 4px rgba(12, 24, 22, 0.04),
-    0 12px 32px rgba(12, 24, 22, 0.12),
-    0 32px 56px rgba(12, 24, 22, 0.1);
+    0 2px 4px rgba(10, 20, 40, 0.04),
+    0 12px 32px rgba(10, 20, 40, 0.12),
+    0 32px 56px rgba(10, 20, 40, 0.1);
   transform: perspective(900px)
     rotateX(var(--tilt-x, 0deg))
     rotateY(var(--tilt-y, 0deg))

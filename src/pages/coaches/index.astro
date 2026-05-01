@@ -19,42 +19,58 @@ const jsonLd = {
 
 <BaseLayout
   title="Coaching staff"
-  description="Meet the licensed and professional staff leading Aceler8 Soccer FC — Connally Edozien, Betsy Jones, and Carmen Stagnitta."
+  description="Meet the staff leading Aceler8 Soccer FC — Connally Edozien, Charles Gbeke, Betsy Jones, and Carmen Stagnitta."
   jsonLd={jsonLd}
 >
   <article class="page-intro wrap">
     <p class="tag">Staff</p>
-    <h1>Coaches you can verify.</h1>
-    <p class="lead">
-      Tournament desks and scouts look for names, licenses, and playing backgrounds. We publish ours
-      openly — pulled from the same staff who lead our competitive environment.
+    <h1 class="reveal">Coaches you can verify.</h1>
+    <p class="lead reveal reveal-delay-1">
+      We publish our staff credentials openly — professional playing backgrounds, U.S. Soccer
+      licenses, and the experience behind every session.
     </p>
   </article>
 
   <section class="wrap coaches-layout">
-    {coaches.map((c, i) => (
-      <article class:list={['card coach-card', { 'coach-card--featured': i === 0 }]} data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
-        <a href={`/coaches/${c.slug}/`} class="coach-card__image-link">
-          <img src={c.imageSrc} alt={c.imageAlt} width="800" height="520" loading="lazy" />
-        </a>
-        <div class="coach-card__body">
-          <h2>
-            <a href={`/coaches/${c.slug}/`}>{c.name}</a>
-          </h2>
-          <p class="coach-card__role">{c.role}</p>
-          <p class="coach-card__title">{c.title}</p>
-          <p class="coach-card__summary">{c.summary}</p>
-          {c.credentials && i === 0 && (
-            <ul class="coach-card__credentials">
-              {c.credentials.map((cr) => <li>{cr}</li>)}
-            </ul>
+    {coaches.map((c, i) => {
+      const hasPhoto = !!c.imageSrc;
+      const isFeatured = i === 0;
+      return (
+        <article
+          class:list={['card coach-card', { 'coach-card--featured': isFeatured, 'coach-card--no-photo': !hasPhoto }]}
+          data-reveal
+          style={`--reveal-delay: ${i * 0.08}s`}
+        >
+          {hasPhoto ? (
+            <a href={`/coaches/${c.slug}/`} class="coach-card__image-link">
+              <img src={c.imageSrc} alt={c.imageAlt} width="800" height="520" loading="lazy" />
+            </a>
+          ) : (
+            <div class="coach-card__photo-placeholder">
+              <span class="coach-card__initials">
+                {c.name.split(' ').map((n: string) => n[0]).join('')}
+              </span>
+            </div>
           )}
-          <a class="coach-card__more" href={`/coaches/${c.slug}/`}>
-            Full bio →
-          </a>
-        </div>
-      </article>
-    ))}
+          <div class="coach-card__body">
+            <h2>
+              <a href={`/coaches/${c.slug}/`}>{c.name}</a>
+            </h2>
+            <p class="coach-card__role">{c.role}</p>
+            <p class="coach-card__title">{c.title}</p>
+            <p class="coach-card__summary">{c.summary}</p>
+            {c.credentials && c.credentials.length > 0 && isFeatured && (
+              <ul class="coach-card__credentials">
+                {c.credentials.map((cr: string) => <li>{cr}</li>)}
+              </ul>
+            )}
+            <a class="coach-card__more" href={`/coaches/${c.slug}/`}>
+              Full bio →
+            </a>
+          </div>
+        </article>
+      );
+    })}
   </section>
 </BaseLayout>
 
@@ -126,14 +142,13 @@ const jsonLd = {
     outline-offset: 2px;
   }
 
-  /* Gradient overlay that slides up on hover */
   .coach-card__image-link::after {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(12, 61, 61, 0.55) 0%,
+      rgba(13, 43, 94, 0.55) 0%,
       transparent 60%
     );
     opacity: 0;
@@ -153,6 +168,31 @@ const jsonLd = {
 
   .coach-card:hover img {
     transform: scale(1.06);
+  }
+
+  /* Photo placeholder for coaches without a photo */
+  .coach-card__photo-placeholder {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-muted) 100%);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .coach-card--featured .coach-card__photo-placeholder {
+    aspect-ratio: unset;
+    height: 100%;
+    min-height: 280px;
+  }
+
+  .coach-card__initials {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: -0.02em;
+    user-select: none;
   }
 
   .coach-card__body {

@@ -37,8 +37,8 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title="Aceler8 Soccer FC — U11 Girls Competitive Soccer"
-  description="Aceler8 Soccer FC is a U11 girls competitive club built on elite development, character, and professionalism — trusted by families and tournament organizers."
+  title="Aceler8 Soccer FC — Player Development · Rochester, NY"
+  description="Aceler8 Soccer FC is a player-first development club in Rochester, NY — building technically excellent, mentally resilient, and community-minded athletes."
   ogImage={heroImage}
   jsonLd={jsonLd}
 >
@@ -46,7 +46,7 @@ const jsonLd = [
     <div class="hero__media">
       <img
         src={heroImage}
-        alt="Placeholder hero: women’s soccer match action — replace with Aceler8 FC team photography"
+        alt="Soccer match action — Aceler8 Soccer FC"
         width="1600"
         height="1000"
         fetchpriority="high"
@@ -54,15 +54,15 @@ const jsonLd = [
       <div class="hero__scrim" aria-hidden="true"></div>
     </div>
     <div class="wrap hero__content">
-      <p class="tag reveal">National tournament circuit</p>
+      <p class="tag reveal">Rochester, NY · Player Development</p>
       <h1 class="reveal reveal-delay-1">Built for the next level.</h1>
       <p class="hero__lead reveal reveal-delay-2">
-        Aceler8 Soccer FC is a U11 girls competitive team establishing a disciplined, family-driven
-        presence on the youth tournament stage — with a staff rooted in professional and licensed
-        coaching.
+        Aceler8 Soccer FC is a player-first development club dedicated to building technically
+        excellent, mentally resilient, and community-minded athletes — from first touch to full
+        potential.
       </p>
       <div class="hero__actions reveal reveal-delay-3">
-        <a class="btn btn--primary" href="/tournament-directors/">Tournament desk</a>
+        <a class="btn btn--primary" href="/pathway/">Explore Programs</a>
         <a class="btn btn--ghost" href="/coaches/">Meet the staff</a>
       </div>
     </div>
@@ -70,46 +70,46 @@ const jsonLd = [
 
   <section class="strip wrap" aria-label="Club facts">
     <ul class="strip__list">
-      <li><strong>U11 girls</strong> competitive team identity</li>
+      <li><strong>Recreational &amp; Competitive</strong> teams U8–U14</li>
       <li><strong>Licensed staff</strong> with professional &amp; classroom backgrounds</li>
       <li><strong>Rochester, NY</strong> home training base</li>
-      <li><strong>No open recruitment</strong> — roster is closed at this time</li>
+      <li><strong>PDI &amp; LTAD</strong> development methodology</li>
     </ul>
   </section>
 
   <section class="section wrap">
     <div class="section__head">
-      <p class="tag">Identity</p>
-      <h2>Editorial clarity. Competitive standards.</h2>
+      <p class="tag">What We Offer</p>
+      <h2>A complete development environment.</h2>
       <p class="section__lead">
-        We present like the programs we aspire to play — precise communication, visible coaching
-        credentials, and a development model that respects both the game and the person.
+        From first-touch recreational play to high-level competitive training — Aceler8 provides
+        the coaching, structure, and pathway that every player deserves.
       </p>
     </div>
     <div class="grid-3">
       <article class="card card--pad" data-reveal style="--reveal-delay: 0s">
-        <h3>For tournament desks</h3>
+        <h3>Pathway Program</h3>
         <p>
-          Quick verification contacts, staff backgrounds, and a transparent note on affiliation —
-          so directors can confirm who we are without chasing threads.
+          Our structured age-by-age development model gives every player a clear roadmap — from
+          Foundation (U8) through Performance (U14).
         </p>
-        <a href="/tournament-directors/">Open tournament desk →</a>
+        <a href="/pathway/">Explore the pathway →</a>
       </article>
       <article class="card card--pad" data-reveal style="--reveal-delay: 0.12s">
-        <h3>For the soccer community</h3>
+        <h3>Camps &amp; Clinics</h3>
         <p>
-          Our mission mirrors the wider Aceler8 academy: honesty, integrity, respect, and humility —
-          expressed through modern, purposeful training.
+          Summer camps, spring sessions, and year-round academy clinics — open to all players
+          regardless of club affiliation.
         </p>
-        <a href="/about/">Read our story →</a>
+        <a href="/camps/">View programs →</a>
       </article>
       <article class="card card--pad" data-reveal style="--reveal-delay: 0.24s">
-        <h3>Training &amp; camps</h3>
+        <h3>Our Philosophy</h3>
         <p>
-          Looking for camps, sessions, or academy programming? That lives on our training brand
-          site — separate from this competitive team page.
+          We coach the whole player: technical skill, tactical intelligence, physical literacy,
+          and mental resilience. Long-term development always wins.
         </p>
-        <a href={siteConfig.trainingCampUrl} rel="noopener noreferrer">Visit aceler8soccer.com →</a>
+        <a href="/about/">Read our story →</a>
       </article>
     </div>
   </section>
@@ -130,14 +130,20 @@ const jsonLd = [
           coaches.map((c, i) => (
             <li data-reveal style={`--reveal-delay: ${i * 0.12}s`}>
               <a href={`/coaches/${c.slug}/`} class:list={['coach-preview__link', { 'coach-preview__link--lead': i === 0 }]}>
-                <img
-                  src={c.imageSrc}
-                  alt={c.name}
-                  class="coach-preview__photo"
-                  width="56"
-                  height="56"
-                  loading="lazy"
-                />
+                {c.imageSrc ? (
+                  <img
+                    src={c.imageSrc}
+                    alt={c.name}
+                    class="coach-preview__photo"
+                    width="56"
+                    height="56"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="coach-preview__photo coach-preview__photo--initials" aria-hidden="true">
+                    {c.name.split(' ').map((n: string) => n[0]).join('')}
+                  </span>
+                )}
                 <span class="coach-preview__info">
                   <span class="coach-preview__name">{c.name}</span>
                   <span class="coach-preview__role">{c.role}</span>
@@ -213,14 +219,14 @@ const jsonLd = [
   .hero h1 {
     margin: 0 0 1rem;
     text-shadow: 0 2px 32px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #f6f3ec 55%, #8ef0e6 100%);
+    background: linear-gradient(135deg, #f6f3ec 55%, #fb923c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .hero .tag {
-    color: #8ef0e6;
+    color: #fb923c;
   }
 
   .hero__lead {
@@ -237,7 +243,7 @@ const jsonLd = [
 
   .hero__actions .btn--primary {
     background: var(--color-accent);
-    color: #0a0f0e;
+    color: #0a0d14;
   }
 
   .hero__actions .btn--ghost {
@@ -360,6 +366,18 @@ const jsonLd = [
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
+  }
+
+  .coach-preview__photo--initials {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-muted) 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.05em;
   }
 
   .coach-preview__link--lead .coach-preview__photo {

@@ -18,83 +18,256 @@ const jsonLd = {
 
 <BaseLayout
   title="Contact"
-  description="Contact Aceler8 Soccer FC for tournament verification, media inquiries, and general club questions. No open tryout or recruitment requests."
+  description="Contact Aceler8 Soccer FC for questions about registration, camps, clinics, and the Pathway Program. Based in Rochester, NY."
   jsonLd={jsonLd}
 >
   <article class="page-intro wrap">
     <p class="tag">Contact</p>
-    <h1>Reach the club directly.</h1>
-    <p class="lead">
-      We route tournament and scout questions to a single club inbox so responses stay fast and
-      accountable. We do not collect player applications on this site.
+    <h1 class="reveal">Let's talk.</h1>
+    <p class="lead reveal reveal-delay-1">
+      Whether you're a parent, player, or partner — we'd love to hear from you. Use the form
+      below or reach out directly to a staff member.
     </p>
   </article>
 
-  <section class="wrap contact">
-    <div class="card card--pad contact__card">
-      <h2>Email</h2>
-      <p>
-        <a class="contact__link" href={`mailto:${siteConfig.contactEmail}`}>
+  <section class="wrap contact-layout">
+    <!-- Contact form -->
+    <div class="contact-form-wrap" data-reveal>
+      <h2>Send us a message</h2>
+      <p class="form-desc">We typically respond within one business day.</p>
+      <form
+        class="contact-form card"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+      >
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" type="text" name="name" required placeholder="Your full name" />
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" required placeholder="your@email.com" />
+        </div>
+        <div class="form-row">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject" required>
+            <option value="" disabled selected>Select a topic…</option>
+            <option>Registration / Tryouts</option>
+            <option>Camps & Clinics</option>
+            <option>Pathway Program</option>
+            <option>Sponsorship / Partnership</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Tell us more…"></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary form-submit">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Direct contacts -->
+    <aside class="contact-aside" data-reveal style="--reveal-delay: 0.1s">
+      <h2>Direct contacts</h2>
+
+      <div class="contact-person card">
+        <div class="contact-person__header">
+          <p class="contact-person__name">Dan Norselli</p>
+          <p class="contact-person__role tag">Club Manager</p>
+        </div>
+        <a class="contact-person__email" href="mailto:dan@aceler8fc.com">dan@aceler8fc.com</a>
+        <p class="contact-person__note">Registration, scheduling, and operations inquiries.</p>
+      </div>
+
+      <div class="contact-person card">
+        <div class="contact-person__header">
+          <p class="contact-person__name">Connally Edozien</p>
+          <p class="contact-person__role tag">Co-Founder · Head of Coaching</p>
+        </div>
+        <a class="contact-person__email" href="mailto:connally@aceler8fc.com">connally@aceler8fc.com</a>
+        <p class="contact-person__note">Player development, coaching philosophy, and staff inquiries.</p>
+      </div>
+
+      <div class="contact-general">
+        <p class="label">General</p>
+        <a href={`mailto:${siteConfig.contactEmail}`} class="contact-general__email">
           {siteConfig.contactEmail}
         </a>
-      </p>
 
-      <h2>Social</h2>
-      <p>
-        <a href={siteConfig.instagram} rel="noopener noreferrer">Instagram — @aceler8_soccer</a>
-      </p>
+        <p class="label">Social</p>
+        <a href={siteConfig.instagram} rel="noopener noreferrer" target="_blank">
+          @aceler8_soccer on Instagram
+        </a>
 
-      <h2>Mailing / training brand</h2>
-      <p class="muted">
-        Camp and academy programming inquiries should continue through{' '}
-        <a href={siteConfig.trainingCampUrl}>aceler8soccer.com</a> so competitive team
-        communication stays uncluttered.
-      </p>
-    </div>
+        <p class="label">Training Academy</p>
+        <a href={siteConfig.trainingCampUrl} rel="noopener noreferrer" target="_blank">
+          aceler8soccer.com
+        </a>
+      </div>
+    </aside>
   </section>
 </BaseLayout>
 
 <style>
-  .contact {
-    padding-bottom: 4rem;
-    max-width: 36rem;
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+    align-items: start;
+    padding-bottom: 5rem;
   }
 
-  .contact__card {
-    padding: 1.5rem 1.6rem;
+  .contact-form-wrap h2 {
+    margin: 0 0 0.35rem;
   }
 
-  .contact__card h2 {
-    margin: 1.5rem 0 0.35rem;
-    font-size: 0.75rem;
+  .form-desc {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .contact-form {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-row label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .form-row input,
+  .form-row select,
+  .form-row textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.2s var(--ease-out);
+    outline: none;
+    resize: vertical;
+  }
+
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    border-color: var(--color-primary-muted);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+  }
+
+  .form-row input::placeholder,
+  .form-row textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  .form-submit {
+    align-self: flex-start;
+  }
+
+  /* Aside */
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact-aside h2 {
+    margin: 0;
+    font-size: 1.35rem;
+  }
+
+  .contact-person {
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .contact-person__header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-person__name {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-text);
+  }
+
+  .contact-person__role {
+    margin: 0;
+  }
+
+  .contact-person__email {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .contact-person__email:hover {
+    text-decoration: underline;
+  }
+
+  .contact-person__note {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .contact-general {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem 0;
+  }
+
+  .contact-general .label {
+    margin: 0.75rem 0 0;
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text-muted);
   }
 
-  .contact__card h2:first-of-type {
+  .contact-general .label:first-child {
     margin-top: 0;
   }
 
-  .contact__link {
-    font-size: 1.15rem;
+  .contact-general__email {
     font-weight: 700;
+    font-size: 1rem;
     text-decoration: none;
   }
 
-  .contact__link:hover {
+  .contact-general__email:hover {
     text-decoration: underline;
   }
 
-  .muted {
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-  }
-
-  code {
-    font-size: 0.88em;
-    padding: 0.1rem 0.35rem;
-    border-radius: 4px;
-    background: var(--color-surface);
+  @media (max-width: 860px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
