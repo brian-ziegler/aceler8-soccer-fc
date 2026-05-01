@@ -7,7 +7,9 @@
   "context": {
     "@aws-cdk/core:newStyleStackSynthesis": true,
     "bucketName": "aceler8-fc-prod-site",
-    "siteDomain": "www.aceler8fc.org",
+    "siteDomain": "aceler8fc.com",
+    "additionalDomains": ["www.aceler8fc.com"],
+    "acmCertificateArn": "arn:aws:acm:us-east-1:125069362169:certificate/e4c764d0-7b32-4770-98ba-977079e6a9a5",
     "createGithubOidcProvider": false,
 
     "next:bucketName": "aceler8-fc-next-site",

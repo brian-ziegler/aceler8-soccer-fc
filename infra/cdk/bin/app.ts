@@ -22,6 +22,7 @@ const env = {
 // ── Production stack ──────────────────────────────────────────────────────────
 const bucketName = requireContext('bucketName');
 const siteDomain = requireContext('siteDomain');
+const additionalDomains = app.node.tryGetContext('additionalDomains') as string[] | undefined;
 const githubOwner = app.node.tryGetContext('githubOwner');
 const githubRepository = app.node.tryGetContext('githubRepository');
 const acmCertificateArn = app.node.tryGetContext('acmCertificateArn');
@@ -36,6 +37,7 @@ new Aceler8SiteStack(app, 'Aceler8SoccerSite', {
   env,
   bucketName,
   siteDomain,
+  additionalDomains: additionalDomains ?? [],
   githubOwner: githubOwner ? String(githubOwner).trim() : undefined,
   githubRepository: githubRepository ? String(githubRepository).trim() : undefined,
   acmCertificateArn: acmCertificateArn ? String(acmCertificateArn).trim() : undefined,
