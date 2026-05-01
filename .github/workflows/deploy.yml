@@ -1,11 +1,16 @@
 # Deploy targets: S3_BUCKET and CLOUDFRONT_DISTRIBUTION_ID match CDK stack outputs.
 # AWS auth: OIDC — set repository variable AWS_DEPLOY_ROLE_ARN (stack output GitHubActionsDeployRoleArn).
+#
+# Branches:
+#   main  → production  (uses AWS_DEPLOY_ROLE_ARN, S3_BUCKET secret, CLOUDFRONT_DISTRIBUTION_ID secret)
+#   next  → next env    (uses NEXT_* repo variables set automatically by infra.yml after CDK deploy)
 name: Deploy to S3 and invalidate CloudFront
 
 on:
   push:
     branches:
       - main
+      - next
 
 permissions:
   id-token: write
@@ -14,11 +19,32 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Resolve environment config
+        id: cfg
+        run: |
+          if [[ "${{ github.ref_name }}" == "next" ]]; then
+            echo "role=${{ vars.NEXT_AWS_DEPLOY_ROLE_ARN }}"             >> "$GITHUB_OUTPUT"
+            echo "bucket=aceler8-fc-next-site"                            >> "$GITHUB_OUTPUT"
+            echo "dist=${{ vars.NEXT_CLOUDFRONT_DISTRIBUTION_ID }}"      >> "$GITHUB_OUTPUT"
+            echo "url=${{ vars.NEXT_PUBLIC_SITE_URL }}"                   >> "$GITHUB_OUTPUT"
+          else
+            echo "role=${{ vars.AWS_DEPLOY_ROLE_ARN }}"                   >> "$GITHUB_OUTPUT"
+            echo "bucket=${{ secrets.S3_BUCKET }}"                        >> "$GITHUB_OUTPUT"
+            echo "dist=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}"         >> "$GITHUB_OUTPUT"
+            echo "url=${{ vars.PUBLIC_SITE_URL }}"                        >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check next env is bootstrapped
+        if: github.ref_name == 'next' && steps.cfg.outputs.dist == ''
+        run: |
+          echo "::error::NEXT_CLOUDFRONT_DISTRIBUTION_ID is not set yet."
+          echo "The infra workflow must run first to create the next stack and populate this variable."
+          echo "Push a change inside infra/ on the next branch, wait for it to finish, then re-run this workflow."
+          exit 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -27,6 +53,8 @@ jobs:
           cache: npm
 
       - name: Install and build
+        env:
+          PUBLIC_SITE_URL: ${{ steps.cfg.outputs.url }}
         run: |
           npm ci
           npm run build
@@ -34,14 +62,14 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-to-assume: ${{ steps.cfg.outputs.role }}
           aws-region: us-east-1
 
       - name: Sync site to S3
-        run: aws s3 sync dist/ "s3://${{ secrets.S3_BUCKET }}/" --delete
+        run: aws s3 sync dist/ "s3://${{ steps.cfg.outputs.bucket }}/" --delete
 
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --distribution-id "${{ steps.cfg.outputs.dist }}" \
             --paths "/*"

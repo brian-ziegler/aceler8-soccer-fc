@@ -1,22 +1,25 @@
-# AWS auth: OIDC — set repository variable AWS_CDK_ROLE_ARN to stack output GitHubActionsCdkRoleArn.
-# Also set CDK_* repository variables (see README).
+# Deploys all CDK stacks (prod + next).
+# On the next branch, captures Aceler8SoccerSiteNext outputs and writes them
+# back as repo variables so deploy.yml can consume them immediately.
 name: Deploy infrastructure (CDK)
 
 on:
   push:
     branches:
       - main
+      - next
     paths:
       - "infra/**"
   workflow_dispatch:
 
 concurrency:
-  group: cdk-infra-main
+  group: cdk-infra-${{ github.ref_name }}
   cancel-in-progress: false
 
 permissions:
   id-token: write
   contents: read
+  variables: write   # allows gh variable set to update repo variables
 
 jobs:
   cdk:
@@ -26,6 +29,7 @@ jobs:
         working-directory: infra/cdk
     env:
       AWS_REGION: us-east-1
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
@@ -51,8 +55,43 @@ jobs:
         id: acct
         run: echo "account=$(aws sts get-caller-identity --query Account --output text)" >> "$GITHUB_OUTPUT"
 
-      - name: CDK deploy
+      - name: CDK deploy (all stacks)
         env:
           CDK_DEFAULT_ACCOUNT: ${{ steps.acct.outputs.account }}
           CDK_DEFAULT_REGION: us-east-1
-        run: npx cdk deploy --require-approval never
+        run: npx cdk deploy --all --require-approval never
+
+      # After a successful deploy on the next branch, write the new stack
+      # outputs back as repo variables so deploy.yml can use them right away.
+      - name: Capture next stack outputs → repo variables
+        if: github.ref_name == 'next'
+        working-directory: .
+        run: |
+          STACK=Aceler8SoccerSiteNext
+          REGION=us-east-1
+
+          get_output() {
+            aws cloudformation describe-stacks \
+              --stack-name "$STACK" --region "$REGION" \
+              --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" \
+              --output text
+          }
+
+          CF_DIST_ID=$(get_output CloudFrontDistributionId)
+          CF_URL=$(get_output PublicSiteUrl)
+          DEPLOY_ROLE=$(get_output GitHubActionsDeployRoleArn)
+
+          echo "CloudFront distribution: $CF_DIST_ID"
+          echo "Public URL:              $CF_URL"
+          echo "Deploy role:             $DEPLOY_ROLE"
+
+          gh variable set NEXT_CLOUDFRONT_DISTRIBUTION_ID --body "$CF_DIST_ID" --repo "$GITHUB_REPOSITORY"
+          gh variable set NEXT_PUBLIC_SITE_URL             --body "$CF_URL"      --repo "$GITHUB_REPOSITORY"
+          gh variable set NEXT_AWS_DEPLOY_ROLE_ARN         --body "$DEPLOY_ROLE" --repo "$GITHUB_REPOSITORY"
+
+          echo "### Next environment variables updated" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Variable | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| NEXT_CLOUDFRONT_DISTRIBUTION_ID | \`$CF_DIST_ID\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| NEXT_PUBLIC_SITE_URL | $CF_URL |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| NEXT_AWS_DEPLOY_ROLE_ARN | \`$DEPLOY_ROLE\` |" >> "$GITHUB_STEP_SUMMARY"

@@ -8,6 +8,12 @@
     "@aws-cdk/core:newStyleStackSynthesis": true,
     "bucketName": "aceler8-fc-prod-site",
     "siteDomain": "www.aceler8fc.org",
-    "createGithubOidcProvider": false
+    "createGithubOidcProvider": false,
+
+    "next:bucketName": "aceler8-fc-next-site",
+    "next:siteDomain": "next-version.aceler8fc.com",
+    "next:githubOwner": "brian-ziegler",
+    "next:githubRepository": "aceler8-soccer-fc",
+    "next:githubOidcProviderArn": "arn:aws:iam::125069362169:oidc-provider/token.actions.githubusercontent.com"
   }
 }
