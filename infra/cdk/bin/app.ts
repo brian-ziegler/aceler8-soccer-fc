@@ -54,11 +54,13 @@ if (nextBucketName && nextSiteDomain) {
   const nextGithubRepo = app.node.tryGetContext('next:githubRepository') as string | undefined;
   const nextOidcArn = app.node.tryGetContext('next:githubOidcProviderArn') as string | undefined;
   const nextAcmArn = app.node.tryGetContext('next:acmCertificateArn') as string | undefined;
+  const nextAdditionalDomains = app.node.tryGetContext('next:additionalDomains') as string[] | undefined;
 
   new Aceler8SiteStack(app, 'Aceler8SoccerSiteNext', {
     env,
     bucketName: nextBucketName,
     siteDomain: nextSiteDomain,
+    additionalDomains: nextAdditionalDomains ?? [],
     githubOwner: nextGithubOwner?.trim(),
     githubRepository: nextGithubRepo?.trim(),
     acmCertificateArn: nextAcmArn?.trim(),

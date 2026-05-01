@@ -12,6 +12,8 @@
 
     "next:bucketName": "aceler8-fc-next-site",
     "next:siteDomain": "next-version.aceler8fc.com",
+    "next:additionalDomains": ["aceler8fc.com"],
+    "next:acmCertificateArn": "arn:aws:acm:us-east-1:125069362169:certificate/e4c764d0-7b32-4770-98ba-977079e6a9a5",
     "next:githubOwner": "brian-ziegler",
     "next:githubRepository": "aceler8-soccer-fc",
     "next:githubOidcProviderArn": "arn:aws:iam::125069362169:oidc-provider/token.actions.githubusercontent.com"

@@ -9,6 +9,8 @@ import { Construct } from 'constructs';
 export interface Aceler8SiteStackProps extends cdk.StackProps {
   readonly bucketName: string;
   readonly siteDomain: string;
+  /** Extra domain names to add to the CloudFront distribution (must be covered by the cert). */
+  readonly additionalDomains?: string[];
   readonly githubOwner?: string;
   readonly githubRepository?: string;
   readonly acmCertificateArn?: string;
@@ -29,6 +31,7 @@ export class Aceler8SiteStack extends cdk.Stack {
     const {
       bucketName,
       siteDomain,
+      additionalDomains = [],
       githubOwner,
       githubRepository,
       acmCertificateArn,
@@ -101,7 +104,7 @@ function handler(event) {
           ttl: cdk.Duration.minutes(5),
         },
       ],
-      domainNames: useCustomCert ? [siteDomain] : undefined,
+      domainNames: useCustomCert ? [siteDomain, ...additionalDomains] : undefined,
       certificate: useCustomCert
         ? acm.Certificate.fromCertificateArn(this, 'AcmCert', acmCertificateArn!)
         : undefined,
