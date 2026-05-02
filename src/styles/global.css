@@ -1,5 +1,6 @@
 /*
-  Theme & brand tokens — Brand: deep navy · Accent: electric orange
+  Theme & brand tokens — derived from the Aceler8 Soccer FC logo
+  Primary: deep navy #0d2255  ·  Accent: logo orange #f47b0e  ·  Link: logo blue #1e6ec8
 */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..900;1,9..144,200..900&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap');
 
@@ -7,20 +8,21 @@
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body: 'Source Sans 3', system-ui, sans-serif;
 
-  --color-primary: #0d2b5e;
-  --color-primary-muted: #1a3d7a;
-  --color-accent: #f97316;
-  --color-accent-soft: rgba(249, 115, 22, 0.12);
+  --color-primary: #0d2255;
+  --color-primary-muted: #1c3d8a;
+  --color-accent: #f47b0e;
+  --color-accent-soft: rgba(244, 123, 14, 0.12);
+  --color-link: #1e6ec8;
 
   --color-bg: #f6f3ec;
   --color-bg-elevated: #ffffff;
-  --color-surface: #ebe6dc;
-  --color-text: #141416;
-  --color-text-muted: #3d3f52;
-  --color-border: rgba(13, 43, 94, 0.12);
+  --color-surface: #edeae3;
+  --color-text: #111320;
+  --color-text-muted: #404568;
+  --color-border: rgba(13, 34, 85, 0.12);
 
-  --shadow-sm: 0 1px 2px rgba(13, 43, 94, 0.06);
-  --shadow-md: 0 12px 40px rgba(13, 43, 94, 0.12);
+  --shadow-sm: 0 1px 2px rgba(13, 34, 85, 0.06);
+  --shadow-md: 0 12px 40px rgba(13, 34, 85, 0.12);
   --btn-on-primary: #f6f3ec;
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -31,62 +33,6 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-primary: #6b9fff;
-    --color-primary-muted: #93b4ff;
-    --color-accent: #fb923c;
-    --color-accent-soft: rgba(251, 146, 60, 0.15);
-
-    --color-bg: #0a0d14;
-    --color-bg-elevated: #111726;
-    --color-surface: #192038;
-    --color-text: #eef1f8;
-    --color-text-muted: #b5bed8;
-    --color-border: rgba(107, 159, 255, 0.12);
-
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-    --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.45);
-    --btn-on-primary: #0a0d14;
-  }
-}
-
-:root[data-theme='light'] {
-  --color-primary: #0d2b5e;
-  --color-primary-muted: #1a3d7a;
-  --color-accent: #f97316;
-  --color-accent-soft: rgba(249, 115, 22, 0.12);
-
-  --color-bg: #f6f3ec;
-  --color-bg-elevated: #ffffff;
-  --color-surface: #ebe6dc;
-  --color-text: #141416;
-  --color-text-muted: #3d3f52;
-  --color-border: rgba(13, 43, 94, 0.12);
-
-  --shadow-sm: 0 1px 2px rgba(13, 43, 94, 0.06);
-  --shadow-md: 0 12px 40px rgba(13, 43, 94, 0.12);
-  --btn-on-primary: #f6f3ec;
-}
-
-:root[data-theme='dark'] {
-  --color-primary: #6b9fff;
-  --color-primary-muted: #93b4ff;
-  --color-accent: #fb923c;
-  --color-accent-soft: rgba(251, 146, 60, 0.15);
-
-  --color-bg: #0a0d14;
-  --color-bg-elevated: #111726;
-  --color-surface: #192038;
-  --color-text: #eef1f8;
-  --color-text-muted: #b5bed8;
-  --color-border: rgba(107, 159, 255, 0.12);
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.45);
-  --btn-on-primary: #0a0d14;
-}
-
 *,
 *::before,
 *::after {
@@ -95,6 +41,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -112,6 +59,7 @@ body {
   color: var(--color-text);
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 body.nav-open {
@@ -142,7 +90,7 @@ h3 {
 }
 
 a {
-  color: var(--color-primary-muted);
+  color: var(--color-link);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   transition: color 0.2s var(--ease-out);
@@ -214,18 +162,19 @@ img {
     var(--color-primary-muted) 100%
   );
   color: var(--btn-on-primary);
-  box-shadow: 0 2px 12px rgba(13, 43, 94, 0.25);
+  box-shadow: 0 2px 12px rgba(13, 34, 85, 0.25);
 }
 
 .btn--primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 24px rgba(13, 43, 94, 0.35);
+  box-shadow: 0 6px 24px rgba(13, 34, 85, 0.35);
   filter: brightness(1.08);
+  color: var(--btn-on-primary);
 }
 
 .btn--primary:active {
   transform: translateY(0) scale(0.97);
-  box-shadow: 0 1px 4px rgba(13, 43, 94, 0.2);
+  box-shadow: 0 1px 4px rgba(13, 34, 85, 0.2);
   transition-duration: 0.08s;
 }
 
@@ -238,6 +187,7 @@ img {
 .btn--ghost:hover {
   border-color: var(--color-primary-muted);
   background: var(--color-accent-soft);
+  color: var(--color-text);
 }
 
 .tag {

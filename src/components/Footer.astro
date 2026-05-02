@@ -1,6 +1,5 @@
 ---
 import { siteConfig } from '@/data/site';
-import ThemeToggle from '@/components/ThemeToggle.astro';
 ---
 
 <footer class="site-footer">
@@ -15,7 +14,7 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
       />
       <p class="site-footer__muted">{siteConfig.tagline}</p>
       <p class="site-footer__note">
-        This site represents our competitive team. Youth camps and open training programs live at{' '}
+        Youth camps and open training programs live at{' '}
         <a href={siteConfig.trainingCampUrl}>aceler8soccer.com</a>.
       </p>
     </div>
@@ -29,7 +28,7 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
           <a href={siteConfig.instagram} rel="noopener noreferrer">Instagram</a>
         </li>
         <li>
-          <a href="/contact/">Contact &amp; verification</a>
+          <a href="/contact/">Contact us</a>
         </li>
       </ul>
     </div>
@@ -46,10 +45,7 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
   <div class="site-footer__bar">
     <div class="wrap site-footer__bar-inner">
       <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-      <div class="site-footer__bar-end">
-        <p class="site-footer__muted">Rochester, NY</p>
-        <ThemeToggle />
-      </div>
+      <p class="site-footer__muted">Rochester, NY</p>
     </div>
   </div>
 </footer>
@@ -74,16 +70,6 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
     width: auto;
     margin-bottom: 0.75rem;
     object-fit: contain;
-  }
-
-  :global(:root[data-theme='dark']) .site-footer__logo {
-    filter: invert(1);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme])) .site-footer__logo {
-      filter: invert(1);
-    }
   }
 
   .site-footer__heading {
@@ -135,11 +121,5 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
 
   .site-footer__bar-inner p {
     margin: 0;
-  }
-
-  .site-footer__bar-end {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
   }
 </style>

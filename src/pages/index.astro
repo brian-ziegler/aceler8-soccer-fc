@@ -164,12 +164,14 @@ const jsonLd = [
     display: flex;
     align-items: flex-end;
     padding-bottom: clamp(2.5rem, 6vw, 4rem);
+    overflow: hidden;
   }
 
   .hero__media {
     position: absolute;
     inset: 0;
     z-index: 0;
+    overflow: hidden;
   }
 
   .hero__media img {
@@ -184,29 +186,9 @@ const jsonLd = [
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(10, 15, 14, 0.2) 0%,
-      rgba(10, 15, 14, 0.75) 55%,
-      rgba(10, 15, 14, 0.92) 100%
-    );
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme='light'])) .hero__scrim {
-      background: linear-gradient(
-        180deg,
-        rgba(10, 15, 14, 0.5) 0%,
-        rgba(10, 15, 14, 0.82) 50%,
-        rgba(10, 15, 14, 0.95) 100%
-      );
-    }
-  }
-
-  :global(:root[data-theme='dark']) .hero__scrim {
-    background: linear-gradient(
-      180deg,
-      rgba(10, 15, 14, 0.5) 0%,
-      rgba(10, 15, 14, 0.82) 50%,
-      rgba(10, 15, 14, 0.95) 100%
+      rgba(8, 14, 30, 0.2) 0%,
+      rgba(8, 14, 30, 0.75) 55%,
+      rgba(8, 14, 30, 0.92) 100%
     );
   }
 
@@ -219,14 +201,14 @@ const jsonLd = [
   .hero h1 {
     margin: 0 0 1rem;
     text-shadow: 0 2px 32px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #f6f3ec 55%, #fb923c 100%);
+    background: linear-gradient(135deg, #f6f3ec 55%, #f47b0e 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .hero .tag {
-    color: #fb923c;
+    color: #f47b0e;
   }
 
   .hero__lead {
@@ -243,7 +225,7 @@ const jsonLd = [
 
   .hero__actions .btn--primary {
     background: var(--color-accent);
-    color: #0a0d14;
+    color: #111320;
   }
 
   .hero__actions .btn--ghost {
