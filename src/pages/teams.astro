@@ -4,37 +4,35 @@ import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/site';
 
 const ageGroups = [
-  { group: 'U8', format: '4v4', season: 'Fall 2025', status: 'Recreational — Forming' },
-  { group: 'U10', format: '7v7', season: 'Fall 2025', status: 'Recreational — Forming' },
-  { group: 'U11', format: '9v9', season: 'Fall 2025', status: 'Competitive — Active' },
-  { group: 'U12', format: '9v9', season: 'Fall 2025', status: 'Competitive — Forming' },
-  { group: 'U13', format: '11v11', season: 'Fall 2025', status: 'Competitive — Forming' },
-  { group: 'U14', format: '11v11', season: 'Fall 2025', status: 'Competitive — Forming' },
+  { group: 'U8', season: 'Fall 2026' },
+  { group: 'U10', season: 'Fall 2026' },
+  { group: 'U11', season: 'Fall 2026' },
+  { group: 'U12', season: 'Fall 2026' },
 ];
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: 'Teams — Aceler8 Soccer FC',
+  name: 'Teams — Aceler8 FC',
   url: `${siteConfig.url}/teams/`,
 };
 ---
 
 <BaseLayout
   title="Teams — Age Groups & Rosters"
-  description="Aceler8 Soccer FC fields recreational and competitive teams for players U8 through U14 in Rochester, NY. Find your age group and learn more about our program."
+  description="Aceler8 FC offers elite programming for players U8 through U12 in Rochester, NY. Find your age group and learn more about our program."
   jsonLd={jsonLd}
 >
   <PageHero
     tag="Our Teams"
-    title="Built for every level."
-    lead="Aceler8 Soccer FC offers both recreational and competitive programming for players U8 through U14. All teams follow our player-first development model."
+    title="Built for elite development."
+    lead="Aceler8 FC offers elite programming for players U8–U12. All teams follow our player-first development model."
   />
 
   <section class="wrap teams-section">
     <h2 data-reveal>Age Groups</h2>
     <p class="lead" data-reveal style="--reveal-delay: 0.1s">
-      Current and upcoming teams for the 2025 season.
+      Current and upcoming teams for the Fall 2026 season.
     </p>
 
     <div class="age-table-wrap card" data-reveal style="--reveal-delay: 0.15s">
@@ -42,9 +40,7 @@ const jsonLd = {
         <thead>
           <tr>
             <th>Age Group</th>
-            <th>Format</th>
             <th>Season</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -54,18 +50,7 @@ const jsonLd = {
                 <td class="group-cell">
                   <strong>{row.group}</strong>
                 </td>
-                <td>{row.format}</td>
                 <td>{row.season}</td>
-                <td>
-                  <span
-                    class:list={[
-                      'status-badge',
-                      row.status.includes('Active') ? 'status-badge--active' : 'status-badge--forming',
-                    ]}
-                  >
-                    {row.status}
-                  </span>
-                </td>
               </tr>
             ))
           }
@@ -77,29 +62,12 @@ const jsonLd = {
   <section class="wrap levels-section">
     <div class="levels-grid">
       <div class="card level-card" data-reveal>
-        <p class="tag">Recreational</p>
-        <h3>Learn the game</h3>
-        <p>
-          Our recreational program is the perfect entry point for players new to soccer or
-          those looking for a fun, low-pressure environment. We focus on fundamentals,
-          teamwork, and a love for the game.
-        </p>
-        <ul>
-          <li>Open to all skill levels</li>
-          <li>Focus on fun and fundamentals</li>
-          <li>Age-appropriate small-sided formats</li>
-          <li>Qualified coaching staff</li>
-        </ul>
-        <a href="/contact/" class="btn btn--ghost">Get in touch</a>
-      </div>
-
-      <div class="card level-card" data-reveal style="--reveal-delay: 0.1s">
-        <p class="tag">Competitive</p>
+        <p class="tag">Elite</p>
         <h3>Elevate your game</h3>
         <p>
-          Our competitive teams are for players who want to push themselves further. We compete
+          Our elite teams are for players who want to push themselves further. We compete
           in regional leagues and tournaments, following a structured development model built
-          around PDI and LTAD principles.
+          on a globally recognized coaching curriculum.
         </p>
         <ul>
           <li>Tryout / evaluation required</li>
@@ -112,10 +80,25 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- ── Player gallery ──────────────────────────────────────────────────── -->
+  <section class="player-gallery" aria-label="Aceler8 FC players">
+    {[1,2,3,4,5,6].map((n) => (
+      <div class="player-gallery__item">
+        <img
+          src={`/images/players-${n}.jpg`}
+          alt={`Aceler8 FC players`}
+          width="6000"
+          height="4000"
+          loading="lazy"
+        />
+      </div>
+    ))}
+  </section>
+
   <section class="wrap cta-section" data-reveal>
-    <h2>Interested in joining?</h2>
+    <h2>Interested in learning more?</h2>
     <p class="lead">
-      Reach out to learn about current roster spots, tryout dates, and registration details.
+      Interested in learning more about the Aceler8 FC Difference?
     </p>
     <div class="cta-actions">
       <a href="/contact/" class="btn btn--primary">Contact Us</a>
@@ -172,33 +155,15 @@ const jsonLd = {
     font-size: 1rem;
   }
 
-  .status-badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-  }
-
-  .status-badge--active {
-    background: rgba(34, 197, 94, 0.12);
-    color: #16a34a;
-  }
-
-  .status-badge--forming {
-    background: var(--color-accent-soft);
-    color: var(--color-accent);
-  }
-
   .levels-section {
     padding-block: 1rem 3rem;
   }
 
   .levels-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
+    max-width: 36rem;
   }
 
   .level-card {
@@ -230,6 +195,37 @@ const jsonLd = {
     flex: 1;
   }
 
+  /* ── Player gallery ─────────────────────────────────────────────────────── */
+  .player-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+    padding-block: 0 1.5rem;
+  }
+
+  .player-gallery__item {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .player-gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.4s ease;
+  }
+
+  .player-gallery__item:hover img {
+    transform: scale(1.04);
+  }
+
+  @media (max-width: 640px) {
+    .player-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .cta-section {
     padding-block: 2rem 5rem;
   }
@@ -248,11 +244,5 @@ const jsonLd = {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-  }
-
-  @media (max-width: 640px) {
-    .levels-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

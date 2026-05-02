@@ -6,7 +6,7 @@ import { siteConfig } from '@/data/site';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
-  name: 'Contact Aceler8 Soccer FC',
+  name: 'Contact Aceler8 FC',
   url: `${siteConfig.url}/contact/`,
   mainEntity: {
     '@type': 'SportsOrganization',
@@ -19,7 +19,7 @@ const jsonLd = {
 
 <BaseLayout
   title="Contact"
-  description="Contact Aceler8 Soccer FC for questions about registration, camps, clinics, and the Pathway Program. Based in Rochester, NY."
+  description="Contact Aceler8 FC for questions about registration, camps, clinics, and the Pathway Program. Based in Rochester, NY."
   jsonLd={jsonLd}
 >
   <PageHero
@@ -72,9 +72,9 @@ const jsonLd = {
       <div class="contact-person card">
         <div class="contact-person__header">
           <p class="contact-person__name">Dan Norselli</p>
-          <p class="contact-person__role tag">Club Manager</p>
+          <p class="contact-person__role tag">Co-Founder – Business Director</p>
         </div>
-        <a class="contact-person__email" href="mailto:dan@aceler8fc.com">dan@aceler8fc.com</a>
+        <a class="contact-person__email" href="mailto:dan.norselli@aceler8fc.com">dan.norselli@aceler8fc.com</a>
         <p class="contact-person__note">Registration, scheduling, and operations inquiries.</p>
       </div>
 
@@ -83,7 +83,7 @@ const jsonLd = {
           <p class="contact-person__name">Connally Edozien</p>
           <p class="contact-person__role tag">Co-Founder · Head of Coaching</p>
         </div>
-        <a class="contact-person__email" href="mailto:connally@aceler8fc.com">connally@aceler8fc.com</a>
+        <a class="contact-person__email" href="mailto:connally.edozien@aceler8fc.com">connally.edozien@aceler8fc.com</a>
         <p class="contact-person__note">Player development, coaching philosophy, and staff inquiries.</p>
       </div>
 
@@ -93,14 +93,14 @@ const jsonLd = {
           {siteConfig.contactEmail}
         </a>
 
-        <p class="label">Social</p>
+        <p class="label">Instagram</p>
         <a href={siteConfig.instagram} rel="noopener noreferrer" target="_blank">
-          @aceler8_soccer on Instagram
+          @aceler8fc
         </a>
 
-        <p class="label">Training Academy</p>
-        <a href={siteConfig.trainingCampUrl} rel="noopener noreferrer" target="_blank">
-          aceler8soccer.com
+        <p class="label">Facebook</p>
+        <a href={siteConfig.facebook} rel="noopener noreferrer" target="_blank">
+          Aceler8 FC
         </a>
       </div>
     </aside>

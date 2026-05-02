@@ -3,174 +3,505 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/site';
 
-const phases = [
-  {
-    num: '01',
-    title: 'Foundation',
-    subtitle: 'Ages 6–9 · U8 / U10',
-    focus: 'Love of the game',
-    desc: 'We introduce fundamental movement skills, basic ball manipulation, and a genuine love of the game. Training is play-heavy, exploratory, and joyful. There are no wrong answers — only discovery.',
-    bullets: [
-      'Small-sided games (2v2, 3v3, 4v4)',
-      'Dribbling, first touch, and basic passing',
-      'Creative expression over tactical instruction',
-      'Positive, low-pressure environment',
-    ],
-  },
-  {
-    num: '02',
-    title: 'Development',
-    subtitle: 'Ages 10–12 · U11 / U12',
-    focus: 'Technical mastery',
-    desc: 'Players begin to develop serious technical habits alongside an introduction to positional awareness and team tactics. Training density increases, and players experience structured league and tournament play.',
-    bullets: [
-      '7v7 and 9v9 competitive formats',
-      'Positional play and shape introduction',
-      'Technical: receiving, turning, 1v1 defending',
-      'Structured league and regional tournament play',
-    ],
-  },
-  {
-    num: '03',
-    title: 'Performance',
-    subtitle: 'Ages 13–14 · U13 / U14',
-    focus: 'Compete & advance',
-    desc: 'Players compete at the highest regional level available to their age group. Training focuses on full 11v11 tactical systems, physical preparation, and the mental demands of high-pressure competition.',
-    bullets: [
-      'Full 11v11 format and tactical systems',
-      'Higher weekly training volume',
-      'Physical conditioning and injury prevention',
-      'State and regional championship pathways',
-    ],
-  },
-];
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: 'Pathway Program — Aceler8 Soccer FC',
+  name: 'Pathway Program — Aceler8 FC',
   url: `${siteConfig.url}/pathway/`,
 };
 ---
 
 <BaseLayout
-  title="Pathway Program — Player Development"
-  description="Aceler8 Soccer FC's Pathway Program gives every player a clear roadmap from first touch to competitive excellence. Three phases: Foundation, Development, and Performance."
+  title="Pathway Program — A Complete Player Development System"
+  description="The Aceler8 FC Pathway Program is a structured, phased journey designed to build technically excellent, tactically smart, mentally resilient players who can compete at the highest levels."
   jsonLd={jsonLd}
 >
   <PageHero
     tag="The Pathway Program"
-    title="A clear road from first touch to full potential."
-    lead="The Pathway Program is our structured, age-by-age development model — built on PDI and LTAD principles — that gives every Aceler8 player a roadmap from their first session to competitive excellence."
+    title="A Complete Player Development System for Elite Competition."
+    lead="The Pathway Program is our flagship development system — a structured, phased journey designed to build technically excellent, tactically smart, mentally resilient players who can compete and thrive at the highest levels of youth and amateur soccer."
   />
 
-  <section class="wrap phases-section">
-    {phases.map((phase, i) => (
-      <div class="phase card" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
-        <div class="phase__header">
-          <span class="phase__num">{phase.num}</span>
+  <!-- ── Intro ──────────────────────────────────────────────────────────────── -->
+  <section class="section wrap intro-section">
+    <div class="intro-grid" data-reveal>
+      <div class="intro-text">
+        <h2>Not Every Club Builds Complete Players. We Do.</h2>
+        <p>
+          At Aceler8 FC, we believe that true player development goes far beyond drilling skills in
+          isolation. The Pathway Program is built on a fundamentally different philosophy: great
+          players are built in sequence, not all at once.
+        </p>
+        <p>
+          We don't just train athletes. We develop complete players — from the ground up.
+        </p>
+      </div>
+      <div class="intro-pillars">
+        <div class="intro-pillar card">
+          <span class="intro-pillar__num">01</span>
+          <div>
+            <strong>Master the Ball</strong>
+            <p>Build your technique before trying to influence the game.</p>
+          </div>
         </div>
-        <div class="phase__content">
-          <p class="tag">{phase.subtitle}</p>
-          <h2>{phase.title}</h2>
-          <p class="phase__focus">Focus: <strong>{phase.focus}</strong></p>
-          <p class="phase__desc">{phase.desc}</p>
-          <ul class="phase__bullets">
-            {phase.bullets.map((b) => <li>{b}</li>)}
-          </ul>
+        <div class="intro-pillar card">
+          <span class="intro-pillar__num">02</span>
+          <div>
+            <strong>Read the Game</strong>
+            <p>Apply your skills in context — learn to see shape, space, and movement.</p>
+          </div>
+        </div>
+        <div class="intro-pillar card">
+          <span class="intro-pillar__num">03</span>
+          <div>
+            <strong>Play with Composure</strong>
+            <p>Build the mentality, awareness, and game IQ to perform under pressure.</p>
+          </div>
         </div>
       </div>
-    ))}
-  </section>
-
-  <section class="wrap principles-section">
-    <div class="principles-inner" data-reveal>
-      <p class="tag">Our Methodology</p>
-      <h2>Why PDI & LTAD?</h2>
-      <p>
-        <strong>Player Development Initiatives (PDI)</strong> are the curriculum used by U.S. Soccer
-        to guide coaching at every level of the game. <strong>Long-Term Athlete Development (LTAD)
-        </strong> is the globally recognized model for ensuring players develop optimally at every
-        age — without burning out or specializing too early.
-      </p>
-      <p>
-        Together, they ensure our players get the right training at the right time — not adult
-        tactics forced onto 8-year-olds, and not watered-down content for teenagers who are ready
-        to compete.
-      </p>
-    </div>
-    <div class="principles-quote card" data-reveal style="--reveal-delay: 0.15s">
-      <blockquote>
-        "The goal is not to win next Saturday. The goal is to develop a player who is still
-        competing at 22 and beyond."
-      </blockquote>
-      <cite>— Connally Edozien, Co-Founder & Head of Coaching</cite>
     </div>
   </section>
 
-  <section class="wrap cta-section" data-reveal>
-    <h2>Ready to start your pathway?</h2>
-    <p class="lead">
-      Registration and tryout information is released seasonally. Contact us to learn about
-      current openings and upcoming evaluation dates.
-    </p>
-    <div class="cta-actions">
+  <!-- ── Who It's For ───────────────────────────────────────────────────────── -->
+  <section class="section section--surface">
+    <div class="wrap who-section" data-reveal>
+      <p class="tag">Who It's For</p>
+      <h2>The Pathway Program Is Designed For Players Who:</h2>
+      <ul class="who-list">
+        <li>Want to compete at the club, regional, or elite level but need a structured development foundation.</li>
+        <li>Are technically inconsistent under pressure and need to solidify the fundamentals.</li>
+        <li>Struggle to read the game or make quick, confident decisions in match situations.</li>
+        <li>Have the talent but lack the confidence or composure to express it consistently.</li>
+        <li>Are preparing for trials, academy consideration, or advancement to a higher competitive level.</li>
+        <li>Want to gain a genuine, measurable competitive edge over their peers.</li>
+      </ul>
+      <p class="who-note">
+        Pathway is primarily designed for players ages U8 through U14 who demonstrate the desire and
+        work ethic to develop beyond the recreational level. Players are typically identified through
+        coach recommendations, family inquiry, open Pathway evaluation sessions, or tryouts where
+        clear potential was shown.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── The Three Phases ──────────────────────────────────────────────────── -->
+  <section class="section wrap phases-section">
+    <div class="phases-header" data-reveal>
+      <p class="tag">The Three-Phase Journey</p>
+      <h2>Each phase builds deliberately on the last.</h2>
+      <p class="phases-note">
+        Players do not advance through phases until they demonstrate mastery of the current one —
+        this ensures no player is asked to compete at a level their foundation cannot support.
+      </p>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase card" data-reveal style="--reveal-delay: 0.05s">
+      <div class="phase__header">
+        <span class="phase__num">Phase 1</span>
+        <span class="phase__label">Mastering the Ball</span>
+      </div>
+      <div class="phase__content">
+        <p class="phase__desc">
+          This is where every complete player starts. Before a player can read the game or play
+          with composure, they need to trust their feet. Phase 1 is all about the ball — making it
+          stick, making it move, making it yours.
+        </p>
+        <div class="phase__cols">
+          <div>
+            <p class="phase__subhead">Focus Areas</p>
+            <ul class="phase__bullets">
+              <li>Ball Mastery — close control, pressure dribbling, turns, and 1v1 moves with both feet.</li>
+              <li>First Touch — receiving across all surfaces in tight and open space.</li>
+              <li>Passing Mechanics — short-range precision, driven passes, weight and timing.</li>
+              <li>Shooting Fundamentals — technique across both feet, placement, driven, volleys, and finishing.</li>
+              <li>Movement Without the Ball — positioning off the ball, angles of support, creating space.</li>
+              <li>Footwork &amp; Coordination — athletic foundation, change of direction, and explosive acceleration.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="phase__subhead">What Your Player Will Achieve</p>
+            <ul class="phase__bullets phase__bullets--accent">
+              <li>Execute skill moves under full-speed pressure with consistency.</li>
+              <li>Control the ball confidently on every surface, first time.</li>
+              <li>Pass accurately across distances in training and live environments.</li>
+              <li>Strike cleanly and purposefully with dominant and non-dominant foot.</li>
+              <li>Move intelligently off the ball to support or create space for teammates.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase card" data-reveal style="--reveal-delay: 0.1s">
+      <div class="phase__header">
+        <span class="phase__num">Phase 2</span>
+        <span class="phase__label">Reading the Game</span>
+      </div>
+      <div class="phase__content">
+        <p class="phase__desc">
+          With solid technique, players start to see the bigger picture. Phase 2 is about shape,
+          space, and movement — understanding how the game is played around you and learning to
+          influence it through smart positioning and team combinations.
+        </p>
+        <div class="phase__cols">
+          <div>
+            <p class="phase__subhead">Focus Areas</p>
+            <ul class="phase__bullets">
+              <li>Positional Play — understanding roles in 1-4-3-3, 1-4-2-3-1, and transitional systems.</li>
+              <li>Pressing &amp; Defending — team press triggers, defensive shape, and recovery runs.</li>
+              <li>Third-Man Combinations — overlaps, underlaps, wall passes, and third-man runs.</li>
+              <li>Transition Training — rapid attack-to-defend and defend-to-attack transitions in live drills.</li>
+              <li>Set Pieces — corner delivery, run-making, defensive zonal and man-marking structures.</li>
+              <li>Game Reading — recognizing formations, identifying weaknesses, exploiting space.</li>
+              <li>Position-Specific Responsibilities — detailed coaching by role.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="phase__subhead">What Your Player Will Achieve</p>
+            <ul class="phase__bullets phase__bullets--accent">
+              <li>Understand and execute at least two tactical systems during match play.</li>
+              <li>Contribute effectively in team press and defensive transitions.</li>
+              <li>Combine fluidly with teammates in tight spaces through rehearsed patterns.</li>
+              <li>Recognize patterns in live game situations and adjust in real time.</li>
+              <li>Execute meaningful set pieces in training and competitive environments.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase card" data-reveal style="--reveal-delay: 0.15s">
+      <div class="phase__header">
+        <span class="phase__num">Phase 3</span>
+        <span class="phase__label">Playing the Match</span>
+      </div>
+      <div class="phase__content">
+        <p class="phase__desc">
+          The final stage is where players put it all together. Phase 3 brings technique and tactical
+          understanding into live match scenarios — scanning before every touch, leading teammates,
+          managing the moment, and competing with composure when the game is on the line.
+        </p>
+        <div class="phase__cols">
+          <div>
+            <p class="phase__subhead">Focus Areas</p>
+            <ul class="phase__bullets">
+              <li>Mental Resilience — performing under pressure, managing mistakes, bouncing back quickly.</li>
+              <li>Spatial Awareness — scanning, shoulder checks, and building a 360° picture before receiving.</li>
+              <li>Decision-Making Under Pressure — quick-fire rondos and small-sided games with live decisions.</li>
+              <li>Game Management — tempo control, killing games, exploiting momentum shifts.</li>
+              <li>Leadership &amp; Communication — organizing teammates, calling, directing, and leading.</li>
+              <li>Performance Mindset — pre-game routines, focus techniques, and managing nerves.</li>
+              <li>Film Review Sessions — watching and analyzing individual and team footage.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="phase__subhead">What Your Player Will Achieve</p>
+            <ul class="phase__bullets phase__bullets--accent">
+              <li>Perform consistently at full intensity in high-pressure environments.</li>
+              <li>Scan effectively before every touch and act with speed and certainty.</li>
+              <li>Communicate clearly and lead from their position on the field.</li>
+              <li>Control game tempo and make strategic decisions in match scenarios.</li>
+              <li>Compete in elite-level fixtures with composure, confidence, and purpose.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The Aceler8 FC Difference ─────────────────────────────────────────── -->
+  <section class="section--dark difference-section">
+    <div class="wrap difference-inner">
+      <div data-reveal>
+        <p class="tag">Coaching Philosophy</p>
+        <h2>The Aceler8 FC Difference</h2>
+        <p>
+          The Aceler8 FC curriculum follows a globally recognized model used by top academies and
+          national federations worldwide. Every session in the Pathway Program is led by licensed,
+          experienced coaches who are focused on one thing: getting the best out of your player.
+        </p>
+        <p>Our coaching approach is:</p>
+      </div>
+      <div class="difference-pillars" data-reveal style="--reveal-delay: 0.12s">
+        {[
+          { title: 'Individual Focus', desc: 'We coach the individual within the team, not one method for everyone.' },
+          { title: 'Measured Progress', desc: 'We track, assess, and adjust based on clear on-field benchmarks at every stage.' },
+          { title: 'High Standards', desc: 'Positive and demanding — we hold players to high standards while building them up.' },
+          { title: 'Purposeful Sessions', desc: 'Every rep, every drill, every session has a precise purpose.' },
+          { title: 'Long-Term Vision', desc: 'We develop players for where they need to be, not just this season.' },
+        ].map((p) => (
+          <div class="diff-pillar">
+            <div>
+              <strong>{p.title}</strong>
+              <p>{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What Families Can Expect ──────────────────────────────────────────── -->
+  <section class="section wrap families-section">
+    <div class="families-header" data-reveal>
+      <p class="tag">Family Experience</p>
+      <h2>What Families Can Expect</h2>
+    </div>
+    <div class="families-grid">
+      {[
+        { title: 'Phase Assessment Report', desc: 'Detailed technical assessment at the start and end of each phase, with clear benchmarks and progress metrics.' },
+        { title: 'Monthly Parent Briefing', desc: 'Written or verbal update from your player\'s coach every month outlining progress, areas of focus, and next steps.' },
+        { title: 'Video Feedback', desc: 'Selected session clips shared to highlight technique and areas for continued at-home development.' },
+        { title: 'Phase Completion Certificate', desc: 'Formal recognition upon successful completion of each phase, awarded at our quarterly showcases.' },
+        { title: 'Elite Fixture Inclusion', desc: 'Phase 2 and 3 players are eligible for Aceler8 FC competitive fixtures and invitational tournaments.' },
+        { title: 'Post-Pathway Roadmap', desc: 'Players completing all three phases receive a personalized development roadmap for the next 12 months.' },
+      ].map((item, i) => (
+        <div class="family-card card" data-reveal style={`--reveal-delay: ${i * 0.07}s`}>
+          <h3>{item.title}</h3>
+          <p>{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Tournament + Promotion ────────────────────────────────────────────── -->
+  <section class="section section--surface">
+    <div class="wrap tournament-section">
+      <div class="tournament-block" data-reveal>
+        <p class="tag">Select Tournament Play</p>
+        <p>
+          A key feature that sets the Pathway Program apart from a traditional skills clinic is the
+          opportunity to compete. Pathway teams participate in a curated selection of age-appropriate
+          tournaments throughout the year, giving players meaningful game experience in a competitive
+          environment. Tournament participation is used as a development tool — not as a measure of
+          success — and is selected by the Director of Coaching based on the development needs of the group.
+        </p>
+      </div>
+      <div class="tournament-block" data-reveal style="--reveal-delay: 0.1s">
+        <p class="tag">Promotion to Competitive Teams</p>
+        <p>
+          The ultimate goal of the Pathway Program is to prepare players to earn a spot on a full
+          Aceler8 FC elite team. Pathway players who meet the technical, tactical, and character
+          benchmarks set by the Director of Coaching will be considered for promotion at the next
+          available tryout cycle or mid-season roster review. Promotion is not automatic — it is
+          earned through consistent effort, coachability, and demonstrated improvement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How to Enroll ─────────────────────────────────────────────────────── -->
+  <section class="section wrap enroll-section">
+    <div class="enroll-header" data-reveal>
+      <p class="tag">How to Enroll</p>
+      <h2>Getting started is simple.</h2>
+      <p class="enroll-note">
+        Enrollment is limited. We keep groups small on purpose.
+      </p>
+    </div>
+    <div class="enroll-steps">
+      {[
+        {
+          step: '01',
+          title: 'Initial Consultation',
+          desc: 'We schedule a free 30-minute call with parent and player to understand goals, current level, and fit within the program.',
+        },
+        {
+          step: '02',
+          title: 'Player Assessment Session',
+          desc: 'Your player attends a complimentary 60-minute assessment session so our coaches can determine the right starting phase and build an individual development profile.',
+        },
+        {
+          step: '03',
+          title: 'Enroll & Begin',
+          desc: 'Once placement is confirmed, we handle registration, schedule your first sessions, and your player begins the Pathway journey.',
+        },
+      ].map((s, i) => (
+        <div class="enroll-step card" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
+          <span class="enroll-step__num">{s.step}</span>
+          <div class="enroll-step__body">
+            <strong>{s.title}</strong>
+            <p>{s.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="enroll-cta" data-reveal style="--reveal-delay: 0.3s">
+      <p>For more information on the Pathway Program, please contact us.</p>
       <a href="/contact/" class="btn btn--primary">Contact Us</a>
-      <a href="/camps/" class="btn btn--ghost">Camps & Clinics</a>
+      <a href="/camps/" class="btn btn--ghost">Camps &amp; Clinics</a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
+  /* ── Intro ─────────────────────────────────────────────────────────────────── */
+  .intro-section {
+    padding-block: 3rem 4rem;
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .intro-text h2 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  .intro-text p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .intro-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .intro-pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .intro-pillar__num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.5rem;
+  }
+
+  .intro-pillar strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-text);
+  }
+
+  .intro-pillar p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  /* ── Who It's For ─────────────────────────────────────────────────────────── */
+  .who-section {
+    max-width: 52rem;
+  }
+
+  .who-section h2 {
+    margin: 0.25rem 0 1.5rem;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+  }
+
+  .who-list {
+    margin: 0 0 1.5rem;
+    padding-left: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .who-note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+  }
+
+  /* ── Phases ────────────────────────────────────────────────────────────────── */
   .phases-section {
-    padding-block: 2.5rem 3rem;
+    padding-block: 2.5rem 4rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
   }
 
+  .phases-header {
+    max-width: 44rem;
+    margin-bottom: 1rem;
+  }
+
+  .phases-header h2 {
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .phases-note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
   .phase {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
     padding: 2.5rem;
-    align-items: start;
   }
 
   .phase__header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding-top: 0.25rem;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
   }
 
   .phase__num {
     font-family: var(--font-display);
-    font-size: 3.5rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    line-height: 1;
     color: var(--color-accent);
-    letter-spacing: -0.03em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
-  .phase__content h2 {
-    margin: 0.25rem 0 0.5rem;
+  .phase__label {
+    font-family: var(--font-display);
     font-size: 1.75rem;
-  }
-
-  .phase__focus {
-    margin: 0 0 1rem;
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    letter-spacing: 0.02em;
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.1;
   }
 
   .phase__desc {
-    margin: 0 0 1.25rem;
+    margin: 0 0 1.5rem;
     color: var(--color-text-muted);
     line-height: 1.7;
-    max-width: 46rem;
+    max-width: 54rem;
+  }
+
+  .phase__subhead {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .phase__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
   }
 
   .phase__bullets {
@@ -179,85 +510,213 @@ const jsonLd = {
     color: var(--color-text-muted);
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    font-size: 0.95rem;
+    gap: 0.45rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
   }
 
-  .principles-section {
-    padding-block: 1rem 4rem;
+  .phase__bullets--accent li::marker {
+    color: var(--color-accent);
+  }
+
+  /* ── The Aceler8 FC Difference ────────────────────────────────────────────── */
+  .difference-section {
+    padding-block: clamp(3.5rem, 9vw, 5.5rem);
+  }
+
+  .difference-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .difference-inner h2 {
+    margin: 0.25rem 0 1.25rem;
+  }
+
+  .difference-inner > div > p {
+    color: rgba(246, 243, 236, 0.78);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .difference-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 3.5rem;
+  }
+
+  .diff-pillar strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: #ffffff;
+  }
+
+  .diff-pillar p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: rgba(246, 243, 236, 0.72);
+    line-height: 1.55;
+  }
+
+  /* ── What Families Can Expect ─────────────────────────────────────────────── */
+  .families-section {
+    padding-block: 2.5rem 4rem;
+  }
+
+  .families-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .families-header h2 {
+    margin: 0.25rem 0 0;
+  }
+
+  .families-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .family-card {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .family-card h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--color-text);
+  }
+
+  .family-card p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  /* ── Tournament + Promotion ───────────────────────────────────────────────── */
+  .tournament-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: start;
   }
 
-  .principles-inner p {
+  .tournament-block .tag {
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .tournament-block p {
+    margin: 0;
     color: var(--color-text-muted);
-    margin-bottom: 1rem;
     line-height: 1.7;
+    font-size: 0.95rem;
   }
 
-  .principles-inner h2 {
-    margin: 0.25rem 0 1.25rem;
-  }
-
-  .principles-quote {
-    padding: 2rem;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-muted) 100%);
-    border: none;
-  }
-
-  .principles-quote blockquote {
-    margin: 0 0 1rem;
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-style: italic;
-    font-weight: 500;
-    line-height: 1.5;
-    color: #f6f3ec;
-  }
-
-  .principles-quote cite {
-    font-size: 0.85rem;
-    color: rgba(246, 243, 236, 0.7);
-    font-style: normal;
-    letter-spacing: 0.02em;
-  }
-
-  .cta-section {
-    padding-block: 2rem 5rem;
-  }
-
-  .cta-section h2 {
-    margin: 0 0 0.75rem;
-  }
-
-  .cta-section .lead {
-    margin: 0 0 1.5rem;
-    max-width: 40rem;
-    color: var(--color-text-muted);
-  }
-
-  .cta-actions {
+  /* ── How to Enroll ────────────────────────────────────────────────────────── */
+  .enroll-section {
+    padding-block: 2.5rem 5rem;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
-  @media (max-width: 720px) {
-    .phase {
+  .enroll-header h2 {
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .enroll-note {
+    margin: 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .enroll-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .enroll-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.75rem 2rem;
+  }
+
+  .enroll-step__num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 3rem;
+  }
+
+  .enroll-step__body strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+  }
+
+  .enroll-step__body p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .enroll-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .enroll-cta p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    width: 100%;
+  }
+
+  /* ── Responsive ───────────────────────────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .intro-grid,
+    .difference-inner,
+    .tournament-section {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 2.5rem;
+    }
+
+    .difference-pillars {
+      padding-top: 0;
+    }
+
+    .phase__cols {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .phase {
       padding: 1.5rem;
     }
+  }
 
-    .phase__header {
-      flex-direction: row;
-      align-items: center;
-    }
-
-    .principles-section {
-      grid-template-columns: 1fr;
+  @media (max-width: 640px) {
+    .enroll-step {
+      flex-direction: column;
+      gap: 0.75rem;
     }
   }
 </style>

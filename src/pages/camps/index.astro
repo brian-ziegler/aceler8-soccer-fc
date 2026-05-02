@@ -7,7 +7,7 @@ const programs = [
   {
     tag: 'Summer',
     title: 'Summer Camp',
-    dates: 'July – August 2025',
+    dates: 'July – August 2026',
     ages: 'Ages 6–14',
     format: 'Full-day & half-day options',
     desc: 'Our flagship summer program runs over multiple weeks during July and August. Players train twice daily with our coaching staff, focusing on technical skill, small-sided games, and player development fundamentals. Camp concludes with an end-of-week showcase.',
@@ -21,12 +21,12 @@ const programs = [
     ctaDisabled: true,
   },
   {
-    tag: 'Spring',
-    title: 'Spring Sessions',
-    dates: 'April – June 2025',
+    tag: 'Seasonal',
+    title: 'Seasonal Camps',
+    dates: 'Fall & Spring',
     ages: 'Ages 8–14',
     format: '4-week & 8-week tracks',
-    desc: "Spring sessions are intensive 4- or 8-week tracks designed to sharpen specific areas of a player's game ahead of the fall competitive season. Small group sizes ensure each player gets personalized attention.",
+    desc: "Seasonal camps are intensive 4- or 8-week tracks designed to sharpen specific areas of a player's game. Small group sizes ensure each player gets personalized attention from our coaching staff in a focused development environment.",
     bullets: [
       'Small groups (max 12 players per session)',
       'Position-specific tracks available',
@@ -36,41 +36,25 @@ const programs = [
     cta: 'Registration opening soon',
     ctaDisabled: true,
   },
-  {
-    tag: 'Year-Round',
-    title: 'Academy Clinics',
-    dates: 'Ongoing',
-    ages: 'Ages 10–16',
-    format: 'Monthly weekend clinics',
-    desc: 'Monthly Saturday clinics give serious players regular exposure to elite coaching outside of their club team schedule. Academy clinics focus on the advanced technical and tactical content from our competitive curriculum.',
-    bullets: [
-      'Advanced 1v1, combination play, finishing',
-      'Video review of match footage',
-      'College and academy pathway guidance',
-      'Open to all club affiliations',
-    ],
-    cta: 'Register for next clinic',
-    ctaDisabled: false,
-  },
 ];
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: 'Camps & Clinics — Aceler8 Soccer FC',
+  name: 'Camps & Clinics — Aceler8 FC',
   url: `${siteConfig.url}/camps/`,
 };
 ---
 
 <BaseLayout
-  title="Camps & Clinics — Summer Camp, Spring Sessions & Academy Clinics"
-  description="Aceler8 Soccer FC offers summer camps, spring development sessions, and year-round academy clinics for players ages 6–16 in Rochester, NY."
+  title="Camps & Clinics — Summer Camp & Seasonal Camps"
+  description="Aceler8 FC offers summer camps and seasonal development camps for players ages 6–14 in Rochester, NY."
   jsonLd={jsonLd}
 >
   <PageHero
     tag="Camps & Clinics"
     title="Train like a pro. Learn from ones."
-    lead="From summer camps to year-round academy clinics, Aceler8 offers elite development programming for players of all levels — no club affiliation required."
+    lead="From summer camps to seasonal training programs, Aceler8 FC offers elite development programming for players of all levels — no club affiliation required."
   />
 
   <section class="wrap programs-section">
@@ -112,10 +96,6 @@ const jsonLd = {
         <p>Cleats, shin guards, a ball, and plenty of water. We'll take care of the rest. A detailed equipment list is sent upon registration.</p>
       </div>
       <div class="faq-item" data-reveal style="--reveal-delay: 0.15s">
-        <h3>Are there payment plans available?</h3>
-        <p>Yes. We offer flexible payment plans and need-based scholarships. Reach out to discuss options — we want cost to be the last reason a player can't join us.</p>
-      </div>
-      <div class="faq-item" data-reveal style="--reveal-delay: 0.2s">
         <h3>Where are camps held?</h3>
         <p>All programs are held at our Rochester-area training facilities. Exact location details are shared with registered participants closer to the start date.</p>
       </div>

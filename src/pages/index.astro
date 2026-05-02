@@ -3,8 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { siteConfig } from '@/data/site';
 import { coaches } from '@/data/coaches';
 
-const heroImage =
-  'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&q=80';
+const heroImage = '/images/homepage.jpg';
 
 const jsonLd = [
   {
@@ -37,8 +36,8 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title="Aceler8 Soccer FC — Player Development · Rochester, NY"
-  description="Aceler8 Soccer FC is a player-first development club in Rochester, NY — building technically excellent, mentally resilient, and community-minded athletes."
+  title="Aceler8 FC — Player Development · Rochester, NY"
+  description="Aceler8 FC is a player-first development club in Rochester, NY — building technically excellent, mentally resilient, and community-minded athletes."
   ogImage={heroImage}
   jsonLd={jsonLd}
 >
@@ -47,9 +46,9 @@ const jsonLd = [
     <div class="hero__media">
       <img
         src={heroImage}
-        alt="Soccer match action — Aceler8 Soccer FC"
-        width="1600"
-        height="1000"
+        alt="Aceler8 FC players — Rochester, NY"
+        width="6000"
+        height="4000"
         fetchpriority="high"
       />
       <div class="hero__scrim" aria-hidden="true"></div>
@@ -58,17 +57,31 @@ const jsonLd = [
       <ul class="hero__badges reveal" aria-label="Key club facts">
         <li>Est. 2024</li>
         <li>Rochester, NY</li>
-        <li>U8–U14 Programs</li>
-        <li>PDI &amp; LTAD</li>
+        <li>U8–U12 Programs</li>
       </ul>
-      <h1 class="reveal reveal-delay-1">Built for the<br />next level.</h1>
+      <h1 class="reveal reveal-delay-1">Welcome to the<br />Aceler8 FC Family</h1>
       <p class="hero__lead reveal reveal-delay-2">
-        A player-first development club dedicated to building technically excellent, mentally
-        resilient athletes — from first touch to full potential.
+        Aceler8 FC was founded in Rochester, New York in 2024 with a single mission: to develop
+        well-rounded soccer players and exceptional human beings. Everything we do — from our
+        coaching curriculum to our parent policies — is designed with the whole child in mind.
       </p>
       <div class="hero__actions reveal reveal-delay-3">
         <a class="btn btn--accent" href="/pathway/">Explore Programs</a>
         <a class="btn btn--outline-light" href="/coaches/">Meet the staff</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Mission ──────────────────────────────────────────────────────────── -->
+  <section class="section section--surface">
+    <div class="wrap mission-banner">
+      <div class="mission-banner__text" data-reveal>
+        <p class="tag">Our Mission</p>
+        <p class="mission-banner__statement">
+          To provide a player-centered, development-focused soccer environment that empowers
+          youth in Rochester and the surrounding community to reach their full potential as
+          athletes and individuals.
+        </p>
       </div>
     </div>
   </section>
@@ -79,8 +92,8 @@ const jsonLd = [
       <p class="tag">What We Offer</p>
       <h2 class="section-heading">A complete development<br class="rwd-break" /> environment.</h2>
       <p class="section__lead">
-        From first-touch recreational play to high-level competitive training — Aceler8 provides
-        the coaching, structure, and pathway every player deserves.
+        From structured pathway training to high-level competitive programming — Aceler8 FC
+        provides the coaching, structure, and pathway every player deserves.
       </p>
     </div>
     <div class="grid-3">
@@ -90,8 +103,8 @@ const jsonLd = [
         </div>
         <h3>Pathway Program</h3>
         <p>
-          Our structured age-by-age development model gives every player a clear roadmap — from
-          Foundation (U8) through Performance (U14).
+          Our structured development model gives every player a clear roadmap — from
+          foundation to elite level.
         </p>
         <a class="btn btn--primary card-cta" href="/pathway/">Explore the pathway</a>
       </article>
@@ -101,7 +114,7 @@ const jsonLd = [
         </div>
         <h3>Camps &amp; Clinics</h3>
         <p>
-          Summer camps, spring sessions, and academy clinics — open to all players
+          Summer camps, seasonal camps, and academy clinics — open to all players
           regardless of club affiliation.
         </p>
         <a class="btn btn--primary card-cta" href="/camps/">View programs</a>
@@ -164,6 +177,21 @@ const jsonLd = [
     </div>
   </section>
 
+  <!-- ── Team photo strip ──────────────────────────────────────────────────── -->
+  <section class="team-photo-section" aria-hidden="true">
+    <img
+      src="/images/team-cheering.jpg"
+      alt="Aceler8 FC team celebrating"
+      width="6000"
+      height="4000"
+      loading="lazy"
+      class="team-photo"
+    />
+    <div class="team-photo__overlay">
+      <p class="team-photo__caption">Aceler8 FC — Rochester, NY · Est. 2024</p>
+    </div>
+  </section>
+
   <!-- ── Navy CTA band ──────────────────────────────────────────────────────── -->
   <section class="section--dark cta-band">
     <div class="wrap cta-band__inner">
@@ -171,8 +199,8 @@ const jsonLd = [
         <p class="tag">Get Started</p>
         <h2>Ready to join the club?</h2>
         <p>
-          Limited spots available for the 2025 season. Register for camps, inquire about
-          tryouts, or reach out to learn more about our programs.
+          Interested in learning more about the Aceler8 FC Difference? Register for camps,
+          explore the Pathway Program, or reach out to start a conversation.
         </p>
       </div>
       <div class="cta-band__actions" data-reveal style="--reveal-delay: 0.1s">
@@ -278,6 +306,31 @@ const jsonLd = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  /* ── Mission banner ──────────────────────────────────────────────────────── */
+  .mission-banner {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mission-banner__text {
+    max-width: 52rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mission-banner__statement {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.55;
+    margin: 0;
   }
 
   /* ── Sections ─────────────────────────────────────────────────────────────── */
@@ -504,5 +557,42 @@ const jsonLd = [
       flex-direction: row;
       flex-wrap: wrap;
     }
+  }
+
+  /* ── Team photo strip ────────────────────────────────────────────────────── */
+  .team-photo-section {
+    position: relative;
+    height: clamp(280px, 40vw, 480px);
+    overflow: hidden;
+  }
+
+  .team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .team-photo__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8, 14, 30, 0.7) 0%,
+      rgba(8, 14, 30, 0.1) 50%,
+      transparent 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .team-photo__caption {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(246, 243, 236, 0.65);
+    margin: 0;
   }
 </style>
