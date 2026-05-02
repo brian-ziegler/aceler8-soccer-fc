@@ -74,6 +74,19 @@ function handler(event) {
       runtime: cloudfront.FunctionRuntime.JS_2_0,
     });
 
+    const noCacheHeadersPolicy = new cloudfront.ResponseHeadersPolicy(this, 'NoCacheHeadersPolicy', {
+      responseHeadersPolicyName: `${bucketName.replace(/[^a-zA-Z0-9-]/g, '-').slice(0, 40)}-no-cache`,
+      customHeadersBehavior: {
+        customHeaders: [
+          {
+            header: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate',
+            override: true,
+          },
+        ],
+      },
+    });
+
     const distribution = new cloudfront.Distribution(this, 'SiteDistribution', {
       comment: siteDomain,
       defaultRootObject: 'index.html',
@@ -83,12 +96,24 @@ function handler(event) {
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
         compress: true,
+        cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+        responseHeadersPolicy: noCacheHeadersPolicy,
         functionAssociations: [
           {
             function: rewriteFn,
             eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
           },
         ],
+      },
+      additionalBehaviors: {
+        '_astro/*': {
+          origin: s3Origin,
+          viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+          cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
+          compress: true,
+          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+        },
       },
       errorResponses: [
         {
