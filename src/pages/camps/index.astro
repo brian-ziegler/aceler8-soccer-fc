@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/site';
 
 const programs = [
@@ -66,14 +67,11 @@ const jsonLd = {
   description="Aceler8 Soccer FC offers summer camps, spring development sessions, and year-round academy clinics for players ages 6–16 in Rochester, NY."
   jsonLd={jsonLd}
 >
-  <article class="page-intro wrap">
-    <p class="tag">Camps & Clinics</p>
-    <h1 class="reveal">Train like a pro.<br />Learn from ones.</h1>
-    <p class="lead reveal reveal-delay-1">
-      From summer camps to year-round academy clinics, Aceler8 offers elite development
-      programming for players of all levels — no club affiliation required.
-    </p>
-  </article>
+  <PageHero
+    tag="Camps & Clinics"
+    title="Train like a pro. Learn from ones."
+    lead="From summer camps to year-round academy clinics, Aceler8 offers elite development programming for players of all levels — no club affiliation required."
+  />
 
   <section class="wrap programs-section">
     {programs.map((p, i) => (
@@ -82,9 +80,9 @@ const jsonLd = {
           <p class="tag">{p.tag}</p>
           <h2>{p.title}</h2>
           <div class="program-card__meta">
-            <span>📅 {p.dates}</span>
-            <span>👟 {p.ages}</span>
-            <span>🏟️ {p.format}</span>
+            <span>{p.dates}</span>
+            <span>{p.ages}</span>
+            <span>{p.format}</span>
           </div>
         </div>
         <div class="program-card__body">
@@ -139,7 +137,7 @@ const jsonLd = {
 
 <style>
   .programs-section {
-    padding-block: 3rem;
+    padding-block: 2.5rem 3rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;

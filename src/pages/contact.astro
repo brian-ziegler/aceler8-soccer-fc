@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/site';
 
 const jsonLd = {
@@ -21,14 +22,11 @@ const jsonLd = {
   description="Contact Aceler8 Soccer FC for questions about registration, camps, clinics, and the Pathway Program. Based in Rochester, NY."
   jsonLd={jsonLd}
 >
-  <article class="page-intro wrap">
-    <p class="tag">Contact</p>
-    <h1 class="reveal">Let's talk.</h1>
-    <p class="lead reveal reveal-delay-1">
-      Whether you're a parent, player, or partner — we'd love to hear from you. Use the form
-      below or reach out directly to a staff member.
-    </p>
-  </article>
+  <PageHero
+    tag="Contact"
+    title="Let's talk."
+    lead="Whether you're a parent, player, or partner — we'd love to hear from you. Use the form below or reach out directly to a staff member."
+  />
 
   <section class="wrap contact-layout">
     <!-- Contact form -->
@@ -115,7 +113,7 @@ const jsonLd = {
     grid-template-columns: 1fr 380px;
     gap: 3rem;
     align-items: start;
-    padding-bottom: 5rem;
+    padding-block: 2.5rem 5rem;
   }
 
   .contact-form-wrap h2 {

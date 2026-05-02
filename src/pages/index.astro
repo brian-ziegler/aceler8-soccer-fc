@@ -42,6 +42,7 @@ const jsonLd = [
   ogImage={heroImage}
   jsonLd={jsonLd}
 >
+  <!-- ── Hero ────────────────────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero__media">
       <img
@@ -54,89 +55,95 @@ const jsonLd = [
       <div class="hero__scrim" aria-hidden="true"></div>
     </div>
     <div class="wrap hero__content">
-      <p class="tag reveal">Rochester, NY · Player Development</p>
-      <h1 class="reveal reveal-delay-1">Built for the next level.</h1>
+      <ul class="hero__badges reveal" aria-label="Key club facts">
+        <li>Est. 2024</li>
+        <li>Rochester, NY</li>
+        <li>U8–U14 Programs</li>
+        <li>PDI &amp; LTAD</li>
+      </ul>
+      <h1 class="reveal reveal-delay-1">Built for the<br />next level.</h1>
       <p class="hero__lead reveal reveal-delay-2">
-        Aceler8 Soccer FC is a player-first development club dedicated to building technically
-        excellent, mentally resilient, and community-minded athletes — from first touch to full
-        potential.
+        A player-first development club dedicated to building technically excellent, mentally
+        resilient athletes — from first touch to full potential.
       </p>
       <div class="hero__actions reveal reveal-delay-3">
-        <a class="btn btn--primary" href="/pathway/">Explore Programs</a>
-        <a class="btn btn--ghost" href="/coaches/">Meet the staff</a>
+        <a class="btn btn--accent" href="/pathway/">Explore Programs</a>
+        <a class="btn btn--outline-light" href="/coaches/">Meet the staff</a>
       </div>
     </div>
   </section>
 
-  <section class="strip wrap" aria-label="Club facts">
-    <ul class="strip__list">
-      <li><strong>Recreational &amp; Competitive</strong> teams U8–U14</li>
-      <li><strong>Licensed staff</strong> with professional &amp; classroom backgrounds</li>
-      <li><strong>Rochester, NY</strong> home training base</li>
-      <li><strong>PDI &amp; LTAD</strong> development methodology</li>
-    </ul>
-  </section>
-
+  <!-- ── What We Offer ─────────────────────────────────────────────────────── -->
   <section class="section wrap">
     <div class="section__head">
       <p class="tag">What We Offer</p>
-      <h2>A complete development environment.</h2>
+      <h2 class="section-heading">A complete development<br class="rwd-break" /> environment.</h2>
       <p class="section__lead">
         From first-touch recreational play to high-level competitive training — Aceler8 provides
-        the coaching, structure, and pathway that every player deserves.
+        the coaching, structure, and pathway every player deserves.
       </p>
     </div>
     <div class="grid-3">
-      <article class="card card--pad" data-reveal style="--reveal-delay: 0s">
+      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0s">
+        <div class="card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
         <h3>Pathway Program</h3>
         <p>
           Our structured age-by-age development model gives every player a clear roadmap — from
           Foundation (U8) through Performance (U14).
         </p>
-        <a href="/pathway/">Explore the pathway →</a>
+        <a class="btn btn--primary card-cta" href="/pathway/">Explore the pathway</a>
       </article>
-      <article class="card card--pad" data-reveal style="--reveal-delay: 0.12s">
+      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.1s">
+        <div class="card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
         <h3>Camps &amp; Clinics</h3>
         <p>
-          Summer camps, spring sessions, and year-round academy clinics — open to all players
+          Summer camps, spring sessions, and academy clinics — open to all players
           regardless of club affiliation.
         </p>
-        <a href="/camps/">View programs →</a>
+        <a class="btn btn--primary card-cta" href="/camps/">View programs</a>
       </article>
-      <article class="card card--pad" data-reveal style="--reveal-delay: 0.24s">
+      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.2s">
+        <div class="card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
         <h3>Our Philosophy</h3>
         <p>
           We coach the whole player: technical skill, tactical intelligence, physical literacy,
           and mental resilience. Long-term development always wins.
         </p>
-        <a href="/about/">Read our story →</a>
+        <a class="btn btn--primary card-cta" href="/about/">Read our story</a>
       </article>
     </div>
   </section>
 
+  <!-- ── Coaching staff preview (surface background) ────────────────────────── -->
   <section class="section section--surface">
     <div class="wrap coach-preview">
-      <div>
+      <div class="coach-preview__intro">
         <p class="tag">Staff</p>
         <h2>Coaches you can look up.</h2>
         <p class="section__lead">
-          Credentials matter. Our leadership blends professional playing experience, classroom
-          pedagogy, and U.S. Soccer licensing.
+          Our leadership blends professional playing experience, classroom pedagogy, and
+          U.S. Soccer licensing — and we publish every credential openly.
         </p>
         <a class="btn btn--primary" href="/coaches/">Full coaching staff</a>
       </div>
       <ul class="coach-preview__list">
         {
           coaches.map((c, i) => (
-            <li data-reveal style={`--reveal-delay: ${i * 0.12}s`}>
+            <li data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
               <a href={`/coaches/${c.slug}/`} class:list={['coach-preview__link', { 'coach-preview__link--lead': i === 0 }]}>
                 {c.imageSrc ? (
                   <img
                     src={c.imageSrc}
                     alt={c.name}
                     class="coach-preview__photo"
-                    width="56"
-                    height="56"
+                    width="64"
+                    height="64"
                     loading="lazy"
                   />
                 ) : (
@@ -148,6 +155,7 @@ const jsonLd = [
                   <span class="coach-preview__name">{c.name}</span>
                   <span class="coach-preview__role">{c.role}</span>
                 </span>
+                <svg class="coach-preview__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </li>
           ))
@@ -155,15 +163,34 @@ const jsonLd = [
       </ul>
     </div>
   </section>
+
+  <!-- ── Navy CTA band ──────────────────────────────────────────────────────── -->
+  <section class="section--dark cta-band">
+    <div class="wrap cta-band__inner">
+      <div class="cta-band__text" data-reveal>
+        <p class="tag">Get Started</p>
+        <h2>Ready to join the club?</h2>
+        <p>
+          Limited spots available for the 2025 season. Register for camps, inquire about
+          tryouts, or reach out to learn more about our programs.
+        </p>
+      </div>
+      <div class="cta-band__actions" data-reveal style="--reveal-delay: 0.1s">
+        <a class="btn btn--accent" href="/contact/">Contact Us Today</a>
+        <a class="btn btn--outline-light" href="/pathway/">View All Programs</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
+  /* ── Hero ─────────────────────────────────────────────────────────────────── */
   .hero {
     position: relative;
-    min-height: min(78vh, 720px);
+    min-height: min(88vh, 760px);
     display: flex;
     align-items: flex-end;
-    padding-bottom: clamp(2.5rem, 6vw, 4rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
     overflow: hidden;
   }
 
@@ -178,43 +205,73 @@ const jsonLd = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    animation: ken-burns 14s ease-out forwards;
+    animation: ken-burns 10s ease-out forwards;
   }
 
   .hero__scrim {
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      180deg,
-      rgba(8, 14, 30, 0.2) 0%,
-      rgba(8, 14, 30, 0.75) 55%,
-      rgba(8, 14, 30, 0.92) 100%
+      175deg,
+      rgba(8, 14, 30, 0.12) 0%,
+      rgba(8, 14, 30, 0.48) 45%,
+      rgba(8, 14, 30, 0.88) 100%
     );
   }
 
   .hero__content {
     position: relative;
     z-index: 1;
-    max-width: 40rem;
+    max-width: 44rem;
+  }
+
+  /* Trust badges above headline */
+  .hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+  }
+
+  .hero__badges li {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(246, 243, 236, 0.65);
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .hero__badges li + li::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.7;
   }
 
   .hero h1 {
-    margin: 0 0 1rem;
-    text-shadow: 0 2px 32px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #f6f3ec 55%, #f47b0e 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero .tag {
-    color: #f47b0e;
+    margin: 0 0 1.1rem;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
   }
 
   .hero__lead {
-    color: rgba(246, 243, 236, 0.92);
-    font-size: 1.15rem;
-    margin: 0 0 1.75rem;
+    color: rgba(246, 243, 236, 0.88);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0 0 2rem;
+    max-width: 36rem;
+    line-height: 1.65;
   }
 
   .hero__actions {
@@ -223,45 +280,7 @@ const jsonLd = [
     gap: 0.75rem;
   }
 
-  .hero__actions .btn--primary {
-    background: var(--color-accent);
-    color: #111320;
-  }
-
-  .hero__actions .btn--ghost {
-    border-color: rgba(246, 243, 236, 0.45);
-    color: #f6f3ec;
-  }
-
-  .hero__actions .btn--ghost:hover {
-    background: rgba(246, 243, 236, 0.1);
-  }
-
-  .strip {
-    padding-block: 1.75rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .strip__list {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-  }
-
-  .strip__list strong {
-    display: block;
-    color: var(--color-text);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.25rem;
-  }
-
+  /* ── Sections ─────────────────────────────────────────────────────────────── */
   .section {
     padding-block: clamp(3.5rem, 9vw, 5.5rem);
   }
@@ -282,6 +301,10 @@ const jsonLd = [
     margin: 0;
   }
 
+  .rwd-break { display: none; }
+  @media (min-width: 640px) { .rwd-break { display: block; } }
+
+  /* ── Feature cards ─────────────────────────────────────────────────────────── */
   .grid-3 {
     display: grid;
     gap: 1.25rem;
@@ -289,23 +312,51 @@ const jsonLd = [
   }
 
   .card--pad {
-    padding: 1.5rem 1.35rem;
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .card--pad h3 {
-    margin-top: 0;
+    margin: 0;
+    font-size: 1.25rem;
   }
 
   .card--pad p {
     color: var(--color-text-muted);
-    margin-bottom: 1rem;
+    margin: 0;
+    flex: 1;
+    line-height: 1.65;
   }
 
+  .card-icon {
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .card-cta {
+    align-self: flex-start;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Coach preview ────────────────────────────────────────────────────────── */
   .coach-preview {
     display: grid;
-    gap: 2rem;
+    gap: 3rem;
     align-items: start;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .coach-preview__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .coach-preview__intro h2 {
+    margin: 0;
   }
 
   .coach-preview__list {
@@ -314,37 +365,51 @@ const jsonLd = [
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.6rem;
   }
 
   .coach-preview__link {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    padding: 0.85rem 1rem;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
     background: var(--color-bg-elevated);
     text-decoration: none;
     color: inherit;
     transition:
-      border-color 0.25s var(--ease-out),
-      transform 0.25s var(--ease-out);
+      border-color 0.2s var(--ease-out),
+      background 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
   }
 
   .coach-preview__link--lead {
     border-color: var(--color-accent);
-    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg-elevated));
+    background: color-mix(in srgb, var(--color-accent) 5%, var(--color-bg-elevated));
   }
 
   .coach-preview__link:hover {
-    border-color: var(--color-primary-muted);
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 4%, var(--color-bg-elevated));
     transform: translateX(4px);
   }
 
+  .coach-preview__arrow {
+    margin-left: auto;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  .coach-preview__link:hover .coach-preview__arrow {
+    transform: translateX(3px);
+    color: var(--color-primary);
+  }
+
   .coach-preview__photo {
-    width: 3rem;
-    height: 3rem;
+    width: 3.25rem;
+    height: 3.25rem;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -357,37 +422,87 @@ const jsonLd = [
     justify-content: center;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.8);
     letter-spacing: 0.05em;
   }
 
   .coach-preview__link--lead .coach-preview__photo {
-    width: 3.5rem;
-    height: 3.5rem;
-    outline: 2px solid var(--color-accent);
+    outline: 2.5px solid var(--color-accent);
     outline-offset: 2px;
   }
 
   .coach-preview__info {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   .coach-preview__name {
     font-family: var(--font-display);
     font-weight: 650;
     font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .coach-preview__role {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--color-text-muted);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
   }
 
   .coach-preview__link--lead .coach-preview__role {
     color: var(--color-accent);
+  }
+
+  @media (max-width: 720px) {
+    .coach-preview {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  /* ── Navy CTA band ───────────────────────────────────────────────────────── */
+  .cta-band {
+    padding-block: clamp(3.5rem, 9vw, 5.5rem);
+  }
+
+  .cta-band__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem 4rem;
+    align-items: center;
+  }
+
+  .cta-band__text h2 {
+    margin: 0.25rem 0 0.75rem;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+
+  .cta-band__text p {
+    margin: 0;
+    max-width: 38rem;
+  }
+
+  .cta-band__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 180px;
+  }
+
+  @media (max-width: 720px) {
+    .cta-band__inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .cta-band__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
 </style>

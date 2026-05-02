@@ -1,37 +1,38 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/site';
 
 const values = [
   {
-    icon: '🎯',
     title: 'Excellence',
     desc: 'We hold ourselves and every player to the highest standard — in training, in competition, and in conduct.',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
   },
   {
-    icon: '🤝',
     title: 'Integrity',
     desc: 'We do what is right even when no one is watching. Honesty and accountability are non-negotiable.',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`,
   },
   {
-    icon: '🌱',
     title: 'Development',
     desc: 'We believe in the long arc. Every session, every rep, every conversation is an investment in who this player will become.',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
   },
   {
-    icon: '🏘️',
     title: 'Community',
     desc: 'We are rooted in Rochester. Our success is measured by the impact we make in the lives of local families.',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
   },
   {
-    icon: '💡',
     title: 'Innovation',
     desc: 'We stay current with modern coaching methodology — PDI frameworks, LTAD principles, and data-informed practice.',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
   },
   {
-    icon: '🙏',
     title: 'Humility',
     desc: 'Great players and great coaches never stop learning. We approach the game and each other with respect and an open mind.',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
   },
 ];
 
@@ -53,17 +54,15 @@ const jsonLd = {
   description="Aceler8 Soccer FC is a player-first development club rooted in Rochester, NY. We develop technically excellent, mentally resilient, and community-minded young athletes."
   jsonLd={jsonLd}
 >
-  <article class="page-intro wrap">
-    <p class="tag">About the Club</p>
-    <h1 class="reveal">More than a team.</h1>
-    <p class="lead reveal reveal-delay-1">
-      Aceler8 Soccer FC is a player-first development club dedicated to building technically
-      excellent, mentally resilient, and community-minded athletes in Rochester, New York.
-    </p>
-  </article>
+  <PageHero
+    tag="About the Club"
+    title="More than a team."
+    lead="A player-first development club dedicated to building technically excellent, mentally resilient, and community-minded athletes in Rochester, New York."
+  />
 
-  <section class="wrap mission-section" data-reveal>
-    <div class="mission-card card">
+  <!-- ── Mission ─────────────────────────────────────────────────────────────── -->
+  <section class="wrap mission-section">
+    <div class="mission-card card--navy card" data-reveal>
       <p class="tag">Our Mission</p>
       <blockquote>
         "To provide every young player in our community access to elite coaching, a structured
@@ -73,20 +72,17 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- ── Core values ─────────────────────────────────────────────────────────── -->
   <section class="wrap values-section">
-    <h2 data-reveal>Core Values</h2>
-    <p class="lead" data-reveal style="--reveal-delay: 0.1s">
-      Six principles that guide everything we do.
-    </p>
+    <div class="section-head" data-reveal>
+      <p class="tag">Core Values</p>
+      <h2>Six principles that guide<br />everything we do.</h2>
+    </div>
     <div class="values-grid">
       {
         values.map((v, i) => (
-          <div
-            class="card value-card"
-            data-reveal
-            style={`--reveal-delay: ${0.05 * i}s`}
-          >
-            <span class="value-icon" aria-hidden="true">{v.icon}</span>
+          <div class="card value-card card--feature" data-reveal style={`--reveal-delay: ${0.06 * i}s`}>
+            <span class="value-icon" aria-hidden="true" set:html={v.svg} />
             <h3>{v.title}</h3>
             <p>{v.desc}</p>
           </div>
@@ -95,11 +91,12 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="wrap philosophy-section">
-    <div class="philosophy-content">
+  <!-- ── Philosophy (dark background) ──────────────────────────────────────── -->
+  <section class="section--dark philosophy-section">
+    <div class="wrap philosophy-inner">
       <div data-reveal>
         <p class="tag">Development Philosophy</p>
-        <h2>Built on PDI & LTAD</h2>
+        <h2>Built on PDI &amp; LTAD</h2>
         <p>
           Our coaching model is grounded in <strong>Player Development Initiatives (PDI)</strong>
           and <strong>Long-Term Athlete Development (LTAD)</strong> — frameworks used by top
@@ -110,51 +107,37 @@ const jsonLd = {
           and psychological resilience. We emphasize decision-making over rote repetition, and
           fun over fear.
         </p>
-        <p>
-          <strong>Short-term results never outweigh long-term growth.</strong> We measure success
-          by the player each athlete becomes — not just the scoreline.
+        <p class="philosophy-emphasis">
+          Short-term results never outweigh long-term growth.
         </p>
       </div>
-      <div class="philosophy-pillars" data-reveal style="--reveal-delay: 0.15s">
-        <div class="pillar">
-          <span class="pillar__num">01</span>
-          <div>
-            <strong>Technical Mastery</strong>
-            <p>Ball manipulation, first touch, and 1v1 skill at the foundation.</p>
+      <div class="philosophy-pillars" data-reveal style="--reveal-delay: 0.12s">
+        {[
+          { num: '01', title: 'Technical Mastery', desc: 'Ball manipulation, first touch, and 1v1 skill at the foundation.' },
+          { num: '02', title: 'Tactical Intelligence', desc: 'Reading the game, positional awareness, and decision-making under pressure.' },
+          { num: '03', title: 'Physical Development', desc: 'Age-appropriate athleticism, injury prevention, and long-term durability.' },
+          { num: '04', title: 'Mental Resilience', desc: 'Confidence, composure, grit, and a growth mindset on and off the field.' },
+        ].map((p) => (
+          <div class="pillar">
+            <span class="pillar__num">{p.num}</span>
+            <div>
+              <strong>{p.title}</strong>
+              <p>{p.desc}</p>
+            </div>
           </div>
-        </div>
-        <div class="pillar">
-          <span class="pillar__num">02</span>
-          <div>
-            <strong>Tactical Intelligence</strong>
-            <p>Reading the game, positional awareness, and decision-making under pressure.</p>
-          </div>
-        </div>
-        <div class="pillar">
-          <span class="pillar__num">03</span>
-          <div>
-            <strong>Physical Development</strong>
-            <p>Age-appropriate athleticism, injury prevention, and long-term durability.</p>
-          </div>
-        </div>
-        <div class="pillar">
-          <span class="pillar__num">04</span>
-          <div>
-            <strong>Mental Resilience</strong>
-            <p>Confidence, composure, grit, and a growth mindset on and off the field.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
+  <!-- ── Vision + CTA ────────────────────────────────────────────────────────── -->
   <section class="wrap vision-section" data-reveal>
     <p class="tag">Vision</p>
-    <h2>Rochester's Premier Development Club</h2>
+    <h2>Rochester's Premier<br />Development Club</h2>
     <p class="lead">
       We are building a club that Rochester families trust — where every player has a clear
-      pathway from first touch to their full potential, and where elite development is accessible
-      regardless of background.
+      pathway from first touch to their full potential, and where elite development is
+      accessible regardless of background.
     </p>
     <a href="/pathway/" class="btn btn--primary">Explore the Pathway Program</a>
   </section>
@@ -162,7 +145,7 @@ const jsonLd = {
 
 <style>
   .mission-section {
-    padding-bottom: 3rem;
+    padding-block: 3.5rem 2.5rem;
   }
 
   .mission-card {
@@ -173,71 +156,94 @@ const jsonLd = {
   .mission-card blockquote {
     margin: 0.75rem 0 0;
     font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-size: clamp(1.2rem, 2.5vw, 1.65rem);
     font-style: italic;
     font-weight: 500;
     line-height: 1.4;
-    color: var(--color-text);
+    color: #ffffff;
   }
 
   .values-section {
-    padding-block: 3rem;
+    padding-block: 2.5rem 3.5rem;
+  }
+
+  .section-head {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-head h2 {
+    margin: 0.25rem 0 0;
+    line-height: 1.15;
   }
 
   .values-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     gap: 1.25rem;
-    margin-top: 2rem;
   }
 
   .value-card {
     padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
   .value-icon {
-    font-size: 1.75rem;
+    color: var(--color-accent);
     display: block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
   }
 
   .value-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.1rem;
+    margin: 0;
+    font-size: 1.15rem;
   }
 
   .value-card p {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.95rem;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
+  /* Philosophy section */
   .philosophy-section {
-    padding-block: 3rem 4rem;
+    padding-block: clamp(3.5rem, 9vw, 5.5rem);
   }
 
-  .philosophy-content {
+  .philosophy-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 5rem;
     align-items: start;
   }
 
-  .philosophy-content p {
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
+  .philosophy-inner h2 {
+    margin: 0.25rem 0 1.25rem;
   }
 
-  .philosophy-content h2 {
-    margin-bottom: 1.25rem;
+  .philosophy-inner p {
+    color: rgba(246, 243, 236, 0.78);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .philosophy-emphasis {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.15rem !important;
+    color: rgba(246, 243, 236, 0.95) !important;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+    margin-top: 1.5rem !important;
   }
 
   .philosophy-pillars {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    padding-top: 3.5rem;
+    gap: 1.5rem;
+    padding-top: 3.75rem;
   }
 
   .pillar {
@@ -248,28 +254,29 @@ const jsonLd = {
 
   .pillar__num {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.65rem;
+    font-weight: 800;
     color: var(--color-accent);
     line-height: 1;
     flex-shrink: 0;
-    width: 2.5rem;
+    width: 2.75rem;
   }
 
   .pillar strong {
     display: block;
     font-size: 1rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.3rem;
+    color: #ffffff;
   }
 
   .pillar p {
     margin: 0;
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
+    font-size: 0.88rem;
   }
 
+  /* Vision */
   .vision-section {
-    padding-block: 3rem 5rem;
+    padding-block: 4rem 5.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -278,17 +285,19 @@ const jsonLd = {
 
   .vision-section h2 {
     margin: 0;
+    line-height: 1.1;
   }
 
   .vision-section .lead {
     margin: 0;
     max-width: 42rem;
+    color: var(--color-text-muted);
   }
 
   @media (max-width: 720px) {
-    .philosophy-content {
+    .philosophy-inner {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 2.5rem;
     }
 
     .philosophy-pillars {

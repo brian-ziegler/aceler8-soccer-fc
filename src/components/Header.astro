@@ -8,7 +8,6 @@ const links = [
   { href: '/coaches/', label: 'Coaches' },
   { href: '/pathway/', label: 'Pathway Program' },
   { href: '/camps/', label: 'Camps & Clinics' },
-  { href: '/contact/', label: 'Contact' },
 ];
 
 function isActive(href: string) {
@@ -55,6 +54,11 @@ function isActive(href: string) {
             </li>
           ))
         }
+        <li>
+          <a href="/contact/" class:list={['site-nav__cta', { 'is-active': isActive('/contact/') }]}>
+            Contact
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -211,8 +215,39 @@ function isActive(href: string) {
     border-color: var(--color-accent);
   }
 
+  /* Contact CTA pill */
+  .site-nav__cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+    transition:
+      background 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
+  }
 
-  @media (max-width: 960px) {
+  .site-nav__cta:hover {
+    background: var(--color-primary);
+    color: var(--btn-on-primary);
+    transform: translateY(-1px);
+  }
+
+  .site-nav__cta.is-active {
+    background: var(--color-primary);
+    color: var(--btn-on-primary);
+  }
+
+  @media (max-width: 800px) {
     .site-header__menu-btn {
       display: inline-flex;
     }
@@ -244,6 +279,12 @@ function isActive(href: string) {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.5rem;
+    }
+
+    .site-nav__cta {
+      margin-top: 0.5rem;
+      width: 100%;
+      justify-content: center;
     }
 
   }

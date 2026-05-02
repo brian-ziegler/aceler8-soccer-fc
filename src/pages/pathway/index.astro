@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/site';
 
 const phases = [
@@ -7,7 +8,6 @@ const phases = [
     num: '01',
     title: 'Foundation',
     subtitle: 'Ages 6–9 · U8 / U10',
-    icon: '🌱',
     focus: 'Love of the game',
     desc: 'We introduce fundamental movement skills, basic ball manipulation, and a genuine love of the game. Training is play-heavy, exploratory, and joyful. There are no wrong answers — only discovery.',
     bullets: [
@@ -21,7 +21,6 @@ const phases = [
     num: '02',
     title: 'Development',
     subtitle: 'Ages 10–12 · U11 / U12',
-    icon: '⚽',
     focus: 'Technical mastery',
     desc: 'Players begin to develop serious technical habits alongside an introduction to positional awareness and team tactics. Training density increases, and players experience structured league and tournament play.',
     bullets: [
@@ -35,7 +34,6 @@ const phases = [
     num: '03',
     title: 'Performance',
     subtitle: 'Ages 13–14 · U13 / U14',
-    icon: '🏆',
     focus: 'Compete & advance',
     desc: 'Players compete at the highest regional level available to their age group. Training focuses on full 11v11 tactical systems, physical preparation, and the mental demands of high-pressure competition.',
     bullets: [
@@ -60,22 +58,17 @@ const jsonLd = {
   description="Aceler8 Soccer FC's Pathway Program gives every player a clear roadmap from first touch to competitive excellence. Three phases: Foundation, Development, and Performance."
   jsonLd={jsonLd}
 >
-  <article class="page-intro wrap">
-    <p class="tag">The Pathway Program</p>
-    <h1 class="reveal">A clear road from first touch<br />to full potential.</h1>
-    <p class="lead reveal reveal-delay-1">
-      The Pathway Program is our structured, age-by-age development model — built on PDI and LTAD
-      principles — that gives every Aceler8 player a roadmap from their first session to
-      competitive excellence.
-    </p>
-  </article>
+  <PageHero
+    tag="The Pathway Program"
+    title="A clear road from first touch to full potential."
+    lead="The Pathway Program is our structured, age-by-age development model — built on PDI and LTAD principles — that gives every Aceler8 player a roadmap from their first session to competitive excellence."
+  />
 
   <section class="wrap phases-section">
     {phases.map((phase, i) => (
       <div class="phase card" data-reveal style={`--reveal-delay: ${i * 0.1}s`}>
         <div class="phase__header">
           <span class="phase__num">{phase.num}</span>
-          <span class="phase__icon" aria-hidden="true">{phase.icon}</span>
         </div>
         <div class="phase__content">
           <p class="tag">{phase.subtitle}</p>
@@ -130,7 +123,7 @@ const jsonLd = {
 
 <style>
   .phases-section {
-    padding-block: 3rem;
+    padding-block: 2.5rem 3rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -159,10 +152,6 @@ const jsonLd = {
     line-height: 1;
     color: var(--color-accent);
     letter-spacing: -0.03em;
-  }
-
-  .phase__icon {
-    font-size: 1.5rem;
   }
 
   .phase__content h2 {
