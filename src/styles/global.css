@@ -1,6 +1,7 @@
 /*
   Theme & brand tokens — derived from the Aceler8 Soccer FC logo
-  Primary: deep navy #0d2255  ·  Accent: logo orange #f47b0e  ·  Link: logo blue #1e6ec8
+  Primary: deep navy #0d2255  ·  Accent: logo orange #f47b0e  ·  Link: cerulean #5b9bf5
+  Background: very dark navy #07111f (dark theme)
 */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..900;1,9..144,200..900&family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap');
 
@@ -11,19 +12,19 @@
   --color-primary: #0d2255;
   --color-primary-muted: #1c3d8a;
   --color-accent: #f47b0e;
-  --color-accent-soft: rgba(244, 123, 14, 0.12);
-  --color-link: #1e6ec8;
+  --color-accent-soft: rgba(244, 123, 14, 0.15);
+  --color-link: #5b9bf5;
 
-  --color-bg: #f6f3ec;
-  --color-bg-elevated: #ffffff;
-  --color-surface: #edeae3;
-  --color-text: #111320;
-  --color-text-muted: #404568;
-  --color-border: rgba(13, 34, 85, 0.12);
+  --color-bg: #07111f;
+  --color-bg-elevated: #0d1e35;
+  --color-surface: #122240;
+  --color-text: #e8eeff;
+  --color-text-muted: #7a90ba;
+  --color-border: rgba(255, 255, 255, 0.09);
 
-  --shadow-sm: 0 1px 2px rgba(13, 34, 85, 0.06);
-  --shadow-md: 0 12px 40px rgba(13, 34, 85, 0.12);
-  --btn-on-primary: #f6f3ec;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --btn-on-primary: #e8eeff;
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
@@ -158,17 +159,17 @@ img {
 .btn--primary {
   background: linear-gradient(
     135deg,
-    var(--color-primary) 0%,
-    var(--color-primary-muted) 100%
+    var(--color-primary-muted) 0%,
+    #2d5cbf 100%
   );
   color: var(--btn-on-primary);
-  box-shadow: 0 2px 12px rgba(13, 34, 85, 0.25);
+  box-shadow: 0 2px 12px rgba(29, 61, 138, 0.45);
 }
 
 .btn--primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 24px rgba(13, 34, 85, 0.35);
-  filter: brightness(1.08);
+  box-shadow: 0 6px 28px rgba(29, 61, 138, 0.6);
+  filter: brightness(1.1);
   color: var(--btn-on-primary);
 }
 
@@ -217,10 +218,10 @@ img {
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: rgba(13, 34, 85, 0.22);
+  border-color: rgba(255, 255, 255, 0.18);
   box-shadow:
-    0 2px 6px rgba(10, 20, 40, 0.06),
-    0 16px 40px rgba(10, 20, 40, 0.14);
+    0 2px 8px rgba(0, 0, 0, 0.45),
+    0 16px 48px rgba(0, 0, 0, 0.55);
 }
 
 /* Feature card — orange left accent bar */
@@ -343,7 +344,7 @@ img {
   max-width: 600px;
   aspect-ratio: 1;
   border-radius: 50%;
-  border: 80px solid rgba(255, 255, 255, 0.03);
+  border: 80px solid rgba(255, 255, 255, 0.05);
   pointer-events: none;
 }
 
