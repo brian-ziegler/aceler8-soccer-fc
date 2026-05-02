@@ -225,8 +225,8 @@ function isActive(href: string) {
     text-decoration: none;
     padding: 0.4rem 1rem;
     border-radius: 999px;
-    border: 2px solid var(--color-primary);
-    color: var(--color-primary);
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
     background: transparent;
     transition:
       background 0.2s var(--ease-out),
@@ -236,14 +236,14 @@ function isActive(href: string) {
   }
 
   .site-nav__cta:hover {
-    background: var(--color-primary);
-    color: var(--btn-on-primary);
+    background: var(--color-accent);
+    color: #111320;
     transform: translateY(-1px);
   }
 
   .site-nav__cta.is-active {
-    background: var(--color-primary);
-    color: var(--btn-on-primary);
+    background: var(--color-accent);
+    color: #111320;
   }
 
   @media (max-width: 800px) {
