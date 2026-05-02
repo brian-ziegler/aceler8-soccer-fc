@@ -73,7 +73,7 @@ export const coaches: Coach[] = [
     name: 'Charles Gbeke',
     role: 'Coach',
     title: 'Coach',
-    imageSrc: '',
+    imageSrc: '/coaches/charles.jpg',
     imageAlt: 'Charles Gbeke — Coach, Aceler8 FC',
     summary:
       "Coach driving Aceler8’s mission to make elite development accessible to every player in Rochester.",
