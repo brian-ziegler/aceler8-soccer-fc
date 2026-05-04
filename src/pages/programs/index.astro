@@ -45,6 +45,8 @@ const jsonLd = {
           <li>Whole player development: technical, tactical, physical, mental</li>
         </ul>
 
+        <a href="/contact/" class="btn btn--accent prog-col__early-cta">Contact Us About Elite</a>
+
         <div class="prog-detail">
           <p>
             Our Elite squads travel to top tournaments locally and regionally throughout the year,
@@ -111,6 +113,8 @@ const jsonLd = {
           <li>Three-phase development model</li>
           <li>Experienced coaches focused on long-term growth</li>
         </ul>
+
+        <a href="/contact/" class="btn btn--primary prog-col__early-cta">Register for Pathway</a>
 
         <div class="prog-detail">
           <p>
@@ -272,6 +276,7 @@ const jsonLd = {
           loading="lazy"
           class="camps-image"
         />
+        <p class="camps-image__note">Current price: $200 per player</p>
       </div>
       <div class="camps-details">
         <div class="camp-session card">
@@ -402,6 +407,7 @@ const jsonLd = {
   .prog-col--elite {
     background: color-mix(in srgb, var(--color-accent) 5%, var(--color-bg-elevated));
     border-right: 1px solid var(--color-border);
+    border-top: 4px solid var(--color-accent);
   }
 
   .prog-col--pathway {
@@ -418,6 +424,10 @@ const jsonLd = {
     color: var(--color-text-muted);
     line-height: 1.65;
     font-size: 1.05rem;
+  }
+
+  .prog-col__early-cta {
+    align-self: flex-start;
   }
 
   /* Highlights */
@@ -671,6 +681,14 @@ const jsonLd = {
     width: 100%;
     height: auto;
     display: block;
+  }
+
+  .camps-image__note {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    font-style: italic;
   }
 
   .camps-details {

@@ -182,7 +182,7 @@ img {
 .btn--ghost {
   background: transparent;
   color: var(--color-text);
-  border-color: var(--color-border);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn--ghost:hover {
