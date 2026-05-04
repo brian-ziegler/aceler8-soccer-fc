@@ -8,6 +8,35 @@ const heroImage = '/images/homepage.jpg';
 const jsonLd = [
   {
     '@context': 'https://schema.org',
+    '@type': 'SportsClub',
+    name: siteConfig.name,
+    url: siteConfig.url,
+    email: siteConfig.contactEmail,
+    foundingDate: '2024',
+    sport: 'Soccer',
+    description:
+      'Youth soccer development club in Rochester, NY offering elite programs, pathway training, summer camps, and free community clinics for players U8–U12.',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: siteConfig.city,
+      addressRegion: siteConfig.region,
+      addressCountry: siteConfig.country,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Rochester', containedInPlace: { '@type': 'State', name: 'New York' } },
+      { '@type': 'City', name: 'Brockport', containedInPlace: { '@type': 'State', name: 'New York' } },
+      { '@type': 'City', name: 'Greece', containedInPlace: { '@type': 'State', name: 'New York' } },
+    ],
+    sameAs: [siteConfig.instagram, siteConfig.facebook],
+    employee: coaches.map((c) => ({
+      '@type': 'Person',
+      name: c.name,
+      jobTitle: c.role,
+      url: `${siteConfig.url}/coaches/${c.slug}/`,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
     '@type': 'SportsOrganization',
     name: siteConfig.name,
     url: siteConfig.url,
@@ -17,27 +46,14 @@ const jsonLd = [
       name: siteConfig.city,
       containedInPlace: { '@type': 'State', name: siteConfig.region },
     },
-    sameAs: [siteConfig.instagram],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'SportsTeam',
-    name: `${siteConfig.name} — ${siteConfig.tagline}`,
-    sport: 'Soccer',
-    memberOf: { '@type': 'SportsOrganization', name: siteConfig.name, url: siteConfig.url },
-    coach: coaches.map((c) => ({
-      '@type': 'Person',
-      name: c.name,
-      jobTitle: c.role,
-      url: `${siteConfig.url}/coaches/${c.slug}/`,
-    })),
+    sameAs: [siteConfig.instagram, siteConfig.facebook],
   },
 ];
 ---
 
 <BaseLayout
   title="Aceler8 FC — Player Development · Rochester, NY"
-  description="Aceler8 FC is a player-first development club in Rochester, NY — building technically excellent, mentally resilient, and community-minded athletes."
+  description="Aceler8 FC is a youth soccer development club in Rochester, NY — offering elite training, the Pathway Program, summer camps, and free clinics for players U8–U12."
   ogImage={heroImage}
   jsonLd={jsonLd}
 >

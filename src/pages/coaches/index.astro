@@ -4,23 +4,36 @@ import PageHero from '@/components/PageHero.astro';
 import { coaches } from '@/data/coaches';
 import { siteConfig } from '@/data/site';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'Coaching staff',
-  url: `${siteConfig.url}/coaches/`,
-  hasPart: coaches.map((c) => ({
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Aceler8 FC Coaching Staff — Rochester, NY',
+    url: `${siteConfig.url}/coaches/`,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+        { '@type': 'ListItem', position: 2, name: 'Coaches', item: `${siteConfig.url}/coaches/` },
+      ],
+    },
+  },
+  ...coaches.map((c) => ({
+    '@context': 'https://schema.org',
     '@type': 'Person',
     name: c.name,
-    jobTitle: c.role,
+    jobTitle: c.title,
+    worksFor: { '@type': 'SportsClub', name: 'Aceler8 FC', url: siteConfig.url },
     url: `${siteConfig.url}/coaches/${c.slug}/`,
+    ...(c.imageSrc ? { image: `${siteConfig.url}${c.imageSrc}` } : {}),
+    ...(c.credentials?.length ? { hasCredential: c.credentials.map((cr) => ({ '@type': 'EducationalOccupationalCredential', credentialCategory: cr })) } : {}),
   })),
-};
+];
 ---
 
 <BaseLayout
-  title="Coaching staff"
-  description="Meet the staff leading Aceler8 Soccer FC — Connally Edozien, Charles Gbeke, Betsy Jones, and Carmen Stagnitta."
+  title="Coaching Staff — Aceler8 FC"
+  description="Meet the coaches behind Aceler8 FC in Rochester, NY — Connally Edozien (former MLS), Carmen Stagnitta (U.S. Soccer licensed), Betsy Jones, and Charles Gbeke."
   jsonLd={jsonLd}
 >
   <PageHero

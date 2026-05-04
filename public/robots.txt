@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.aceler8fc.org/sitemap-index.xml
+Sitemap: https://aceler8fc.com/sitemap-index.xml

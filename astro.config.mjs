@@ -7,12 +7,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const site =
   process.env.PUBLIC_SITE_URL?.replace(/\/$/, '') ||
-  'https://www.aceler8fc.org';
+  'https://aceler8fc.com';
 
 export default defineConfig({
   site,
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.includes('/pathway/') && !page.includes('/camps/'),
+    }),
+  ],
   build: {
     format: 'directory',
   },
