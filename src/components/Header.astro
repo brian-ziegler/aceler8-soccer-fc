@@ -6,14 +6,32 @@ const links = [
   { href: '/about/', label: 'About' },
   { href: '/teams/', label: 'Teams' },
   { href: '/coaches/', label: 'Coaches' },
-  { href: '/pathway/', label: 'Pathway Program' },
-  { href: '/camps/', label: 'Camps & Clinics' },
+];
+
+const programDropdown = [
+  {
+    href: '/programs/#elite',
+    label: 'Aceler8 FC Elite',
+    highlights: ['4 sessions per week', 'Single team commitment', 'Top league & tournament play', 'U13 and up'],
+  },
+  {
+    href: '/programs/#pathway',
+    label: 'Aceler8 FC Pathway',
+    highlights: ['2 sessions per week', 'Ages U8–U11', 'Flexible — works with your current team', 'Direct path to Elite'],
+  },
+  {
+    href: '/programs/#training',
+    label: 'Aceler8 Training Sessions',
+    highlights: ['9-week program', 'Open to all players', 'No tryouts required', 'Individual attention in group setting'],
+  },
 ];
 
 function isActive(href: string) {
   if (href === '/') return pathname === '/';
   return pathname === href || pathname.startsWith(`${href}/`);
 }
+
+const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isActive('/camps/');
 ---
 
 <header class="site-header">
@@ -51,6 +69,29 @@ function isActive(href: string) {
             </li>
           ))
         }
+
+        <!-- Programs dropdown -->
+        <li class="site-nav__has-dropdown">
+          <a
+            href="/programs/"
+            class:list={['site-nav__link', { 'is-active': isProgramsActive }]}
+            aria-haspopup="true"
+            id="programs-trigger"
+          >
+            Programs
+          </a>
+          <div class="programs-dropdown" id="programs-dropdown" role="region" aria-label="Programs menu">
+            {programDropdown.map((item) => (
+              <a href={item.href} class="dropdown-item">
+                <strong class="dropdown-item__name">{item.label}</strong>
+                <ul class="dropdown-item__highlights">
+                  {item.highlights.map((h) => <li>{h}</li>)}
+                </ul>
+              </a>
+            ))}
+          </div>
+        </li>
+
         <li>
           <a href="/contact/" class:list={['site-nav__cta', { 'is-active': isActive('/contact/') }]}>
             Contact
@@ -69,8 +110,6 @@ function isActive(href: string) {
     height: var(--header-h);
   }
 
-  /* Use ::before for backdrop-filter so position:fixed children
-     (the mobile nav) are not trapped in a new containing block. */
   .site-header::before {
     content: '';
     position: absolute;
@@ -155,13 +194,8 @@ function isActive(href: string) {
     transition: transform 0.2s var(--ease-out);
   }
 
-  .site-header__burger::before {
-    top: -6px;
-  }
-
-  .site-header__burger::after {
-    top: 6px;
-  }
+  .site-header__burger::before { top: -6px; }
+  .site-header__burger::after  { top:  6px; }
 
   .site-nav {
     display: flex;
@@ -202,6 +236,91 @@ function isActive(href: string) {
     border-color: var(--color-accent);
   }
 
+  /* ── Programs dropdown ──────────────────────────────────────────────────── */
+  .site-nav__has-dropdown {
+    position: relative;
+  }
+
+  .programs-dropdown {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 580px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  /* Show on hover (desktop) */
+  .site-nav__has-dropdown:hover .programs-dropdown,
+  .site-nav__has-dropdown:focus-within .programs-dropdown {
+    display: grid;
+  }
+
+  /* Show when JS adds .is-open (mobile / click) */
+  .programs-dropdown.is-open {
+    display: grid;
+  }
+
+  .dropdown-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    border-right: 1px solid var(--color-border);
+    transition: background 0.15s var(--ease-out);
+  }
+
+  .dropdown-item:last-child {
+    border-right: none;
+  }
+
+  .dropdown-item:hover {
+    background: color-mix(in srgb, var(--color-accent) 6%, var(--color-bg-elevated));
+  }
+
+  .dropdown-item__name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .dropdown-item__highlights {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .dropdown-item__highlights li {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .dropdown-item__highlights li::before {
+    content: '→';
+    color: var(--color-accent);
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    margin-top: 0.1em;
+  }
+
   /* Contact CTA pill */
   .site-nav__cta {
     display: inline-flex;
@@ -234,6 +353,7 @@ function isActive(href: string) {
     color: #111320;
   }
 
+  /* ── Mobile ──────────────────────────────────────────────────────────────── */
   @media (max-width: 800px) {
     .site-header__menu-btn {
       display: inline-flex;
@@ -254,6 +374,7 @@ function isActive(href: string) {
       transition:
         transform 0.35s var(--ease-out),
         opacity 0.25s var(--ease-out);
+      overflow-y: auto;
     }
 
     .site-nav.is-open {
@@ -268,19 +389,48 @@ function isActive(href: string) {
       gap: 0.5rem;
     }
 
+    .site-nav__has-dropdown {
+      width: 100%;
+    }
+
+    /* On mobile, dropdown is click-toggled and appears inline */
+    .programs-dropdown {
+      position: static;
+      transform: none;
+      width: 100%;
+      grid-template-columns: 1fr;
+      box-shadow: none;
+      border-radius: var(--radius-sm);
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .programs-dropdown.is-open {
+      display: grid;
+    }
+
+    .dropdown-item {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+      padding: 1rem;
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+
     .site-nav__cta {
       margin-top: 0.5rem;
       width: 100%;
       justify-content: center;
     }
-
   }
 </style>
 
 <script>
   const toggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('site-nav');
-  const body = document.body;
+  const nav    = document.getElementById('site-nav');
+  const body   = document.body;
 
   toggle?.addEventListener('click', () => {
     const open = nav?.classList.toggle('is-open');
@@ -288,11 +438,32 @@ function isActive(href: string) {
     body.classList.toggle('nav-open', !!open);
   });
 
-  nav?.querySelectorAll('a').forEach((a) => {
+  nav?.querySelectorAll('a:not(#programs-trigger)').forEach((a) => {
     a.addEventListener('click', () => {
       nav.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
       body.classList.remove('nav-open');
+    });
+  });
+
+  // Mobile: toggle programs dropdown on trigger click
+  const programsTrigger  = document.getElementById('programs-trigger');
+  const programsDropdown = document.getElementById('programs-dropdown');
+
+  programsTrigger?.addEventListener('click', (e) => {
+    if (window.innerWidth <= 800) {
+      e.preventDefault();
+      programsDropdown?.classList.toggle('is-open');
+    }
+  });
+
+  // Close dropdown when clicking any item inside it (mobile)
+  programsDropdown?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      nav?.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      body.classList.remove('nav-open');
+      programsDropdown.classList.remove('is-open');
     });
   });
 </script>

@@ -66,7 +66,22 @@ const jsonLd = [
         coaching curriculum to our parent policies — is designed with the whole child in mind.
       </p>
       <div class="hero__actions reveal reveal-delay-3">
-        <a class="btn btn--accent" href="/pathway/">Explore Programs</a>
+        <div class="programs-menu">
+          <button class="btn btn--accent programs-menu__btn" aria-haspopup="true" aria-expanded="false" id="hero-programs-btn">
+            Explore Programs
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="programs-menu__panel" id="hero-programs-panel" hidden>
+            <a href="/programs/#elite" class="programs-menu__item">
+              <strong>Aceler8 FC Elite</strong>
+              <span>4 sessions/week · single team · top competition</span>
+            </a>
+            <a href="/programs/#pathway" class="programs-menu__item">
+              <strong>Aceler8 FC Pathway</strong>
+              <span>2 sessions/week · U8–U11 · path to Elite</span>
+            </a>
+          </div>
+        </div>
         <a class="btn btn--outline-light" href="/coaches/">Meet the staff</a>
       </div>
     </div>
@@ -99,25 +114,25 @@ const jsonLd = [
     <div class="grid-3">
       <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0s">
         <div class="card-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Elite Program</h3>
+        <p>
+          Four sessions a week, single team commitment, top tournaments. For the player
+          who wants to take their game somewhere real.
+        </p>
+        <a class="btn btn--primary card-cta" href="/programs/#elite">View Elite</a>
+      </article>
+      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.1s">
+        <div class="card-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <h3>Pathway Program</h3>
         <p>
-          Our structured development model gives every player a clear roadmap — from
-          foundation to elite level.
+          Two sessions a week, flexible scheduling, a direct path to Elite — for players
+          U8–U11 ready to push past recreational soccer.
         </p>
-        <a class="btn btn--primary card-cta" href="/pathway/">Explore the pathway</a>
-      </article>
-      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.1s">
-        <div class="card-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <h3>Camps &amp; Clinics</h3>
-        <p>
-          Summer camps, seasonal camps, and academy clinics — open to all players
-          regardless of club affiliation.
-        </p>
-        <a class="btn btn--primary card-cta" href="/camps/">View programs</a>
+        <a class="btn btn--primary card-cta" href="/programs/#pathway">View Pathway</a>
       </article>
       <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.2s">
         <div class="card-icon" aria-hidden="true">
@@ -205,7 +220,7 @@ const jsonLd = [
       </div>
       <div class="cta-band__actions" data-reveal style="--reveal-delay: 0.1s">
         <a class="btn btn--accent" href="/contact/">Contact Us Today</a>
-        <a class="btn btn--outline-light" href="/pathway/">View All Programs</a>
+        <a class="btn btn--outline-light" href="/programs/">View All Programs</a>
       </div>
     </div>
   </section>
@@ -595,4 +610,77 @@ const jsonLd = [
     color: rgba(246, 243, 236, 0.65);
     margin: 0;
   }
+
+  /* ── Hero programs dropdown ──────────────────────────────────────────────── */
+  .programs-menu {
+    position: relative;
+  }
+
+  .programs-menu__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    border: none;
+  }
+
+  .programs-menu__panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    min-width: 260px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    z-index: 20;
+  }
+
+  .programs-menu__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.9rem 1.1rem;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.15s var(--ease-out);
+  }
+
+  .programs-menu__item:last-child {
+    border-bottom: none;
+  }
+
+  .programs-menu__item:hover {
+    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
+  }
+
+  .programs-menu__item strong {
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+
+  .programs-menu__item span {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
 </style>
+
+<script>
+  const btn   = document.getElementById('hero-programs-btn');
+  const panel = document.getElementById('hero-programs-panel');
+
+  btn?.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    panel?.toggleAttribute('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!btn?.contains(e.target as Node) && !panel?.contains(e.target as Node)) {
+      btn?.setAttribute('aria-expanded', 'false');
+      panel?.setAttribute('hidden', '');
+    }
+  });
+</script>

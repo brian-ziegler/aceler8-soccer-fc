@@ -1,0 +1,920 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import { siteConfig } from '@/data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Programs — Aceler8 FC',
+  url: `${siteConfig.url}/programs/`,
+};
+---
+
+<BaseLayout
+  title="Programs — Aceler8 FC Elite & Pathway"
+  description="Aceler8 FC offers elite player development programs in Rochester, NY — from the Elite Program to the Pathway Program, Training Sessions, Summer Camps, and free community clinics."
+  jsonLd={jsonLd}
+>
+  <PageHero
+    tag="Aceler8 FC Programs"
+    title="Built for players who want more."
+    lead="From elite competitive programming to development pathways, training sessions, summer camps, and free community clinics — every program we run has one goal: making your player better."
+  />
+
+  <!-- ── Program overview cards ─────────────────────────────────────────────── -->
+  <section class="wrap programs-overview" aria-label="Programs overview">
+    <div class="programs-cols" id="programs">
+
+      <!-- ── Elite Program ────────────────────────────────────────────────── -->
+      <div class="prog-col prog-col--elite" id="elite" data-reveal>
+        <div class="prog-col__head">
+          <p class="tag">Primary Program</p>
+          <h2>Aceler8 FC Elite</h2>
+          <p class="prog-col__sub">
+            Elite is where the work shows up. Four sessions a week. One team. A standard that
+            pushes players every single day.
+          </p>
+        </div>
+
+        <ul class="prog-highlights">
+          <li>Four high-level training sessions per week</li>
+          <li>Single team commitment for full chemistry and identity</li>
+          <li>Top league play — starting at U13</li>
+          <li>Top tournaments locally and regionally year round</li>
+          <li>Whole player development: technical, tactical, physical, mental</li>
+        </ul>
+
+        <div class="prog-detail">
+          <p>
+            Our Elite squads travel to top tournaments locally and regionally throughout the year,
+            where players are tested on the biggest stages against the best competition around.
+            This is where confidence is built, where reputations grow, and where players learn
+            what it takes to perform when the lights come on.
+          </p>
+          <p>
+            Under the guidance of Head of Academy Connally Edozien and our Elite coaching staff,
+            training is built on a clear game model that mirrors how the game is played at the
+            highest levels. Players sharpen their technical foundation, develop their tactical IQ
+            in possession and out of possession, and learn to read the game at speed. Pressing
+            triggers, build-out play, transitions, defensive shape, finishing under pressure —
+            every layer of the game gets attention.
+          </p>
+          <p>
+            This is more than soccer. It is a standard. It is a culture. It is a commitment to
+            becoming the best version of yourself on and off the field.
+          </p>
+        </div>
+
+        <div class="prog-focus">
+          <p class="prog-focus__label">Main Focus</p>
+          <ul>
+            <li>Four sessions per week designed to build technical mastery, tactical awareness, and physical readiness.</li>
+            <li>Single team commitment so players develop chemistry, identity, and a shared style of play.</li>
+            <li>Match preparation rooted in opposition analysis, set piece work, and clarity of role.</li>
+            <li>A development model that prepares players for high school, ODP, college pathways, and beyond.</li>
+          </ul>
+        </div>
+
+        <div class="prog-focus">
+          <p class="prog-focus__label">Key Features</p>
+          <ul>
+            <li>A full calendar of top tournaments locally and regionally.</li>
+            <li>Position-specific coaching and individual development plans for every player.</li>
+            <li>A culture built on accountability, family values, and the relentless pursuit of growth.</li>
+          </ul>
+        </div>
+
+        <p class="prog-cta-note">
+          If your player is ready to chase the game, we are ready to take them there. Elite is
+          the next step.
+        </p>
+        <a href="/contact/" class="btn btn--accent">Contact Us About Elite</a>
+      </div>
+
+      <!-- ── Pathway Program ──────────────────────────────────────────────── -->
+      <div class="prog-col prog-col--pathway" id="pathway" data-reveal style="--reveal-delay: 0.1s">
+        <div class="prog-col__head">
+          <p class="tag">Development Program</p>
+          <h2>Aceler8 FC Pathway</h2>
+          <p class="prog-col__sub">
+            Built for players who want to take their development seriously and earn their way
+            into the Elite Program.
+          </p>
+        </div>
+
+        <ul class="prog-highlights">
+          <li>Two training sessions per week</li>
+          <li>Flexible — works alongside your current team</li>
+          <li>A direct path to the Aceler8 FC Elite Program</li>
+          <li>Local league play and tournaments</li>
+          <li>Three-phase development model</li>
+          <li>Experienced coaches focused on long-term growth</li>
+        </ul>
+
+        <div class="prog-detail">
+          <p>
+            We built this with flexibility in mind. Players can stay with their current team and
+            still get the top-tier coaching that sets Aceler8 apart. It is the path to the next
+            level without giving up the team they are on right now.
+          </p>
+        </div>
+
+        <div class="prog-focus">
+          <p class="prog-focus__label">Who It Is For</p>
+          <p class="prog-focus__intro">Players ages U8 through U11 who are ready to push past recreational soccer:</p>
+          <ul>
+            <li>Wants to compete at the club, regional, or elite level</li>
+            <li>Needs to lock in fundamentals under pressure</li>
+            <li>Wants to read the game faster and play with more confidence</li>
+            <li>Is preparing for tryouts, academy looks, or higher-level competition</li>
+            <li>Is hungry for a real edge over the rest of the field</li>
+          </ul>
+        </div>
+
+        <div class="prog-focus">
+          <p class="prog-focus__label">The Three Phase Journey</p>
+          <div class="phase-mini">
+            <div class="phase-mini__item">
+              <span class="phase-mini__num">Phase 1</span>
+              <div>
+                <strong>Mastering the Ball</strong>
+                <p>Ball mastery, first touch, passing, shooting, movement, footwork.</p>
+              </div>
+            </div>
+            <div class="phase-mini__item">
+              <span class="phase-mini__num">Phase 2</span>
+              <div>
+                <strong>Reading the Game</strong>
+                <p>Positional play, pressing, combinations, transitions, set pieces.</p>
+              </div>
+            </div>
+            <div class="phase-mini__item">
+              <span class="phase-mini__num">Phase 3</span>
+              <div>
+                <strong>Playing the Match</strong>
+                <p>Mental resilience, scanning, decision-making, leadership, film review.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-focus">
+          <p class="prog-focus__label">What Families Can Expect</p>
+          <ul>
+            <li>Technical assessments at the start and end of each phase</li>
+            <li>Regular updates on your player's progress and next steps</li>
+            <li>Video feedback to support development at home</li>
+            <li>Phase completion recognition at our showcases</li>
+            <li>Select tournament play for Phase 2 and 3 players</li>
+            <li>A clear path into the Aceler8 FC Elite Program</li>
+          </ul>
+        </div>
+
+        <div class="prog-enroll">
+          <p class="prog-focus__label">How to Enroll</p>
+          <ol class="enroll-mini">
+            <li>Free 30-minute call with parent and player to talk goals and fit</li>
+            <li>Complimentary 60-minute assessment to place your player in the right phase</li>
+            <li>Enroll, schedule your sessions, and get to work</li>
+          </ol>
+          <p class="enroll-note">Spots are limited. We keep groups small on purpose.</p>
+        </div>
+
+        <div class="prog-actions">
+          <a href="/contact/" class="btn btn--primary">Register for Pathway</a>
+          <a href="mailto:info@aceler8fc.com" class="btn btn--ghost">info@aceler8fc.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Training Sessions ─────────────────────────────────────────────────── -->
+  <section class="section section--surface" id="training">
+    <div class="wrap training-section">
+      <div class="training-header" data-reveal>
+        <p class="tag">Aceler8 Training Sessions</p>
+        <h2>9 Week Program</h2>
+        <p class="lead">
+          A 9-week program open to every player who wants to see what Aceler8 training is all
+          about. No tryouts, no gatekeeping. Just focused training for kids who want to get better.
+        </p>
+      </div>
+
+      <div class="training-grid">
+        <div class="training-body" data-reveal style="--reveal-delay: 0.05s">
+          <h3>Just Focused Skill Development</h3>
+          <p>
+            Aceler8 Soccer is built to fill the gaps that team practice often leaves behind. If
+            your child wants extra, focused training to sharpen their technique, strengthen their
+            mindset, and grow their game awareness, this is the place for them.
+          </p>
+
+          <h3>Fundamentals, Repetition, Results</h3>
+          <p>There is no magic formula for getting better. With the right fundamentals, the right
+          environment, and experienced coaching, your child can become every coach's dream.
+          We focus on:</p>
+          <ul class="training-list">
+            <li>Technical skills and good habits</li>
+            <li>Mental focus and soccer IQ</li>
+            <li>Hard work and consistency</li>
+            <li>A fun, inclusive environment that develops the whole player</li>
+          </ul>
+
+          <h3>Individualized Training in a Group Setting</h3>
+          <p>
+            At Aceler8, players get personal attention inside a group setting. They get the
+            energy and competition of training alongside others while still being coached on the
+            details that matter most to them. Repetition done the right way is the key to
+            lasting growth, and that is exactly what we deliver.
+          </p>
+          <p class="training-cta-line">
+            Sign up. Show up. Get better. Your child's real development starts here.
+          </p>
+          <a href="/contact/" class="btn btn--primary">Register</a>
+        </div>
+
+        <div class="training-aside card" data-reveal style="--reveal-delay: 0.12s">
+          <p class="tag">Program Details</p>
+          <dl class="detail-list">
+            <dt>Duration</dt>
+            <dd>9 weeks</dd>
+            <dt>Format</dt>
+            <dd>Group training with individual attention</dd>
+            <dt>Who It's For</dt>
+            <dd>All players — no tryouts required</dd>
+            <dt>Focus</dt>
+            <dd>Technical skills, soccer IQ, mental focus</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Summer Camps ───────────────────────────────────────────────────────── -->
+  <section class="wrap camps-section" id="camps">
+    <div class="camps-header" data-reveal>
+      <p class="tag">Camps</p>
+      <h2>Summer Camp 2026</h2>
+      <p class="lead">
+        Kickstart your summer at Sweden Town Park for our Soccer Camp. Perfect for players of
+        all skill levels — our camp offers top-notch coaching and an unforgettable experience.
+      </p>
+    </div>
+
+    <div class="camps-layout" data-reveal style="--reveal-delay: 0.08s">
+      <div class="camps-image-wrap">
+        <img
+          src="/images/summer-camp-2026.png"
+          alt="Aceler8 FC Summer Camp 2026 — Brockport SC"
+          width="1150"
+          height="1435"
+          loading="lazy"
+          class="camps-image"
+        />
+      </div>
+      <div class="camps-details">
+        <div class="camp-session card">
+          <p class="tag">Session 1</p>
+          <p class="camp-session__ages">Ages 14–18</p>
+          <p class="camp-session__dates">July 14–16, 2026</p>
+        </div>
+        <div class="camp-session card">
+          <p class="tag">Session 2</p>
+          <p class="camp-session__ages">Ages 6–13</p>
+          <p class="camp-session__dates">July 20–23, 2026</p>
+        </div>
+        <div class="camp-cost card">
+          <p class="camp-cost__label">Cost</p>
+          <p class="camp-cost__amount">$200</p>
+          <p class="camp-cost__note">Per player, per session</p>
+        </div>
+        <a
+          href="https://go.teamsnap.com/forms/488634"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn--accent camp-register-btn"
+        >
+          Register Now
+        </a>
+        <p class="camp-location">
+          <strong>Location:</strong> Sweden Town Park, Brockport, NY
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Free Clinics ───────────────────────────────────────────────────────── -->
+  <section class="section section--surface" id="clinics">
+    <div class="wrap clinics-section">
+      <div class="clinics-header" data-reveal>
+        <p class="tag">Community</p>
+        <h2>Free Clinics</h2>
+        <p class="lead">
+          A few times each year, Aceler8 opens its doors to the community with free clinics —
+          a chance to step on the field with our coaches and walk away a better player.
+        </p>
+      </div>
+
+      <div class="clinics-grid">
+        <div class="clinics-body" data-reveal style="--reveal-delay: 0.05s">
+          <h3>What to Expect</h3>
+          <ul class="clinics-list">
+            <li>Real coaching from the Aceler8 staff</li>
+            <li>Skill development, competition, and game-based training</li>
+            <li>A high-energy, inclusive environment open to all skill levels</li>
+            <li>A true look at what Aceler8 training is all about</li>
+          </ul>
+
+          <div class="clinic-spotlight card" data-reveal style="--reveal-delay: 0.1s">
+            <p class="tag">April 2026 Clinic</p>
+            <p>
+              Our most recent free clinic brought out over 100 players, and the energy on the
+              field said it all.
+            </p>
+            <ul>
+              <li>Kids left with sharper skills and fresh confidence</li>
+              <li>Players got a real feel for high-level training</li>
+              <li>Parents saw the difference. Players felt the difference.</li>
+            </ul>
+          </div>
+
+          <p class="clinics-close">
+            Whether your child is brand new to the game or already chasing the next level, our
+            free clinics are an open invitation to come train, compete, and grow with us. No
+            cost. No pressure. Just real coaching and real development.
+          </p>
+          <p class="clinics-cta-line">Stay tuned for our next free clinic. You will not want to miss it.</p>
+          <a href="/contact/" class="btn btn--primary">Get Notified</a>
+        </div>
+
+        <div class="clinics-aside" data-reveal style="--reveal-delay: 0.12s">
+          <div class="card clinic-fact">
+            <p class="clinic-fact__num">100+</p>
+            <p class="clinic-fact__label">Players at our April 2026 clinic</p>
+          </div>
+          <div class="card clinic-fact">
+            <p class="clinic-fact__num">Free</p>
+            <p class="clinic-fact__label">No cost, no pressure, no affiliation required</p>
+          </div>
+          <div class="card clinic-fact">
+            <p class="clinic-fact__num">All Levels</p>
+            <p class="clinic-fact__label">Open to every player regardless of experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Bottom CTA ────────────────────────────────────────────────────────── -->
+  <section class="wrap bottom-cta" data-reveal>
+    <h2>Ready to get started?</h2>
+    <p class="lead">Reach out and we'll help you find the right program for your player.</p>
+    <div class="bottom-cta__actions">
+      <a href="/contact/" class="btn btn--primary">Contact Us</a>
+      <a href="/coaches/" class="btn btn--ghost">Meet the Coaches</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Programs overview columns ──────────────────────────────────────────── */
+  .programs-overview {
+    padding-block: 3rem 0;
+  }
+
+  .programs-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .prog-col {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .prog-col--elite {
+    background: color-mix(in srgb, var(--color-accent) 5%, var(--color-bg-elevated));
+    border-right: 1px solid var(--color-border);
+  }
+
+  .prog-col--pathway {
+    background: var(--color-bg-elevated);
+  }
+
+  .prog-col__head h2 {
+    margin: 0.25rem 0 0.75rem;
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  }
+
+  .prog-col__sub {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    font-size: 1.05rem;
+  }
+
+  /* Highlights */
+  .prog-highlights {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .prog-highlights li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .prog-highlights li::before {
+    content: '✓';
+    color: var(--color-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.05em;
+  }
+
+  /* Detail paragraphs */
+  .prog-detail p {
+    margin: 0 0 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .prog-detail p:last-child { margin-bottom: 0; }
+
+  /* Focus blocks */
+  .prog-focus {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+  }
+
+  .prog-focus__label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .prog-focus__intro {
+    margin: 0 0 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .prog-focus ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  /* Phase mini list */
+  .phase-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .phase-mini__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .phase-mini__num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    white-space: nowrap;
+    padding-top: 0.15em;
+    min-width: 4.5rem;
+  }
+
+  .phase-mini__item strong {
+    display: block;
+    font-size: 0.92rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .phase-mini__item p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  /* Enroll block */
+  .prog-enroll {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+  }
+
+  .enroll-mini {
+    margin: 0 0 0.75rem;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .enroll-note {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  .prog-cta-note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+  }
+
+  .prog-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+  }
+
+  /* ── Training Sessions ────────────────────────────────────────────────────── */
+  .training-section {
+    padding-block: 3rem 4rem;
+  }
+
+  .training-header {
+    max-width: 44rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .training-header h2 {
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .training-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .training-body h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.2rem;
+  }
+
+  .training-body p {
+    margin: 0 0 1.25rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .training-list {
+    margin: 0 0 1.5rem;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .training-cta-line {
+    font-style: italic;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .training-aside {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .detail-list {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .detail-list dt {
+    font-weight: 700;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  .detail-list dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Camps ─────────────────────────────────────────────────────────────────── */
+  .camps-section {
+    padding-block: 3rem 4rem;
+  }
+
+  .camps-header {
+    max-width: 44rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .camps-header h2 { margin: 0.25rem 0 0.75rem; }
+
+  .camps-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .camps-image-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .camps-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .camps-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .camp-session {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .camp-session__ages {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-text);
+    font-family: var(--font-display);
+  }
+
+  .camp-session__dates {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .camp-cost {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .camp-cost__label {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .camp-cost__amount {
+    margin: 0;
+    font-size: 2.25rem;
+    font-weight: 800;
+    font-family: var(--font-display);
+    color: var(--color-text);
+    line-height: 1;
+  }
+
+  .camp-cost__note {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .camp-register-btn {
+    align-self: flex-start;
+    font-size: 1rem;
+    padding: 0.65rem 1.5rem;
+  }
+
+  .camp-location {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Clinics ────────────────────────────────────────────────────────────── */
+  .clinics-section {
+    padding-block: 3rem 4rem;
+  }
+
+  .clinics-header {
+    max-width: 44rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .clinics-header h2 { margin: 0.25rem 0 0.75rem; }
+
+  .clinics-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .clinics-body h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.1rem;
+  }
+
+  .clinics-list {
+    margin: 0 0 1.5rem;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .clinic-spotlight {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .clinic-spotlight p {
+    margin: 0.5rem 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .clinic-spotlight ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .clinics-close {
+    margin: 0 0 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .clinics-cta-line {
+    margin: 0 0 1.25rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .clinics-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .clinic-fact {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .clinic-fact__num {
+    margin: 0 0 0.25rem;
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: var(--font-display);
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .clinic-fact__label {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── Bottom CTA ──────────────────────────────────────────────────────────── */
+  .bottom-cta {
+    padding-block: 3rem 5rem;
+  }
+
+  .bottom-cta h2 { margin: 0 0 0.6rem; }
+
+  .bottom-cta .lead {
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted);
+    max-width: 36rem;
+  }
+
+  .bottom-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* ── Shared ──────────────────────────────────────────────────────────────── */
+  .lead {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────────── */
+  @media (max-width: 960px) {
+    .programs-cols {
+      grid-template-columns: 1fr;
+    }
+
+    .prog-col--elite {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .training-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .camps-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .camps-image-wrap {
+      max-width: 380px;
+    }
+
+    .clinics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .clinics-aside {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .clinic-fact {
+      flex: 1;
+      min-width: 140px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .prog-col {
+      padding: 1.75rem;
+    }
+
+    .clinics-aside {
+      flex-direction: column;
+    }
+  }
+</style>
