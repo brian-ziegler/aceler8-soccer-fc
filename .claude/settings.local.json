@@ -29,7 +29,17 @@
       "Bash(node -e \"require\\('sharp'\\); console.log\\('sharp ok'\\)\")",
       "Bash(magick -version)",
       "Bash(node -e ':*)",
-      "Bash"
+      "Bash",
+      "WebFetch(domain:next-version.aceler8fc.com)",
+      "Skill(agent-browser)",
+      "Skill(agent-browser:*)",
+      "PowerShell(Start-Process -FilePath \"npm\" -ArgumentList \"run\",\"dev\" -WorkingDirectory \"c:\\\\Users\\\\Brian\\\\git\\\\aceler8-soccer-fc\" -WindowStyle Hidden)",
+      "Read(//c/Users/Brian/AppData/Local/Temp/**)",
+      "PowerShell(Get-ChildItem -Path $env:USERPROFILE\\\\Downloads | Where-Object { $_.Name -match \"gbeke|gebke|charles|coach\" -or $_.Extension -match \"\\\\.\\(jpg|jpeg|png|webp\\)\" } | Select-Object -ExpandProperty FullName)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\Brian\\\\Downloads\\\\Aceler8 Logo - 8 Logo.png\" \"c:\\\\Users\\\\Brian\\\\git\\\\aceler8-soccer-fc\\\\public\\\\logo-mark.png\" -Force)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Brian\\Downloads"
     ]
   }
 }
