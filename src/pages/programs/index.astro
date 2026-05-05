@@ -755,7 +755,7 @@ const jsonLd = [
   }
 
   .camps-image-wrap {
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     border: 1px solid var(--color-border);
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
@@ -765,15 +765,17 @@ const jsonLd = [
     width: 100%;
     height: auto;
     display: block;
-    clip-path: inset(0 round calc(var(--radius-lg) - 1px));
+    clip-path: inset(0 round calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0);
   }
 
   .camps-image__note {
-    margin: 0.5rem 0 0;
+    padding: 0.6rem 1rem;
+    background: var(--color-bg-elevated);
     font-size: 0.8rem;
     color: var(--color-text-muted);
     text-align: center;
     font-style: italic;
+    margin: 0;
   }
 
   .camps-details {
