@@ -93,17 +93,6 @@ const jsonLd = {
         />
       </div>
     ))}
-    {[7,8,9,10,11].map((n) => (
-      <div class="player-gallery__item player-gallery__item--portrait">
-        <img
-          src={`/images/players-${n}.jpg`}
-          alt={`Aceler8 FC players`}
-          width="1080"
-          height="1620"
-          loading="lazy"
-        />
-      </div>
-    ))}
   </section>
 
   <section class="wrap cta-section" data-reveal>
@@ -217,10 +206,6 @@ const jsonLd = {
   .player-gallery__item {
     aspect-ratio: 4 / 3;
     overflow: hidden;
-  }
-
-  .player-gallery__item--portrait {
-    aspect-ratio: 2 / 3;
   }
 
   .player-gallery__item img {
