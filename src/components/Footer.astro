@@ -12,6 +12,22 @@ import { siteConfig } from '@/data/site';
         width="160"
         height="60"
       />
+      <div class="site-footer__partner-logos">
+        <img
+          src="/images/logo-afcr.jpg"
+          alt="Association Football Club of Rochester"
+          class="site-footer__partner-logo"
+          width="60"
+          height="60"
+        />
+        <img
+          src="/images/logo-select.png"
+          alt="AFCR Select"
+          class="site-footer__partner-logo"
+          width="60"
+          height="60"
+        />
+      </div>
       <p class="site-footer__muted">{siteConfig.tagline}</p>
     </div>
     <div>
@@ -69,6 +85,21 @@ import { siteConfig } from '@/data/site';
     margin-bottom: 0.75rem;
     object-fit: contain;
     filter: invert(1);
+  }
+
+  .site-footer__partner-logos {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .site-footer__partner-logo {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .site-footer__heading {
