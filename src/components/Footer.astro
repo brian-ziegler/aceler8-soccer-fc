@@ -5,14 +5,14 @@ import { siteConfig } from '@/data/site';
 <footer class="site-footer">
   <div class="wrap site-footer__grid">
     <div>
-      <img
-        src="/logo-wordmark.png"
-        alt={siteConfig.name}
-        class="site-footer__logo"
-        width="160"
-        height="60"
-      />
-      <div class="site-footer__partner-logos">
+      <div class="site-footer__logos">
+        <img
+          src="/logo-wordmark.png"
+          alt={siteConfig.name}
+          class="site-footer__logo"
+          width="160"
+          height="60"
+        />
         <img
           src="/images/logo-afcr.jpg"
           alt="Association Football Club of Rochester"
@@ -78,20 +78,18 @@ import { siteConfig } from '@/data/site';
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   }
 
-  .site-footer__logo {
-    display: block;
-    height: 3.5rem;
-    width: auto;
+  .site-footer__logos {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 0.75rem;
-    object-fit: contain;
-    filter: invert(1);
   }
 
-  .site-footer__partner-logos {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    margin-bottom: 0.75rem;
+  .site-footer__logo {
+    height: 3.5rem;
+    width: auto;
+    object-fit: contain;
+    filter: invert(1);
   }
 
   .site-footer__partner-logo {
@@ -100,6 +98,7 @@ import { siteConfig } from '@/data/site';
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
   }
 
   .site-footer__heading {
