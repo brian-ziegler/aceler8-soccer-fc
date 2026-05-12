@@ -131,6 +131,12 @@ function handler(event) {
           cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
           compress: true,
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          functionAssociations: [
+            {
+              function: rewriteFn,
+              eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+            },
+          ],
         },
         '*.png': {
           origin: s3Origin,
