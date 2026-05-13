@@ -322,7 +322,10 @@ const jsonLd = [
           <p class="training-cta-line">
             Sign up. Show up. Get better. Your child's real development starts here.
           </p>
-          <a href="/contact/" class="btn btn--primary">Register</a>
+          <div class="training-actions">
+            <a href="https://aceler8soccer.com/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Register at aceler8soccer.com</a>
+            <a href="/contact/" class="btn btn--ghost">Contact Us</a>
+          </div>
         </div>
 
         <div class="training-aside card" data-reveal style="--reveal-delay: 0.12s">
@@ -711,6 +714,12 @@ const jsonLd = [
   .training-cta-line {
     font-style: italic;
     margin-bottom: 1.25rem !important;
+  }
+
+  .training-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .training-aside {

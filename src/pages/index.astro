@@ -59,75 +59,75 @@ const jsonLd = [
 >
   <!-- ── Hero ────────────────────────────────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero__media">
-      {[7,8,9,10,11].map((n, i) => (
-        <div class="hero-slide" data-index={i}>
-          <img
-            src={`/images/players-${n}.jpg`}
-            alt="Aceler8 FC players in action"
-            width="1080"
-            height="1620"
-            fetchpriority={i === 0 ? 'high' : 'auto'}
-            loading={i === 0 ? 'eager' : 'lazy'}
-          />
-        </div>
-      ))}
-      <div class="hero__scrim" aria-hidden="true"></div>
-    </div>
-    <div class="wrap hero__content">
-      <ul class="hero__badges reveal" aria-label="Key club facts">
-        <li>Est. 2024</li>
-        <li>Rochester, NY</li>
-        <li>U8–U12 Programs</li>
-      </ul>
-      <h1 class="reveal reveal-delay-1">Welcome to the<br />Aceler8 FC Family</h1>
-      <p class="hero__lead reveal reveal-delay-2">
-        Aceler8 FC was founded in Rochester, New York in 2024 with a single mission: to develop
-        well-rounded soccer players and exceptional human beings. Everything we do — from our
-        coaching curriculum to our parent policies — is designed with the whole child in mind.
-      </p>
-      <div class="hero__actions reveal reveal-delay-3">
-        <div class="programs-menu">
-          <button class="btn btn--accent programs-menu__btn" aria-haspopup="true" aria-expanded="false" id="hero-programs-btn">
-            Explore Programs
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="programs-menu__panel" id="hero-programs-panel" hidden>
-            <a href="/programs/#elite" class="programs-menu__item">
-              <strong>Aceler8 FC Elite</strong>
-              <span>4 sessions/week · single team · top competition</span>
-            </a>
-            <a href="/programs/#pathway" class="programs-menu__item">
-              <strong>Aceler8 FC Pathway</strong>
-              <span>2 sessions/week · U8–U11 · path to Elite</span>
-            </a>
-            <a href="/programs/#training" class="programs-menu__item">
-              <strong>Aceler8 Training Sessions</strong>
-              <span>9-week program · open to all · no tryouts required</span>
-            </a>
+    <div class="wrap hero__inner">
+      <div class="hero__card">
+        <ul class="hero__badges reveal" aria-label="Key club facts">
+          <li>Est. 2024</li>
+          <li>Rochester, NY</li>
+          <li>U8–U12 Programs</li>
+        </ul>
+        <h1 class="reveal reveal-delay-1">Welcome to the<br />Aceler8 FC Family</h1>
+        <p class="hero__lead reveal reveal-delay-2">
+          We build complete soccer players — technically sharp, mentally resilient, and rooted in
+          the Rochester community. Elite coaching, a structured development pathway, and a culture
+          that puts the whole player first.
+        </p>
+        <div class="hero__actions reveal reveal-delay-3">
+          <div class="programs-menu">
+            <button class="btn btn--accent programs-menu__btn" aria-haspopup="true" aria-expanded="false" id="hero-programs-btn">
+              Explore Programs
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="programs-menu__panel" id="hero-programs-panel" hidden>
+              <a href="/programs/#elite" class="programs-menu__item">
+                <strong>Aceler8 FC Elite</strong>
+                <span>4 sessions/week · single team · top competition</span>
+              </a>
+              <a href="/programs/#pathway" class="programs-menu__item">
+                <strong>Aceler8 FC Pathway</strong>
+                <span>2 sessions/week · U8–U11 · path to Elite</span>
+              </a>
+              <a href="/programs/#training" class="programs-menu__item">
+                <strong>Aceler8 Training Sessions</strong>
+                <span>9-week program · open to all · no tryouts required</span>
+              </a>
+            </div>
           </div>
+          <a class="btn btn--outline-light" href="/coaches/">Meet the staff</a>
         </div>
-        <a class="btn btn--outline-light" href="/coaches/">Meet the staff</a>
+      </div>
+
+      <div class="hero__carousel">
+        {[
+          ['/images/action-1.png', 1023, 1537],
+          ['/images/action-2.png', 1023, 1537],
+          ['/images/action-3.png', 1023, 1537],
+          ['/images/action-4.png', 1023, 1537],
+          ['/images/action-5.png', 1023, 1537],
+          ['/images/action-6.png', 1023, 1537],
+          ['/images/action-7.jpg', 4000, 6000],
+          ['/images/action-8.jpg', 1080, 1620],
+        ].map(([src, w, h], i) => (
+          <div class="hero-slide" data-index={i}>
+            <img
+              src={src}
+              alt="Aceler8 FC players in action"
+              width={w}
+              height={h}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- ── Mission ──────────────────────────────────────────────────────────── -->
-  <section class="section section--surface">
-    <div class="wrap mission-banner">
-      <div class="mission-banner__text" data-reveal>
-        <p class="tag">Our Mission</p>
-        <p class="mission-banner__statement">
-          To provide a player-centered, development-focused soccer environment that empowers
-          youth in Rochester and the surrounding community to reach their full potential as
-          athletes and individuals.
-        </p>
-      </div>
-    </div>
-  </section>
+  <hr class="section-rule" aria-hidden="true" />
 
   <!-- ── What We Offer ─────────────────────────────────────────────────────── -->
-  <section class="section wrap">
+  <section class="section">
+    <div class="wrap">
     <div class="section__head">
       <p class="tag">What We Offer</p>
       <h2 class="section-heading">A complete development<br class="rwd-break" /> environment.</h2>
@@ -161,7 +161,7 @@ const jsonLd = [
       </article>
       <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.2s">
         <div class="card-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
         </div>
         <h3>Our Philosophy</h3>
         <p>
@@ -171,6 +171,7 @@ const jsonLd = [
         <a class="btn btn--primary card-cta" href="/about/">Read our story</a>
       </article>
     </div>
+    </div>
   </section>
 
   <!-- ── Coaching staff preview (surface background) ────────────────────────── -->
@@ -178,7 +179,7 @@ const jsonLd = [
     <div class="wrap coach-preview">
       <div class="coach-preview__intro">
         <p class="tag">Staff</p>
-        <h2>Coaches you can look up.</h2>
+        <h2 class="section-heading">Coaches you can look up.</h2>
         <p class="section__lead">
           Our leadership blends professional playing experience, classroom pedagogy, and
           U.S. Soccer licensing — and we publish every credential openly.
@@ -220,10 +221,10 @@ const jsonLd = [
   <!-- ── Team photo strip ──────────────────────────────────────────────────── -->
   <section class="team-photo-section" aria-hidden="true">
     <img
-      src="/images/team-cheering.jpg"
+      src="/images/team-cheering.png"
       alt="Aceler8 FC team celebrating"
-      width="6000"
-      height="4000"
+      width="1536"
+      height="1024"
       loading="lazy"
       class="team-photo"
     />
@@ -254,19 +255,34 @@ const jsonLd = [
 <style>
   /* ── Hero ─────────────────────────────────────────────────────────────────── */
   .hero {
-    position: relative;
-    /* Scale hero to the image's natural 3:2 ratio — clamp keeps it usable on
-       small screens and prevents it from overflowing tall viewports */
-    min-height: clamp(500px, calc(100vw * 2 / 3), 90vh);
-    display: flex;
-    align-items: flex-start;
-    padding-top: clamp(3rem, 7vw, 5rem);
+    padding-block-start: clamp(3rem, 6vw, 5rem);
+    padding-block-end: clamp(2rem, 4vw, 3rem);
+    background:
+      radial-gradient(ellipse 70% 90% at 72% 50%, rgba(29, 61, 138, 0.35) 0%, transparent 65%),
+      var(--color-bg);
   }
 
-  .hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr min(42vw, 420px);
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .hero__card {
+    background: var(--color-primary);
+    border-radius: var(--radius-md);
+    border-top: 3px solid var(--color-accent);
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 48px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero__carousel {
+    position: relative;
+    border-radius: var(--radius-md);
     overflow: hidden;
   }
 
@@ -285,29 +301,24 @@ const jsonLd = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 67%;
-    transform-origin: center 67%;
+    object-position: center center;
+    transform-origin: center center;
   }
 
   .hero-slide.is-active img {
     animation: ken-burns 6s ease-out forwards;
   }
 
-  .hero__scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(8, 14, 30, 0.05) 0%,
-      rgba(8, 14, 30, 0.45) 55%,
-      rgba(8, 14, 30, 0.82) 100%
-    );
-  }
+  @media (max-width: 640px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+    }
 
-  .hero__content {
-    position: relative;
-    z-index: 1;
-    max-width: 44rem;
+    .hero__carousel {
+      width: min(100%, 360px);
+      margin-inline: auto;
+      aspect-ratio: 2 / 3;
+    }
   }
 
   /* Trust badges above headline */
@@ -347,7 +358,6 @@ const jsonLd = [
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.0;
-    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.3);
     color: #ffffff;
   }
 
@@ -365,28 +375,10 @@ const jsonLd = [
     gap: 0.75rem;
   }
 
-  /* ── Mission banner ──────────────────────────────────────────────────────── */
-  .mission-banner {
-    display: flex;
-    justify-content: center;
-  }
-
-  .mission-banner__text {
-    max-width: 52rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .mission-banner__statement {
-    font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    font-style: italic;
-    font-weight: 500;
-    color: var(--color-text);
-    line-height: 1.55;
+  /* ── Section divider ─────────────────────────────────────────────────────── */
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--color-border);
     margin: 0;
   }
 
