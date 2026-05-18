@@ -1,0 +1,157 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/data/site';
+
+const player = {
+  name: 'Payton Ziegler',
+  number: 19,
+  photo: '/images/action-1.png',
+  photoW: 1023,
+  photoH: 1537,
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: player.name,
+  url: `${siteConfig.url}/players/payton-ziegler/`,
+  memberOf: {
+    '@type': 'SportsOrganization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+  },
+};
+---
+
+<BaseLayout
+  title={`${player.name} — #${player.number} | Aceler8 FC`}
+  description={`${player.name}, #${player.number} at Aceler8 FC — a player-first youth soccer club in Rochester, NY.`}
+  jsonLd={jsonLd}
+>
+  <!-- ── Player hero banner ────────────────────────────────────────────────── -->
+  <section class="player-hero" aria-label={`${player.name} profile`}>
+    <img
+      src={player.photo}
+      alt={player.name}
+      width={player.photoW}
+      height={player.photoH}
+      fetchpriority="high"
+      loading="eager"
+      class="player-hero__img"
+    />
+    <div class="player-hero__scrim" aria-hidden="true" />
+    <div class="player-hero__overlay">
+      <div class="wrap player-hero__content">
+        <span class="player-hero__number" aria-label={`Jersey number ${player.number}`}>
+          #{player.number}
+        </span>
+        <h1 class="player-hero__name">{player.name}</h1>
+        <p class="player-hero__club">Aceler8 FC · Rochester, NY</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Back navigation ────────────────────────────────────────────────────── -->
+  <div class="wrap player-nav">
+    <a href="/teams/" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Teams
+    </a>
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Player hero ─────────────────────────────────────────────────────────── */
+  .player-hero {
+    position: relative;
+    width: 100%;
+    height: clamp(520px, 85svh, 900px);
+    overflow: hidden;
+    background: #020d1a;
+  }
+
+  .player-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+
+  .player-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(3, 9, 20, 0.95) 0%,
+      rgba(3, 9, 20, 0.5) 28%,
+      rgba(3, 9, 20, 0.1) 55%,
+      transparent 75%
+    );
+  }
+
+  .player-hero__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .player-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .player-hero__number {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-accent);
+    opacity: 0.9;
+    text-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .player-hero__name {
+    font-size: clamp(2rem, 5.5vw, 4rem);
+    font-weight: 750;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .player-hero__club {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(246, 243, 236, 0.55);
+    margin: 0.25rem 0 0;
+  }
+
+  /* ── Back link ───────────────────────────────────────────────────────────── */
+  .player-nav {
+    padding-block: 2rem 1rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+</style>

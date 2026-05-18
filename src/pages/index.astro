@@ -5,6 +5,50 @@ import { coaches } from '@/data/coaches';
 
 const heroImage = '/images/homepage.jpg';
 
+const slides = [
+  {
+    src: '/images/action-1.png', w: 1023, h: 1537,
+    category: 'Player Spotlight',
+    label: '#19 Payton Ziegler',
+    cta: 'View Profile',
+    href: '/players/payton-ziegler/',
+  },
+  {
+    src: '/images/action-2.png', w: 1023, h: 1537,
+    category: null, label: null, cta: null, href: null,
+  },
+  {
+    src: '/images/action-3.png', w: 1023, h: 1537,
+    category: 'Fall 2026',
+    label: 'Elite Program',
+    cta: 'Learn More',
+    href: '/programs/#elite',
+  },
+  {
+    src: '/images/action-4.png', w: 1023, h: 1537,
+    category: null, label: null, cta: null, href: null,
+  },
+  {
+    src: '/images/action-5.png', w: 1023, h: 1537,
+    category: 'Development',
+    label: 'Pathway Program',
+    cta: 'Get Started',
+    href: '/programs/#pathway',
+  },
+  {
+    src: '/images/action-6.png', w: 1023, h: 1537,
+    category: null, label: null, cta: null, href: null,
+  },
+  {
+    src: '/images/action-7.jpg', w: 4000, h: 6000,
+    category: null, label: null, cta: null, href: null,
+  },
+  {
+    src: '/images/action-8.jpg', w: 1080, h: 1620,
+    category: null, label: null, cta: null, href: null,
+  },
+];
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -57,22 +101,71 @@ const jsonLd = [
   ogImage={heroImage}
   jsonLd={jsonLd}
 >
-  <!-- ── Hero ────────────────────────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="wrap hero__inner">
-      <div class="hero__card">
+  <!-- ── Full-bleed hero carousel ─────────────────────────────────────────────── -->
+  <section class="hero" id="hero" aria-label="Aceler8 FC highlights">
+    {slides.map((slide, i) => (
+      <div class="hero-slide" data-index={i} aria-hidden={i !== 0 ? 'true' : 'false'}>
+        <img
+          src={slide.src}
+          alt="Aceler8 FC players in action"
+          width={slide.w}
+          height={slide.h}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+        <div class="hero-slide__scrim" aria-hidden="true" />
+        {(slide.label || slide.cta) && (
+          <div class="hero-slide__content">
+            {slide.category && <p class="hero-slide__category">{slide.category}</p>}
+            {slide.label && <p class="hero-slide__label">{slide.label}</p>}
+            {slide.href && slide.cta && (
+              <a href={slide.href} class="btn btn--accent hero-slide__cta">{slide.cta}</a>
+            )}
+          </div>
+        )}
+      </div>
+    ))}
+
+    <!-- Controls bar -->
+    <div class="hero__controls" aria-label="Carousel controls">
+      <div class="hero__dots" role="tablist" aria-label="Slides">
+        {slides.map((_, i) => (
+          <button
+            class="hero__dot"
+            role="tab"
+            data-slide={i}
+            aria-label={`Go to slide ${i + 1}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+          />
+        ))}
+      </div>
+      <div class="hero__arrows">
+        <button class="hero__arrow hero__arrow--prev" aria-label="Previous slide">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="hero__arrow hero__arrow--next" aria-label="Next slide">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Welcome section ───────────────────────────────────────────────────────── -->
+  <section class="welcome-section">
+    <div class="wrap welcome-inner">
+      <div class="welcome-content">
         <ul class="hero__badges reveal" aria-label="Key club facts">
           <li>Est. 2024</li>
           <li>Rochester, NY</li>
           <li>U8–U12 Programs</li>
         </ul>
         <h1 class="reveal reveal-delay-1">Welcome to the<br />Aceler8 FC Family</h1>
-        <p class="hero__lead reveal reveal-delay-2">
+        <p class="welcome-lead reveal reveal-delay-2">
           We build complete soccer players — technically sharp, mentally resilient, and rooted in
           the Rochester community. Elite coaching, a structured development pathway, and a culture
           that puts the whole player first.
         </p>
-        <div class="hero__actions reveal reveal-delay-3">
+        <div class="welcome-actions reveal reveal-delay-3">
           <div class="programs-menu">
             <button class="btn btn--accent programs-menu__btn" aria-haspopup="true" aria-expanded="false" id="hero-programs-btn">
               Explore Programs
@@ -93,32 +186,8 @@ const jsonLd = [
               </a>
             </div>
           </div>
-          <a class="btn btn--outline-light" href="/coaches/">Meet the staff</a>
+          <a class="btn btn--ghost" href="/coaches/">Meet the staff</a>
         </div>
-      </div>
-
-      <div class="hero__carousel">
-        {[
-          ['/images/action-1.png', 1023, 1537],
-          ['/images/action-2.png', 1023, 1537],
-          ['/images/action-3.png', 1023, 1537],
-          ['/images/action-4.png', 1023, 1537],
-          ['/images/action-5.png', 1023, 1537],
-          ['/images/action-6.png', 1023, 1537],
-          ['/images/action-7.jpg', 4000, 6000],
-          ['/images/action-8.jpg', 1080, 1620],
-        ].map(([src, w, h], i) => (
-          <div class="hero-slide" data-index={i}>
-            <img
-              src={src}
-              alt="Aceler8 FC players in action"
-              width={w}
-              height={h}
-              fetchpriority={i === 0 ? 'high' : 'auto'}
-              loading={i === 0 ? 'eager' : 'lazy'}
-            />
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -128,49 +197,49 @@ const jsonLd = [
   <!-- ── What We Offer ─────────────────────────────────────────────────────── -->
   <section class="section">
     <div class="wrap">
-    <div class="section__head">
-      <p class="tag">What We Offer</p>
-      <h2 class="section-heading">A complete development<br class="rwd-break" /> environment.</h2>
-      <p class="section__lead">
-        From structured pathway training to high-level competitive programming — Aceler8 FC
-        provides the coaching, structure, and pathway every player deserves.
-      </p>
-    </div>
-    <div class="grid-3">
-      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0s">
-        <div class="card-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <h3>Elite Program</h3>
-        <p>
-          Four sessions a week, single team commitment, top tournaments. For the player
-          who wants to take their game somewhere real.
+      <div class="section__head">
+        <p class="tag">What We Offer</p>
+        <h2 class="section-heading">A complete development<br class="rwd-break" /> environment.</h2>
+        <p class="section__lead">
+          From structured pathway training to high-level competitive programming — Aceler8 FC
+          provides the coaching, structure, and pathway every player deserves.
         </p>
-        <a class="btn btn--primary card-cta" href="/programs/#elite">View Elite</a>
-      </article>
-      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.1s">
-        <div class="card-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3>Pathway Program</h3>
-        <p>
-          Two sessions a week, flexible scheduling, a direct path to Elite — for players
-          U8–U11 ready to push past recreational soccer.
-        </p>
-        <a class="btn btn--primary card-cta" href="/programs/#pathway">View Pathway</a>
-      </article>
-      <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.2s">
-        <div class="card-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-        </div>
-        <h3>Our Philosophy</h3>
-        <p>
-          We coach the whole player: technical skill, tactical intelligence, physical literacy,
-          and mental resilience. Long-term development always wins.
-        </p>
-        <a class="btn btn--primary card-cta" href="/about/">Read our story</a>
-      </article>
-    </div>
+      </div>
+      <div class="grid-3">
+        <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0s">
+          <div class="card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Elite Program</h3>
+          <p>
+            Four sessions a week, single team commitment, top tournaments. For the player
+            who wants to take their game somewhere real.
+          </p>
+          <a class="btn btn--primary card-cta" href="/programs/#elite">View Elite</a>
+        </article>
+        <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.1s">
+          <div class="card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Pathway Program</h3>
+          <p>
+            Two sessions a week, flexible scheduling, a direct path to Elite — for players
+            U8–U11 ready to push past recreational soccer.
+          </p>
+          <a class="btn btn--primary card-cta" href="/programs/#pathway">View Pathway</a>
+        </article>
+        <article class="card card--pad card--feature" data-reveal style="--reveal-delay: 0.2s">
+          <div class="card-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3>Our Philosophy</h3>
+          <p>
+            We coach the whole player: technical skill, tactical intelligence, physical literacy,
+            and mental resilience. Long-term development always wins.
+          </p>
+          <a class="btn btn--primary card-cta" href="/about/">Read our story</a>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -253,44 +322,20 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
-  /* ── Hero ─────────────────────────────────────────────────────────────────── */
+  /* ── Full-bleed hero ─────────────────────────────────────────────────────── */
   .hero {
-    padding-block-start: clamp(3rem, 6vw, 5rem);
-    padding-block-end: clamp(2rem, 4vw, 3rem);
-    background:
-      radial-gradient(ellipse 70% 90% at 72% 50%, rgba(29, 61, 138, 0.35) 0%, transparent 65%),
-      var(--color-bg);
-  }
-
-  .hero__inner {
-    display: grid;
-    grid-template-columns: 1fr min(42vw, 420px);
-    gap: 2rem;
-    align-items: stretch;
-  }
-
-  .hero__card {
-    background: var(--color-primary);
-    border-radius: var(--radius-md);
-    border-top: 3px solid var(--color-accent);
-    padding: 2.5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 24px 48px rgba(0, 0, 0, 0.35);
-  }
-
-  .hero__carousel {
     position: relative;
-    border-radius: var(--radius-md);
+    width: 100%;
+    height: clamp(520px, 88svh, 960px);
     overflow: hidden;
+    background: #020d1a;
   }
 
   .hero-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.9s ease;
+    transition: opacity 1s ease;
   }
 
   .hero-slide.is-active {
@@ -301,33 +346,168 @@ const jsonLd = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center 18%;
     transform-origin: center center;
   }
 
   .hero-slide.is-active img {
-    animation: ken-burns 6s ease-out forwards;
+    animation: ken-burns 8s ease-out forwards;
   }
 
-  @media (max-width: 640px) {
-    .hero__inner {
-      grid-template-columns: 1fr;
-    }
-
-    .hero__carousel {
-      width: min(100%, 360px);
-      margin-inline: auto;
-      aspect-ratio: 2 / 3;
-    }
+  .hero-slide__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(3, 9, 20, 0.92) 0%,
+      rgba(3, 9, 20, 0.55) 22%,
+      rgba(3, 9, 20, 0.15) 48%,
+      transparent 68%
+    );
   }
 
-  /* Trust badges above headline */
+  .hero-slide__content {
+    position: absolute;
+    bottom: 5.5rem;
+    left: 0;
+    right: 0;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
+    max-width: calc(var(--max-w) + 2 * clamp(1.25rem, 5vw, 4rem));
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .hero-slide__category {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .hero-slide__label {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 750;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.08;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+    max-width: 18ch;
+  }
+
+  .hero-slide__cta {
+    margin-top: 0.4rem;
+  }
+
+  /* ── Controls bar ────────────────────────────────────────────────────────── */
+  .hero__controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
+    gap: 1.25rem;
+    z-index: 10;
+    background: linear-gradient(to top, rgba(3, 9, 20, 0.7) 0%, transparent 100%);
+  }
+
+  .hero__dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex: 1;
+  }
+
+  .hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.35);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      background 0.25s ease,
+      width 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .hero__dot.is-active {
+    background: var(--color-accent);
+    width: 26px;
+  }
+
+  .hero__dot:hover:not(.is-active) {
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  .hero__arrows {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .hero__arrow {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .hero__arrow:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .hero__arrow:active {
+    background: rgba(255, 255, 255, 0.4);
+    transition-duration: 0.08s;
+  }
+
+  /* ── Welcome section ─────────────────────────────────────────────────────── */
+  .welcome-section {
+    padding-block: clamp(3rem, 7vw, 5rem);
+    background: var(--color-bg);
+  }
+
+  .welcome-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .welcome-content {
+    max-width: 46rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
   .hero__badges {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem 0.75rem;
     list-style: none;
-    margin: 0 0 1.5rem;
+    margin: 0;
     padding: 0;
   }
 
@@ -336,7 +516,7 @@ const jsonLd = [
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(246, 243, 236, 0.65);
+    color: rgba(246, 243, 236, 0.55);
     display: flex;
     align-items: center;
     gap: 0.45rem;
@@ -352,27 +532,27 @@ const jsonLd = [
     opacity: 0.7;
   }
 
-  .hero h1 {
-    margin: 0 0 1.1rem;
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
+  .welcome-section h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 5.5vw, 4rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.0;
-    color: #ffffff;
+    color: var(--color-text);
   }
 
-  .hero__lead {
-    color: rgba(246, 243, 236, 0.88);
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    margin: 0 0 2rem;
-    max-width: 36rem;
+  .welcome-lead {
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    margin: 0;
     line-height: 1.65;
   }
 
-  .hero__actions {
+  .welcome-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+    align-items: center;
   }
 
   /* ── Section divider ─────────────────────────────────────────────────────── */
@@ -645,7 +825,7 @@ const jsonLd = [
     margin: 0;
   }
 
-  /* ── Hero programs dropdown ──────────────────────────────────────────────── */
+  /* ── Programs dropdown ───────────────────────────────────────────────────── */
   .programs-menu {
     position: relative;
   }
@@ -699,21 +879,94 @@ const jsonLd = [
     font-size: 0.78rem;
     color: var(--color-text-muted);
   }
+
+  /* ── btn--outline-light (used in CTA band) ───────────────────────────────── */
+  .btn--outline-light {
+    background: transparent;
+    color: rgba(246, 243, 236, 0.85);
+    border-color: rgba(246, 243, 236, 0.35);
+  }
+
+  .btn--outline-light:hover {
+    border-color: rgba(246, 243, 236, 0.65);
+    background: rgba(246, 243, 236, 0.08);
+    color: #ffffff;
+    transform: translateY(-3px);
+  }
+
+  .btn--outline-light:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 0.08s;
+  }
+
+  /* ── Mobile tweaks ───────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .hero-slide__content {
+      bottom: 4.5rem;
+    }
+
+    .hero__controls {
+      padding-inline: 1rem;
+    }
+
+    .hero {
+      height: clamp(480px, 85svh, 720px);
+    }
+  }
 </style>
 
 <script>
-  // Hero carousel
-  const heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
-  if (heroSlides.length) {
+  // ── Hero carousel ────────────────────────────────────────────────────────────
+  const heroEl = document.querySelector<HTMLElement>('.hero');
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('.hero-slide'));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('.hero__dot'));
+  const prevBtn = document.querySelector<HTMLButtonElement>('.hero__arrow--prev');
+  const nextBtn = document.querySelector<HTMLButtonElement>('.hero__arrow--next');
+
+  if (slides.length) {
     let current = 0;
-    heroSlides[0].classList.add('is-active');
-    setInterval(() => {
-      heroSlides[current].classList.remove('is-active');
-      current = (current + 1) % heroSlides.length;
-      heroSlides[current].classList.add('is-active');
-    }, 5000);
+    let paused = false;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    function goTo(n: number) {
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      dots[current]?.classList.remove('is-active');
+      dots[current]?.setAttribute('aria-selected', 'false');
+
+      current = ((n % slides.length) + slides.length) % slides.length;
+
+      slides[current].classList.add('is-active');
+      slides[current].setAttribute('aria-hidden', 'false');
+      dots[current]?.classList.add('is-active');
+      dots[current]?.setAttribute('aria-selected', 'true');
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => { if (!paused) goTo(current + 1); }, 6000);
+    }
+
+    goTo(0);
+    startTimer();
+
+    prevBtn?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
+    nextBtn?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { goTo(i); startTimer(); });
+    });
+
+    heroEl?.addEventListener('mouseenter', () => { paused = true; });
+    heroEl?.addEventListener('mouseleave', () => { paused = false; });
+
+    // Keyboard navigation
+    heroEl?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') { goTo(current - 1); startTimer(); }
+      if (e.key === 'ArrowRight') { goTo(current + 1); startTimer(); }
+    });
   }
 
+  // ── Programs dropdown ─────────────────────────────────────────────────────
   const btn   = document.getElementById('hero-programs-btn');
   const panel = document.getElementById('hero-programs-panel');
 
