@@ -2,52 +2,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { siteConfig } from '@/data/site';
 import { coaches } from '@/data/coaches';
+import { heroSlides as slides } from '@/data/hero-slides';
 
 const heroImage = '/images/homepage.jpg';
-
-const slides = [
-  {
-    src: '/images/3323.jpg', w: 1620, h: 1080,
-    category: 'Player Spotlight',
-    label: '#19 Payton Ziegler',
-    cta: 'View Profile',
-    href: '/players/payton-ziegler/',
-  },
-  {
-    src: '/images/action-2.png', w: 1023, h: 1537,
-    category: null, label: null, cta: null, href: null,
-  },
-  {
-    src: '/images/action-3.png', w: 1023, h: 1537,
-    category: 'Fall 2026',
-    label: 'Elite Program',
-    cta: 'Learn More',
-    href: '/programs/#elite',
-  },
-  {
-    src: '/images/action-4.png', w: 1023, h: 1537,
-    category: null, label: null, cta: null, href: null,
-  },
-  {
-    src: '/images/action-5.png', w: 1023, h: 1537,
-    category: 'Development',
-    label: 'Pathway Program',
-    cta: 'Get Started',
-    href: '/programs/#pathway',
-  },
-  {
-    src: '/images/action-6.png', w: 1023, h: 1537,
-    category: null, label: null, cta: null, href: null,
-  },
-  {
-    src: '/images/action-7.jpg', w: 4000, h: 6000,
-    category: null, label: null, cta: null, href: null,
-  },
-  {
-    src: '/images/action-8.jpg', w: 1080, h: 1620,
-    category: null, label: null, cta: null, href: null,
-  },
-];
 
 const jsonLd = [
   {
@@ -108,18 +65,19 @@ const jsonLd = [
         <img
           src={slide.src}
           alt="Aceler8 FC players in action"
-          width={slide.w}
-          height={slide.h}
+          width={slide.width}
+          height={slide.height}
           fetchpriority={i === 0 ? 'high' : 'auto'}
           loading={i === 0 ? 'eager' : 'lazy'}
         />
         <div class="hero-slide__scrim" aria-hidden="true" />
-        {(slide.label || slide.cta) && (
+        {(slide.heading || slide.title || slide.description || slide.button) && (
           <div class="hero-slide__content">
-            {slide.category && <p class="hero-slide__category">{slide.category}</p>}
-            {slide.label && <p class="hero-slide__label">{slide.label}</p>}
-            {slide.href && slide.cta && (
-              <a href={slide.href} class="btn btn--accent hero-slide__cta">{slide.cta}</a>
+            {slide.heading && <p class="hero-slide__heading">{slide.heading}</p>}
+            {slide.title && <p class="hero-slide__title">{slide.title}</p>}
+            {slide.description && <p class="hero-slide__description">{slide.description}</p>}
+            {slide.button && (
+              <a href={slide.button.href} class="btn btn--accent hero-slide__cta">{slide.button.label}</a>
             )}
           </div>
         )}
@@ -383,7 +341,7 @@ const jsonLd = [
     gap: 0.6rem;
   }
 
-  .hero-slide__category {
+  .hero-slide__heading {
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -392,7 +350,7 @@ const jsonLd = [
     margin: 0;
   }
 
-  .hero-slide__label {
+  .hero-slide__title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.75rem);
     font-weight: 750;
@@ -401,6 +359,14 @@ const jsonLd = [
     line-height: 1.08;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
     max-width: 18ch;
+  }
+
+  .hero-slide__description {
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+    color: rgba(246, 243, 236, 0.8);
+    margin: 0;
+    max-width: 32ch;
+    line-height: 1.5;
   }
 
   .hero-slide__cta {
