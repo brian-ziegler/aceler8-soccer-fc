@@ -17,54 +17,17 @@ export interface HeroSlide {
 }
 
 export const heroSlides: HeroSlide[] = [
-  {
-    src: '/images/3323.jpg',
-    width: 1620,
-    height: 1080,
-    heading: 'Player Spotlight',
-    title: '#19 Payton Ziegler',
-    description: 'See more about Payton',
-    button: { label: 'View Profile', href: '/players/payton-ziegler/' },
-  },
-  {
-    src: '/images/action-2.png',
-    width: 1023,
-    height: 1537,
-  },
-  {
-    src: '/images/action-3.png',
-    width: 1023,
-    height: 1537,
-    heading: 'Fall 2026',
-    title: 'Elite Program',
-    button: { label: 'Learn More', href: '/programs/#elite' },
-  },
-  {
-    src: '/images/action-4.png',
-    width: 1023,
-    height: 1537,
-  },
-  {
-    src: '/images/action-5.png',
-    width: 1023,
-    height: 1537,
-    heading: 'Development',
-    title: 'Pathway Program',
-    button: { label: 'Get Started', href: '/programs/#pathway' },
-  },
-  {
-    src: '/images/action-6.png',
-    width: 1023,
-    height: 1537,
-  },
-  {
-    src: '/images/action-7.jpg',
-    width: 4000,
-    height: 6000,
-  },
-  {
-    src: '/images/action-8.jpg',
-    width: 1080,
-    height: 1620,
-  },
+  { src: '/hero/3323.jpg',    width: 1620, height: 1080 },
+  { src: '/hero/3324.jpg',    width: 1620, height: 1080 },
+  { src: '/hero/3325.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3326.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3327.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3328.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3329.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3330.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3331.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3332.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/3333.jpg',    width: 6000, height: 4000 },
+  { src: '/hero/action-2.png', width: 1023, height: 1537 },
+  { src: '/hero/action-6.png', width: 1023, height: 1537 },
 ];
