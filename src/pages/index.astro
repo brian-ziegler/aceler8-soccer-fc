@@ -84,8 +84,31 @@ const jsonLd = [
       </div>
     ))}
 
+    <!-- Hero content overlay — desktop only, welcome section handles mobile -->
+    <div class="hero-overlay">
+      <div class="hero-overlay__inner">
+        <ul class="hero__badges">
+          <li>Est. 2024</li>
+          <li>Rochester, NY</li>
+          <li>U8–U12 Programs</li>
+        </ul>
+        <h1 class="hero-overlay__heading">Welcome to the<br />Aceler8 FC Family</h1>
+        <p class="hero-overlay__lead">
+          We build complete soccer players — technically sharp, mentally resilient, and rooted in
+          the Rochester community. Elite coaching and a culture that puts the whole player first.
+        </p>
+        <div class="welcome-actions">
+          <a class="btn btn--accent" href="/programs/">Explore Programs</a>
+          <a class="btn btn--ghost" href="/coaches/">Meet the Staff</a>
+        </div>
+      </div>
+    </div>
+
     <!-- Controls bar -->
     <div class="hero__controls" aria-label="Carousel controls">
+      <button class="hero__arrow hero__arrow--prev" aria-label="Previous slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
       <div class="hero__dots" role="tablist" aria-label="Slides">
         {slides.map((_, i) => (
           <button
@@ -97,14 +120,9 @@ const jsonLd = [
           />
         ))}
       </div>
-      <div class="hero__arrows">
-        <button class="hero__arrow hero__arrow--prev" aria-label="Previous slide">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button class="hero__arrow hero__arrow--next" aria-label="Next slide">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
+      <button class="hero__arrow hero__arrow--next" aria-label="Next slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
   </section>
 
@@ -208,6 +226,7 @@ const jsonLd = [
   .hero-slide__scrim {
     position: absolute;
     inset: 0;
+    /* Mobile: bottom-up gradient so controls area stays readable */
     background: linear-gradient(
       to top,
       rgba(3, 9, 20, 0.92) 0%,
@@ -215,6 +234,15 @@ const jsonLd = [
       rgba(3, 9, 20, 0.15) 48%,
       transparent 68%
     );
+  }
+
+  @media (min-width: 641px) {
+    .hero-slide__scrim {
+      /* Desktop: left-side gradient for overlay legibility + subtle bottom for controls */
+      background:
+        linear-gradient(to right, rgba(3, 9, 20, 0.92) 0%, rgba(3, 9, 20, 0.7) 28%, rgba(3, 9, 20, 0.12) 58%, transparent 75%),
+        linear-gradient(to top, rgba(3, 9, 20, 0.55) 0%, transparent 18%);
+    }
   }
 
   .hero-slide__content {
@@ -272,17 +300,30 @@ const jsonLd = [
     height: 4rem;
     display: flex;
     align-items: center;
-    padding-inline: clamp(1.25rem, 5vw, 4rem);
-    gap: 1.25rem;
+    justify-content: center;
+    padding-inline: 1rem;
+    gap: 0.5rem;
     z-index: 10;
     background: linear-gradient(to top, rgba(3, 9, 20, 0.7) 0%, transparent 100%);
+  }
+
+  @media (min-width: 641px) {
+    .hero__controls {
+      left: auto;
+      right: clamp(1.25rem, 5vw, 4rem);
+      width: auto;
+      height: auto;
+      bottom: 1.75rem;
+      padding-inline: 0;
+      justify-content: flex-end;
+      background: none;
+    }
   }
 
   .hero__dots {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    flex: 1;
   }
 
   .hero__dot {
@@ -323,12 +364,6 @@ const jsonLd = [
     background: rgba(255, 255, 255, 0.65);
   }
 
-  .hero__arrows {
-    display: flex;
-    gap: 0.5rem;
-    flex-shrink: 0;
-  }
-
   .hero__arrow {
     width: 2.25rem;
     height: 2.25rem;
@@ -356,10 +391,61 @@ const jsonLd = [
     transition-duration: 0.08s;
   }
 
-  /* ── Welcome section ─────────────────────────────────────────────────────── */
+  /* ── Hero overlay (desktop only) ─────────────────────────────────────────── */
+  .hero-overlay {
+    display: none;
+  }
+
+  @media (min-width: 641px) {
+    .hero-overlay {
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(52%, 42rem);
+      z-index: 5;
+      align-items: center;
+      padding-inline: clamp(1.25rem, 5vw, 4rem);
+      padding-block: 4rem;
+    }
+
+    .hero-overlay__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .hero-overlay__heading {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: #ffffff;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-overlay__lead {
+      color: rgba(246, 243, 236, 0.82);
+      font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+      margin: 0;
+      line-height: 1.65;
+      max-width: 36ch;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  /* ── Welcome section (mobile only below hero) ─────────────────────────────── */
   .welcome-section {
     padding-block: clamp(3rem, 7vw, 5rem);
     background: var(--color-bg);
+  }
+
+  @media (min-width: 641px) {
+    .welcome-section {
+      display: none;
+    }
   }
 
   .welcome-inner {
@@ -548,10 +634,6 @@ const jsonLd = [
   @media (max-width: 640px) {
     .hero-slide__content {
       bottom: 4.5rem;
-    }
-
-    .hero__controls {
-      padding-inline: 1rem;
     }
 
     .hero {
