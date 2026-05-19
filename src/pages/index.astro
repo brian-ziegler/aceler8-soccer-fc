@@ -458,11 +458,6 @@ const jsonLd = [
     animation: dot-progress 6s linear forwards;
   }
 
-  /* Pause the fill when the carousel is hovered */
-  .hero--paused .hero__dot.is-active::after {
-    animation-play-state: paused;
-  }
-
   @keyframes dot-progress {
     from { transform: scaleX(0); }
     to   { transform: scaleX(1); }
@@ -979,14 +974,8 @@ const jsonLd = [
       dot.addEventListener('click', () => { goTo(i); startTimer(); });
     });
 
-    heroEl?.addEventListener('mouseenter', () => {
-      paused = true;
-      heroEl.classList.add('hero--paused');
-    });
-    heroEl?.addEventListener('mouseleave', () => {
-      paused = false;
-      heroEl.classList.remove('hero--paused');
-    });
+    heroEl?.addEventListener('mouseenter', () => { paused = true; });
+    heroEl?.addEventListener('mouseleave', () => { paused = false; });
 
     // Keyboard navigation
     heroEl?.addEventListener('keydown', (e: KeyboardEvent) => {
