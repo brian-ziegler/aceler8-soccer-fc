@@ -63,6 +63,10 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  overflow-x: hidden;
+}
+
 body.nav-open {
   overflow: hidden;
 }
@@ -509,8 +513,8 @@ img {
 }
 
 @keyframes ken-burns {
-  from { transform: scale(1) translate(0, 0); }
-  to   { transform: scale(1.09) translate(-1.5%, 0); }
+  from { transform: scale(1); }
+  to   { transform: scale(1.07); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -7,7 +7,7 @@ const heroImage = '/images/homepage.jpg';
 
 const slides = [
   {
-    src: '/images/action-1.png', w: 1023, h: 1537,
+    src: '/images/3323.jpg', w: 1620, h: 1080,
     category: 'Player Spotlight',
     label: '#19 Payton Ziegler',
     cta: 'View Profile',
@@ -326,14 +326,18 @@ const jsonLd = [
   .hero {
     position: relative;
     width: 100%;
+    max-width: 100vw;
     height: clamp(520px, 88svh, 960px);
     overflow: hidden;
+    /* isolate stacking context so transforms on children are always clipped */
+    isolation: isolate;
     background: #020d1a;
   }
 
   .hero-slide {
     position: absolute;
     inset: 0;
+    overflow: hidden;
     opacity: 0;
     transition: opacity 1s ease;
   }
