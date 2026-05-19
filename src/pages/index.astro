@@ -437,15 +437,35 @@ const jsonLd = [
     border: none;
     padding: 0;
     cursor: pointer;
-    transition:
-      background 0.25s ease,
-      width 0.25s ease;
+    transition: width 0.25s ease;
     flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
   }
 
   .hero__dot.is-active {
-    background: var(--color-accent);
+    background: rgba(244, 123, 14, 0.25);
     width: 26px;
+  }
+
+  .hero__dot.is-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: dot-progress 6s linear forwards;
+  }
+
+  /* Pause the fill when the carousel is hovered */
+  .hero--paused .hero__dot.is-active::after {
+    animation-play-state: paused;
+  }
+
+  @keyframes dot-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
   }
 
   .hero__dot:hover:not(.is-active) {
@@ -959,8 +979,14 @@ const jsonLd = [
       dot.addEventListener('click', () => { goTo(i); startTimer(); });
     });
 
-    heroEl?.addEventListener('mouseenter', () => { paused = true; });
-    heroEl?.addEventListener('mouseleave', () => { paused = false; });
+    heroEl?.addEventListener('mouseenter', () => {
+      paused = true;
+      heroEl.classList.add('hero--paused');
+    });
+    heroEl?.addEventListener('mouseleave', () => {
+      paused = false;
+      heroEl.classList.remove('hero--paused');
+    });
 
     // Keyboard navigation
     heroEl?.addEventListener('keydown', (e: KeyboardEvent) => {
