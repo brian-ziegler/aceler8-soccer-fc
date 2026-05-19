@@ -652,7 +652,6 @@ const jsonLd = [
 
   if (slides.length) {
     let current = 0;
-    let paused = false;
     let timer: ReturnType<typeof setInterval> | null = null;
 
     function goTo(n: number) {
@@ -671,7 +670,7 @@ const jsonLd = [
 
     function startTimer() {
       if (timer) clearInterval(timer);
-      timer = setInterval(() => { if (!paused) goTo(current + 1); }, 6000);
+      timer = setInterval(() => goTo(current + 1), 6000);
     }
 
     goTo(0);
@@ -683,10 +682,6 @@ const jsonLd = [
       dot.addEventListener('click', () => { goTo(i); startTimer(); });
     });
 
-    heroEl?.addEventListener('mouseenter', () => { paused = true; });
-    heroEl?.addEventListener('mouseleave', () => { paused = false; });
-
-    // Keyboard navigation
     heroEl?.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') { goTo(current - 1); startTimer(); }
       if (e.key === 'ArrowRight') { goTo(current + 1); startTimer(); }
