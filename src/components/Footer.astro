@@ -3,7 +3,7 @@ import { siteConfig } from '@/data/site';
 ---
 
 <footer class="site-footer">
-  <div class="wrap site-footer__grid">
+  <div class="site-footer__grid">
     <div>
       <div class="site-footer__logos">
         <img
@@ -57,7 +57,7 @@ import { siteConfig } from '@/data/site';
     </div>
   </div>
   <div class="site-footer__bar">
-    <div class="wrap site-footer__bar-inner">
+    <div class="site-footer__bar-inner">
       <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
       <p class="site-footer__muted">Rochester, NY</p>
     </div>
@@ -75,6 +75,7 @@ import { siteConfig } from '@/data/site';
     display: grid;
     gap: 2rem;
     padding-block: 3rem;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   }
 
@@ -144,6 +145,7 @@ import { siteConfig } from '@/data/site';
     align-items: center;
     justify-content: space-between;
     padding-block: 0.75rem;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
     font-size: 0.85rem;
     color: var(--color-text-muted);
   }
