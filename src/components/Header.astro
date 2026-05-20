@@ -44,7 +44,6 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
         width="48"
         height="48"
       />
-      <span class="site-header__name">Aceler8 FC</span>
     </a>
 
     <button
@@ -92,7 +91,7 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
           </div>
         </li>
 
-        <li>
+        <li style="margin-left: auto">
           <a href="/contact/" class:list={['site-nav__cta', { 'is-active': isActive('/contact/') }]}>
             Contact
           </a>
@@ -123,9 +122,9 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
   .site-header__inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100%;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .site-header__brand {
@@ -151,15 +150,7 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
     padding: 0.2rem;
   }
 
-  .site-header__name {
-    font-size: 1.1rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    color: var(--color-brand-blue);
-    white-space: nowrap;
-  }
-
-  .site-header__menu-btn {
+.site-header__menu-btn {
     display: none;
     width: 2.75rem;
     height: 2.75rem;
