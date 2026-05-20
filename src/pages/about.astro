@@ -61,7 +61,7 @@ const jsonLd = {
   />
 
   <!-- ── Mission ─────────────────────────────────────────────────────────────── -->
-  <section class="mission-section">
+  <section class="wrap mission-section">
     <div class="mission-layout">
       <div class="mission-card card--navy card" data-reveal>
         <p class="tag">Our Mission</p>
@@ -85,7 +85,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Core values ─────────────────────────────────────────────────────────── -->
-  <section class="values-section">
+  <section class="wrap values-section">
     <div class="section-head" data-reveal>
       <p class="tag">Core Values</p>
       <h2>Six principles that guide<br />everything we do.</h2>
@@ -105,7 +105,7 @@ const jsonLd = {
 
   <!-- ── Philosophy (dark background) ──────────────────────────────────────── -->
   <section class="section--dark philosophy-section">
-    <div class="philosophy-inner">
+    <div class="wrap philosophy-inner">
       <div data-reveal>
         <p class="tag">Development Philosophy</p>
         <h2>The Aceler8 FC Difference</h2>
@@ -142,7 +142,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Vision + CTA ────────────────────────────────────────────────────────── -->
-  <section class="vision-section" data-reveal>
+  <section class="wrap vision-section" data-reveal>
     <p class="tag">Vision</p>
     <h2>Rochester's Premier<br />Development Club</h2>
     <p class="lead">
@@ -157,7 +157,6 @@ const jsonLd = {
 <style>
   .mission-section {
     padding-block: 3.5rem 2.5rem;
-    padding-inline: clamp(1.25rem, 5vw, 4rem);
   }
 
   .mission-layout {
@@ -207,7 +206,6 @@ const jsonLd = {
 
   .values-section {
     padding-block: 2.5rem 3.5rem;
-    padding-inline: clamp(1.25rem, 5vw, 4rem);
   }
 
   .section-head {
@@ -260,7 +258,6 @@ const jsonLd = {
     grid-template-columns: 1fr 1fr;
     gap: 5rem;
     align-items: start;
-    padding-inline: clamp(1.25rem, 5vw, 4rem);
   }
 
   .philosophy-inner h2 {
@@ -321,7 +318,6 @@ const jsonLd = {
   /* Vision */
   .vision-section {
     padding-block: 4rem 5.5rem;
-    padding-inline: clamp(1.25rem, 5vw, 4rem);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
