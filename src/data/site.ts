@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: 'Aceler8 FC',
   tagline: 'Player Development | Rochester, NY',
+  slogan: 'More than just a name, we uphold the shirt.',
   locale: 'en_US',
   url: import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://aceler8fc.com',
   contactEmail: 'info@aceler8fc.com',
