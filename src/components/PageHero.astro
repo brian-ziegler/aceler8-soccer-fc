@@ -9,7 +9,7 @@ const { tag, title, lead } = Astro.props;
 ---
 
 <section class="page-hero">
-  <div class="wrap page-hero__inner">
+  <div class="page-hero__inner">
     {tag && <p class="page-hero__tag">{tag}</p>}
     <h1 class="page-hero__title reveal">{title}</h1>
     {lead && <p class="page-hero__lead reveal reveal-delay-1">{lead}</p>}
@@ -57,7 +57,7 @@ const { tag, title, lead } = Astro.props;
   .page-hero__inner {
     position: relative;
     z-index: 1;
-    max-width: 52rem;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
   }
 
   .page-hero__tag {
