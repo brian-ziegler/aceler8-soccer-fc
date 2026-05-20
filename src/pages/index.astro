@@ -58,6 +58,48 @@ const jsonLd = [
   ogImage={heroImage}
   jsonLd={jsonLd}
 >
+  <!-- ── Welcome section ───────────────────────────────────────────────────────── -->
+  <section class="welcome-section">
+    <div class="wrap welcome-inner">
+      <div class="welcome-content">
+        <ul class="hero__badges reveal" aria-label="Key club facts">
+          <li>Est. 2024</li>
+          <li>Rochester, NY</li>
+          <li>U8–U12 Programs</li>
+        </ul>
+        <h1 class="reveal reveal-delay-1">Welcome to the<br />Aceler8 FC Family</h1>
+        <p class="welcome-lead reveal reveal-delay-2">
+          We build complete soccer players — technically sharp, mentally resilient, and rooted in
+          the Rochester community. Elite coaching, a structured development pathway, and a culture
+          that puts the whole player first.
+        </p>
+        <div class="welcome-actions reveal reveal-delay-3">
+          <div class="programs-menu">
+            <button class="btn btn--accent programs-menu__btn" aria-haspopup="true" aria-expanded="false" id="hero-programs-btn">
+              Explore Programs
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="programs-menu__panel" id="hero-programs-panel" hidden>
+              <a href="/programs/#elite" class="programs-menu__item">
+                <strong>Aceler8 FC Elite</strong>
+                <span>4 sessions/week · single team · top competition</span>
+              </a>
+              <a href="/programs/#pathway" class="programs-menu__item">
+                <strong>Aceler8 FC Pathway</strong>
+                <span>2 sessions/week · U8–U11 · path to Elite</span>
+              </a>
+              <a href="/programs/#training" class="programs-menu__item">
+                <strong>Aceler8 Training Sessions</strong>
+                <span>9-week program · open to all · no tryouts required</span>
+              </a>
+            </div>
+          </div>
+          <a class="btn btn--ghost" href="/coaches/">Meet the staff</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Full-bleed hero carousel ─────────────────────────────────────────────── -->
   <section class="hero" id="hero" aria-label="Aceler8 FC highlights">
     {slides.map((slide, i) => (
@@ -123,48 +165,6 @@ const jsonLd = [
       <button class="hero__arrow hero__arrow--next" aria-label="Next slide">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
-    </div>
-  </section>
-
-  <!-- ── Welcome section ───────────────────────────────────────────────────────── -->
-  <section class="welcome-section">
-    <div class="wrap welcome-inner">
-      <div class="welcome-content">
-        <ul class="hero__badges reveal" aria-label="Key club facts">
-          <li>Est. 2024</li>
-          <li>Rochester, NY</li>
-          <li>U8–U12 Programs</li>
-        </ul>
-        <h1 class="reveal reveal-delay-1">Welcome to the<br />Aceler8 FC Family</h1>
-        <p class="welcome-lead reveal reveal-delay-2">
-          We build complete soccer players — technically sharp, mentally resilient, and rooted in
-          the Rochester community. Elite coaching, a structured development pathway, and a culture
-          that puts the whole player first.
-        </p>
-        <div class="welcome-actions reveal reveal-delay-3">
-          <div class="programs-menu">
-            <button class="btn btn--accent programs-menu__btn" aria-haspopup="true" aria-expanded="false" id="hero-programs-btn">
-              Explore Programs
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="programs-menu__panel" id="hero-programs-panel" hidden>
-              <a href="/programs/#elite" class="programs-menu__item">
-                <strong>Aceler8 FC Elite</strong>
-                <span>4 sessions/week · single team · top competition</span>
-              </a>
-              <a href="/programs/#pathway" class="programs-menu__item">
-                <strong>Aceler8 FC Pathway</strong>
-                <span>2 sessions/week · U8–U11 · path to Elite</span>
-              </a>
-              <a href="/programs/#training" class="programs-menu__item">
-                <strong>Aceler8 Training Sessions</strong>
-                <span>9-week program · open to all · no tryouts required</span>
-              </a>
-            </div>
-          </div>
-          <a class="btn btn--ghost" href="/coaches/">Meet the staff</a>
-        </div>
-      </div>
     </div>
   </section>
 
