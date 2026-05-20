@@ -35,7 +35,7 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
 ---
 
 <header class="site-header">
-  <div class="wrap site-header__inner">
+  <div class="site-header__inner">
     <a class="site-header__brand" href="/">
       <img
         src="/logo-soccer-ball.png"
@@ -125,6 +125,7 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
     justify-content: flex-start;
     height: 100%;
     gap: 1.5rem;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
   }
 
   .site-header__brand {
