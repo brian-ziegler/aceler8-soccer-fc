@@ -1,20 +1,22 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { players } from '@/data/players';
 import { siteConfig } from '@/data/site';
 
-const player = {
-  name: 'Payton Ziegler',
-  number: 19,
-  photo: '/images/action-1.png',
-  photoW: 1023,
-  photoH: 1537,
-};
+export function getStaticPaths() {
+  return players.map((player) => ({
+    params: { slug: player.slug },
+    props: { player },
+  }));
+}
+
+const { player } = Astro.props;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: player.name,
-  url: `${siteConfig.url}/players/payton-ziegler/`,
+  url: `${siteConfig.url}/players/${player.slug}/`,
   memberOf: {
     '@type': 'SportsOrganization',
     name: siteConfig.name,
@@ -24,21 +26,13 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title={`${player.name} — #${player.number} | Aceler8 FC`}
-  description={`${player.name}, #${player.number} at Aceler8 FC — a player-first youth soccer club in Rochester, NY.`}
+  title={`${player.name} — #${player.number} | ${siteConfig.name}`}
+  description={`${player.name}, #${player.number}${player.position ? ` · ${player.position}` : ''} at Aceler8 FC — a player-first youth soccer club in Rochester, NY.`}
   jsonLd={jsonLd}
 >
-  <!-- ── Player hero banner ────────────────────────────────────────────────── -->
+  <!-- ── Player hero ────────────────────────────────────────────────────────── -->
   <section class="player-hero" aria-label={`${player.name} profile`}>
-    <img
-      src={player.photo}
-      alt={player.name}
-      width={player.photoW}
-      height={player.photoH}
-      fetchpriority="high"
-      loading="eager"
-      class="player-hero__img"
-    />
+    <div class="player-hero__photo photo-placeholder" aria-hidden="true"></div>
     <div class="player-hero__scrim" aria-hidden="true" />
     <div class="player-hero__overlay">
       <div class="wrap player-hero__content">
@@ -46,6 +40,7 @@ const jsonLd = {
           #{player.number}
         </span>
         <h1 class="player-hero__name">{player.name}</h1>
+        {player.position && <p class="player-hero__position">{player.position}</p>}
         <p class="player-hero__club">Aceler8 FC · Rochester, NY</p>
       </div>
     </div>
@@ -61,21 +56,18 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
-  /* ── Player hero ─────────────────────────────────────────────────────────── */
   .player-hero {
     position: relative;
     width: 100%;
-    max-width: 100vw;
     height: clamp(520px, 85svh, 900px);
     overflow: clip;
     background: #020d1a;
   }
 
-  .player-hero__img {
+  .player-hero__photo {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center 15%;
+    border-radius: 0;
   }
 
   .player-hero__scrim {
@@ -125,16 +117,24 @@ const jsonLd = {
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
   }
 
+  .player-hero__position {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0.1rem 0 0;
+  }
+
   .player-hero__club {
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(246, 243, 236, 0.55);
-    margin: 0.25rem 0 0;
+    margin: 0.15rem 0 0;
   }
 
-  /* ── Back link ───────────────────────────────────────────────────────────── */
   .player-nav {
     padding-block: 2rem 1rem;
   }
