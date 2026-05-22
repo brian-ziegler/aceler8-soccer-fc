@@ -9,9 +9,9 @@ export interface Team {
 
 export const teams: Team[] = [
   {
-    slug: 'u11',
-    name: 'Aceler8 FC U11',
-    ageGroup: 'U11',
+    slug: 'u12',
+    name: 'Aceler8 FC U12',
+    ageGroup: 'U12',
     season: 'Fall 2026',
     playerSlugs: [
       'bryn-ingraham',
@@ -40,17 +40,17 @@ export const teams: Team[] = [
     ],
   },
   {
-    slug: 'u12',
-    name: 'Aceler8 FC U12',
-    ageGroup: 'U12',
+    slug: 'u10',
+    name: 'Aceler8 FC U10',
+    ageGroup: 'U10',
     season: 'Fall 2026',
     playerSlugs: [],
     galleryImages: [],
   },
   {
-    slug: 'u10',
-    name: 'Aceler8 FC U10',
-    ageGroup: 'U10',
+    slug: 'u9',
+    name: 'Aceler8 FC U9',
+    ageGroup: 'U9',
     season: 'Fall 2026',
     playerSlugs: [],
     galleryImages: [],
