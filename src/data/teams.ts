@@ -40,6 +40,14 @@ export const teams: Team[] = [
     ],
   },
   {
+    slug: 'u11',
+    name: 'Aceler8 FC U11',
+    ageGroup: 'U11',
+    season: 'Fall 2026',
+    playerSlugs: [],
+    galleryImages: [],
+  },
+  {
     slug: 'u10',
     name: 'Aceler8 FC U10',
     ageGroup: 'U10',
