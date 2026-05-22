@@ -15,7 +15,7 @@ export const coaches: Coach[] = [
   {
     slug: 'connally-edozien',
     name: 'Connally Edozien',
-    role: 'Founder',
+    role: 'Head Coach',
     title: 'Founder | Head of Coaching and Player Development',
     imageSrc: '/coaches/connally.jpg',
     imageAlt: 'Connally Edozien — Co-Founder, Aceler8 FC',

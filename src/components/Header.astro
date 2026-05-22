@@ -1,11 +1,11 @@
 ---
+import { coaches } from '@/data/coaches';
 
 const pathname = Astro.url.pathname;
 
 const links = [
   { href: '/about/', label: 'About' },
   { href: '/teams/', label: 'Teams' },
-  { href: '/coaches/', label: 'Coaches' },
 ];
 
 const programDropdown = [
@@ -32,6 +32,7 @@ function isActive(href: string) {
 }
 
 const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isActive('/camps/');
+const isCoachesActive  = isActive('/coaches/');
 ---
 
 <header class="site-header">
@@ -86,6 +87,28 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
                 <ul class="dropdown-item__highlights">
                   {item.highlights.map((h) => <li>{h}</li>)}
                 </ul>
+              </a>
+            ))}
+          </div>
+        </li>
+
+        <!-- Coaches dropdown -->
+        <li class="site-nav__has-dropdown">
+          <a
+            href="/coaches/"
+            class:list={['site-nav__link', { 'is-active': isCoachesActive }]}
+            aria-haspopup="true"
+            id="coaches-trigger"
+          >
+            Coaches
+          </a>
+          <div class="coaches-dropdown" id="coaches-dropdown" role="region" aria-label="Coaches menu">
+            <a href="/coaches/" class="coaches-dropdown__all">View all coaches →</a>
+            {coaches.map((coach) => (
+              <a href={`/coaches/${coach.slug}/`} class="dropdown-item">
+                <strong class="dropdown-item__name">{coach.name}</strong>
+                <p class="dropdown-item__role">{coach.role}</p>
+                <p class="dropdown-item__summary">{coach.summary}</p>
               </a>
             ))}
           </div>
@@ -322,6 +345,59 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
     margin-top: 0.1em;
   }
 
+  /* ── Coaches dropdown ──────────────────────────────────────────────────── */
+  .coaches-dropdown {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 760px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .site-nav__has-dropdown:hover .coaches-dropdown,
+  .site-nav__has-dropdown:focus-within .coaches-dropdown {
+    display: grid;
+  }
+
+  .coaches-dropdown.is-open {
+    display: grid;
+  }
+
+  .dropdown-item__role {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .dropdown-item__summary {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .coaches-dropdown__all {
+    display: none;
+    padding: 0.9rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
   /* Contact CTA pill */
   .site-nav__cta {
     display: inline-flex;
@@ -394,8 +470,9 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
       width: 100%;
     }
 
-    /* On mobile, dropdown is click-toggled and appears inline */
-    .programs-dropdown {
+    /* On mobile, dropdowns are click-toggled and appear inline */
+    .programs-dropdown,
+    .coaches-dropdown {
       position: static;
       transform: none;
       width: 100%;
@@ -406,8 +483,13 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
       display: none;
     }
 
-    .programs-dropdown.is-open {
+    .programs-dropdown.is-open,
+    .coaches-dropdown.is-open {
       display: grid;
+    }
+
+    .coaches-dropdown__all {
+      display: block;
     }
 
     .dropdown-item {
@@ -439,7 +521,7 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
     body.classList.toggle('nav-open', !!open);
   });
 
-  nav?.querySelectorAll('a:not(#programs-trigger)').forEach((a) => {
+  nav?.querySelectorAll('a:not(#programs-trigger):not(#coaches-trigger)').forEach((a) => {
     a.addEventListener('click', () => {
       nav.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
@@ -458,13 +540,32 @@ const isProgramsActive = isActive('/programs/') || isActive('/pathway/') || isAc
     }
   });
 
-  // Close dropdown when clicking any item inside it (mobile)
   programsDropdown?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => {
       nav?.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
       body.classList.remove('nav-open');
       programsDropdown.classList.remove('is-open');
+    });
+  });
+
+  // Mobile: toggle coaches dropdown on trigger click
+  const coachesTrigger  = document.getElementById('coaches-trigger');
+  const coachesDropdown = document.getElementById('coaches-dropdown');
+
+  coachesTrigger?.addEventListener('click', (e) => {
+    if (window.innerWidth <= 800) {
+      e.preventDefault();
+      coachesDropdown?.classList.toggle('is-open');
+    }
+  });
+
+  coachesDropdown?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      nav?.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      body.classList.remove('nav-open');
+      coachesDropdown.classList.remove('is-open');
     });
   });
 </script>

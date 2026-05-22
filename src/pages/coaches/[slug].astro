@@ -103,6 +103,18 @@ const jsonLd = {
     max-height: 520px;
   }
 
+  @media (max-width: 600px) {
+    .coach-page__figure {
+      background: #020d1a;
+    }
+
+    .coach-page__figure img {
+      aspect-ratio: 2 / 3;
+      max-height: unset;
+      object-fit: contain;
+    }
+  }
+
   .coach-page__initials-placeholder {
     aspect-ratio: 4 / 3;
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-muted) 100%);

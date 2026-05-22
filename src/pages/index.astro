@@ -113,13 +113,17 @@ const jsonLd = [
           loading={i === 0 ? 'eager' : 'lazy'}
         />
         <div class="hero-slide__scrim" aria-hidden="true" />
-        {(slide.heading || slide.title || slide.description || slide.button) && (
+        {(slide.heading || slide.title || slide.description || slide.buttons?.length) && (
           <div class="hero-slide__content">
             {slide.heading && <p class="hero-slide__heading">{slide.heading}</p>}
             {slide.title && <p class="hero-slide__title">{slide.title}</p>}
             {slide.description && <p class="hero-slide__description">{slide.description}</p>}
-            {slide.button && (
-              <a href={slide.button.href} class="btn btn--accent hero-slide__cta">{slide.button.label}</a>
+            {slide.buttons && slide.buttons.length > 0 && (
+              <div class="hero-slide__ctas">
+                {slide.buttons.map(btn => (
+                  <a href={btn.href} class="btn btn--accent hero-slide__cta">{btn.label}</a>
+                ))}
+              </div>
             )}
           </div>
         )}
@@ -256,7 +260,7 @@ const jsonLd = [
     align-items: flex-end;
     text-align: right;
     gap: 0.6rem;
-    max-width: min(52%, 42rem);
+    max-width: min(30%, 30rem);
   }
 
   .hero-slide__heading {
@@ -276,19 +280,25 @@ const jsonLd = [
     margin: 0;
     line-height: 1.08;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
-    max-width: 18ch;
   }
 
   .hero-slide__description {
     font-size: clamp(0.9rem, 1.5vw, 1.05rem);
     color: rgba(246, 243, 236, 0.8);
     margin: 0;
-    max-width: 42ch;
     line-height: 1.5;
   }
 
-  .hero-slide__cta {
+  .hero-slide__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     margin-top: 0.4rem;
+    justify-content: flex-end;
+  }
+
+  .hero-slide__cta {
+    flex-shrink: 0;
   }
 
   /* ── Controls bar ────────────────────────────────────────────────────────── */
