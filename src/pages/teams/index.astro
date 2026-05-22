@@ -1,0 +1,149 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import { siteConfig } from '@/data/site';
+import { teams } from '@/data/teams';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Teams — Aceler8 FC',
+  url: `${siteConfig.url}/teams/`,
+};
+---
+
+<BaseLayout
+  title="Teams — U8, U10, U11 & U12 | Aceler8 FC Rochester NY"
+  description="Aceler8 FC competitive soccer teams in Rochester, NY — U8, U10, U11, and U12 age groups starting Fall 2026. Elite player-first development for young athletes."
+  jsonLd={jsonLd}
+>
+  <PageHero
+    tag="Our Teams"
+    title="Built for elite development."
+    lead="Aceler8 FC offers elite programming for players U8–U12. All teams follow our player-first development model."
+  />
+
+  <section class="wrap teams-section">
+    <div class="teams-grid">
+      {teams.map((team, i) => (
+        <a
+          href={`/teams/${team.slug}/`}
+          class="team-card card"
+          data-reveal
+          style={`--reveal-delay: ${i * 0.08}s`}
+        >
+          <p class="team-card__age">{team.ageGroup}</p>
+          <h2 class="team-card__name">{team.name}</h2>
+          <p class="team-card__season">{team.season}</p>
+          {team.playerSlugs.length > 0 && (
+            <p class="team-card__count">{team.playerSlugs.length} players</p>
+          )}
+          <span class="team-card__cta">View roster →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap cta-section" data-reveal>
+    <h2>Interested in learning more?</h2>
+    <p class="lead">
+      Interested in learning more about the Aceler8 FC Difference?
+    </p>
+    <div class="cta-actions">
+      <a href="/contact/" class="btn btn--primary">Contact Us</a>
+      <a href="/coaches/" class="btn btn--ghost">Meet the Coaches</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .teams-section {
+    padding-block: 2.5rem 4rem;
+  }
+
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 2rem 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.25s var(--ease-out),
+      border-color 0.2s var(--ease-out),
+      box-shadow 0.25s var(--ease-out);
+  }
+
+  .team-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-3px);
+  }
+
+  .team-card__age {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .team-card__name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0.35rem 0 0;
+    color: var(--color-text);
+  }
+
+  .team-card__season {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .team-card__count {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin: 0.25rem 0 0;
+  }
+
+  .team-card__cta {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .cta-section {
+    padding-block: 2rem 5rem;
+  }
+
+  .cta-section h2 {
+    margin: 0 0 0.75rem;
+  }
+
+  .cta-section .lead {
+    margin: 0 0 1.5rem;
+    max-width: 38rem;
+    color: var(--color-text-muted);
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

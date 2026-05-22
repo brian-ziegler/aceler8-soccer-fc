@@ -1,0 +1,250 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import { siteConfig } from '@/data/site';
+import { teams, getTeamBySlug } from '@/data/teams';
+import { players } from '@/data/players';
+
+export function getStaticPaths() {
+  return teams.map((team) => ({
+    params: { slug: team.slug },
+    props: { team },
+  }));
+}
+
+const { team } = Astro.props;
+
+const roster = players
+  .filter((p) => team.playerSlugs.includes(p.slug))
+  .sort((a, b) => parseInt(a.number) - parseInt(b.number));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsTeam',
+  name: team.name,
+  url: `${siteConfig.url}/teams/${team.slug}/`,
+  sport: 'Soccer',
+  memberOf: {
+    '@type': 'SportsOrganization',
+    name: siteConfig.name,
+    url: siteConfig.url,
+  },
+};
+---
+
+<BaseLayout
+  title={`${team.name} — ${team.season} | Aceler8 FC`}
+  description={`${team.name} roster and info for the ${team.season} season. Aceler8 FC — elite youth soccer development in Rochester, NY.`}
+  jsonLd={jsonLd}
+>
+  <PageHero
+    tag={team.season}
+    title={team.name}
+    lead={`${team.ageGroup} competitive team — player-first development in Rochester, NY.`}
+  />
+
+  <!-- ── Back navigation ───────────────────────────────────────────────────── -->
+  <div class="wrap team-nav">
+    <a href="/teams/" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      All Teams
+    </a>
+  </div>
+
+  {roster.length > 0 ? (
+    <>
+      <!-- ── Roster ───────────────────────────────────────────────────────── -->
+      <section class="wrap roster-section">
+        <h2 data-reveal>Roster</h2>
+        <div class="roster-grid">
+          {roster.map((player, i) => (
+            <a
+              href={`/players/${player.slug}/`}
+              class="roster-card card"
+              data-reveal
+              style={`--reveal-delay: ${0.04 * i}s`}
+            >
+              <span class="roster-card__number">#{player.number}</span>
+              <span class="roster-card__name">{player.name}</span>
+              {player.position && <span class="roster-card__position">{player.position}</span>}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {team.galleryImages.length > 0 && (
+        <!-- ── Gallery ─────────────────────────────────────────────────────── -->
+        <section class="player-gallery" aria-label={`${team.name} players`}>
+          {team.galleryImages.map((src) => (
+            <div class="player-gallery__item">
+              <img
+                src={src}
+                alt={`${team.name} players`}
+                width="1536"
+                height="1024"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </section>
+      )}
+    </>
+  ) : (
+    <section class="wrap empty-section">
+      <p class="empty-message">Roster coming soon — check back as the season approaches.</p>
+    </section>
+  )}
+
+  <section class="wrap cta-section" data-reveal>
+    <h2>Interested in joining?</h2>
+    <p class="lead">Learn more about our programs and how to get involved.</p>
+    <div class="cta-actions">
+      <a href="/contact/" class="btn btn--primary">Contact Us</a>
+      <a href="/programs/" class="btn btn--ghost">View Programs</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .team-nav {
+    padding-block: 2rem 1rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+
+  /* ── Roster ────────────────────────────────────────────────────────────── */
+  .roster-section {
+    padding-block: 1rem 3rem;
+  }
+
+  .roster-section h2 {
+    margin: 0 0 1.5rem;
+  }
+
+  .roster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .roster-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem;
+    padding: 1.25rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.25s var(--ease-out),
+      border-color 0.2s var(--ease-out),
+      box-shadow 0.25s var(--ease-out);
+  }
+
+  .roster-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-3px);
+  }
+
+  .roster-card__number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-accent);
+    letter-spacing: -0.03em;
+  }
+
+  .roster-card__name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .roster-card__position {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Gallery ───────────────────────────────────────────────────────────── */
+  .player-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+    padding-block: 0 1.5rem;
+  }
+
+  .player-gallery__item {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+
+  .player-gallery__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.4s ease;
+  }
+
+  .player-gallery__item:hover img {
+    transform: scale(1.04);
+  }
+
+  @media (max-width: 640px) {
+    .player-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ── Empty state ───────────────────────────────────────────────────────── */
+  .empty-section {
+    padding-block: 2rem 3rem;
+  }
+
+  .empty-message {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  /* ── CTA ───────────────────────────────────────────────────────────────── */
+  .cta-section {
+    padding-block: 2rem 5rem;
+  }
+
+  .cta-section h2 {
+    margin: 0 0 0.75rem;
+  }
+
+  .cta-section .lead {
+    margin: 0 0 1.5rem;
+    max-width: 38rem;
+    color: var(--color-text-muted);
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>
