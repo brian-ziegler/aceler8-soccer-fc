@@ -41,6 +41,11 @@ export default defineConfig({
           return { ...item, priority: 0.6, changefreq: 'monthly' };
         }
 
+        // Player profiles
+        if (path.startsWith('/players/')) {
+          return { ...item, priority: 0.5, changefreq: 'monthly' };
+        }
+
         // Core informational pages
         if (['/about/', '/teams/', '/contact/'].includes(path)) {
           return { ...item, priority: 0.7, changefreq: 'monthly' };
