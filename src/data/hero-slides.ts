@@ -22,12 +22,12 @@ export const heroSlides: HeroSlide[] = [
     width: 1620, height: 1080, 
   },
   { 
-    src: '/hero/raw/3343.jpg', 
+    src: '/hero/raw/3343-web.jpg',
     width: 1620, height: 1080, 
     title: 'The Family',
   },
   { 
-    src: '/hero/raw/3335.jpg', 
+    src: '/hero/raw/3335-web.jpg',
     width: 1620, height: 1080, 
   },
   { 
@@ -38,7 +38,7 @@ export const heroSlides: HeroSlide[] = [
     buttons: [{ label: 'Player Info', href: '/players/lauren-hoenk/' }],
   },
   { 
-    src: '/hero/raw/3329.jpg', 
+    src: '/hero/raw/3329-web.jpg',
     width: 1620, height: 1080, 
   },
   { 
@@ -60,30 +60,30 @@ export const heroSlides: HeroSlide[] = [
     ],
   },
   { 
-    src: '/hero/raw/3347.jpg', 
+    src: '/hero/raw/3347-web.jpg',
     width: 1620, height: 1080, 
     title: 'Celebrating',
   },
   { 
-    src: '/hero/raw/3341.jpg', 
+    src: '/hero/raw/3341-web.jpg',
     width: 1620, height: 1080, 
     heading: 'Player Spotlight', 
     title: 'Olivia Narselli, Forward 23',
     buttons: [{ label: 'Player Info', href: '/players/olivia-norselli/' }],
   },
   { 
-    src: '/hero/raw/3346.jpg', 
+    src: '/hero/raw/3346-web.jpg',
     width: 1620, height: 1080, 
   },
   { 
-    src: '/hero/raw/3340-landscape.jpg', 
+    src: '/hero/raw/3340-landscape-web.jpg',
     width: 1620, height: 1080, 
     heading: 'Player Spotlight', 
     title: 'Ellie Seaman, Forward / Mid-fielder 18',
     buttons: [{ label: 'Player Info', href: '/players/ellie-seaman/' }],
   },
   { 
-    src: '/hero/raw/3336.jpg', 
+    src: '/hero/raw/3336-web.jpg',
     width: 1620, height: 1080, 
   },
   { 

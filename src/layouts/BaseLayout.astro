@@ -10,9 +10,10 @@ type Props = {
   description: string;
   ogImage?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  preloadImages?: string[];
 };
 
-const { title, description, ogImage, jsonLd } = Astro.props;
+const { title, description, ogImage, jsonLd, preloadImages } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
 ---
@@ -33,6 +34,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
       image={ogImage}
       jsonLd={jsonLd}
     />
+    {preloadImages?.map((src) => (
+      <link rel="preload" as="image" href={src} />
+    ))}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
