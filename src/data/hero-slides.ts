@@ -68,7 +68,7 @@ export const heroSlides: HeroSlide[] = [
     src: '/hero/raw/3341-web.jpg',
     width: 1620, height: 1080, 
     heading: 'Player Spotlight', 
-    title: 'Olivia Narselli, Forward 23',
+    title: 'Olivia Norselli, Forward 23',
     buttons: [{ label: 'Player Info', href: '/players/olivia-norselli/' }],
   },
   { 
@@ -93,10 +93,10 @@ export const heroSlides: HeroSlide[] = [
     title: 'Adrianna Hauck, Forward / Mid-fielder 20',
     buttons: [{ label: 'Player Info', href: '/players/adrianna-hauck/' }],
   },
-  { 
-    src: '/hero/raw/3348.jpg', 
-    width: 1620, height: 1080, 
-  },
+  // { 
+  //   src: '/hero/raw/3348.jpg', 
+  //   width: 1620, height: 1080, 
+  // },
   { 
     src: '/hero/raw/bryn.jpg', 
     width: 1620, height: 1080, 
