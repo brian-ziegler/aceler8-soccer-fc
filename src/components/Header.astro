@@ -130,6 +130,7 @@ const isCoachesActive  = isActive('/coaches/');
     top: 0;
     z-index: 50;
     height: var(--header-h);
+    overflow: visible;
   }
 
   .site-header::before {
@@ -156,6 +157,8 @@ const isCoachesActive  = isActive('/coaches/');
     gap: 0.65rem;
     text-decoration: none;
     color: inherit;
+    align-self: flex-start;
+    padding-top: 0.4rem;
   }
 
   .site-header__brand:hover {
@@ -163,8 +166,8 @@ const isCoachesActive  = isActive('/coaches/');
   }
 
   .site-header__logo {
-    height: 2.75rem;
-    width: 2.75rem;
+    height: 5.5rem;
+    width: 5.5rem;
     object-fit: contain;
     flex-shrink: 0;
     background: var(--color-text-muted);
