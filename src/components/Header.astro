@@ -17,12 +17,27 @@ const programDropdown = [
   {
     href: '/programs/#pathway',
     label: 'Aceler8 FC Pathway',
-    highlights: ['2 sessions per week', 'Ages U8–U11', 'Flexible — works with your current team', 'Direct path to Elite'],
+    highlights: ['2 sessions per week', 'Flexible — works with your current team', 'Direct path to Elite', 'Starting August 2026'],
+  },
+  {
+    href: '/programs/#evaluations',
+    label: 'Player Evaluations',
+    highlights: ['Monday, June 8th', '5:00–6:30 PM at Grace & Truth', 'Open to boys and girls', 'Pathway Program placement'],
   },
   {
     href: '/programs/#training',
     label: 'Aceler8 Training Sessions',
     highlights: ['9-week program', 'Open to all players', 'No tryouts required', 'Individual attention in group setting'],
+  },
+  {
+    href: '/programs/#camps',
+    label: 'Summer Camps',
+    highlights: ['Sweden Town Park, Brockport', 'Ages 6–13 and 14–18', 'July 2026', '$200 per player'],
+  },
+  {
+    href: '/programs/#clinics',
+    label: 'Free Clinics',
+    highlights: ['Free — no cost', 'Open to all skill levels', 'Real Aceler8 coaching', 'Community events throughout the year'],
   },
 ];
 
@@ -123,9 +138,7 @@ const isCoachesActive  = isActive('/coaches/');
     </nav>
 
     <a
-      href="https://playmetrics.com/signup?clubToken=TG9naW4tQ2x1Yi52MS0yNjY2LTE3ODQ0MDIzMjZ8c3g4OHdJQ1pQaGszaWJNdlpLR0kvcXVHZFROUG1iUEYwYXBpZm5Nei9uOD0=&program_id=105530"
-      target="_blank"
-      rel="noopener noreferrer"
+      href="/programs/#evaluations"
       class="site-header__register"
     >
       <span class="site-header__register-full">Player Evaluation Registration — June 8th</span>
@@ -284,7 +297,7 @@ const isCoachesActive  = isActive('/coaches/');
     top: calc(100% + 0.75rem);
     left: 50%;
     transform: translateX(-50%);
-    width: 580px;
+    width: 640px;
     background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
