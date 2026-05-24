@@ -16,6 +16,7 @@ type Props = {
 const { title, description, ogImage, jsonLd, preloadImages } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
+const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <!doctype html>
@@ -37,6 +38,17 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url).href;
     {preloadImages?.map((src) => (
       <link rel="preload" as="image" href={src} />
     ))}
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

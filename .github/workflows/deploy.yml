@@ -55,6 +55,7 @@ jobs:
       - name: Install and build
         env:
           PUBLIC_SITE_URL: ${{ steps.cfg.outputs.url }}
+          PUBLIC_GA_ID: ${{ github.ref_name == 'main' && 'G-LVLVF42VRM' || '' }}
         run: |
           npm ci
           npm run build
