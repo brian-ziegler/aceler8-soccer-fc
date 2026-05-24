@@ -119,6 +119,17 @@ const isCoachesActive  = isActive('/coaches/');
             Contact
           </a>
         </li>
+
+        <li>
+          <a
+            href="https://playmetrics.com/signup?clubToken=TG9naW4tQ2x1Yi52MS0yNjY2LTE3ODQ0MDIzMjZ8c3g4OHdJQ1pQaGszaWJNdlpLR0kvcXVHZFROUG1iUEYwYXBpZm5Nei9uOD0=&program_id=105530"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="site-nav__register"
+          >
+            Register — June 8th
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -433,6 +444,31 @@ const isCoachesActive  = isActive('/coaches/');
     color: #111320;
   }
 
+  /* Register CTA pill — filled accent */
+  .site-nav__register {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-accent);
+    color: #111320;
+    background: var(--color-accent);
+    transition:
+      background 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
+  }
+
+  .site-nav__register:hover {
+    background: color-mix(in srgb, var(--color-accent) 85%, #fff);
+    transform: translateY(-1px);
+  }
+
   /* ── Mobile ──────────────────────────────────────────────────────────────── */
   @media (max-width: 800px) {
     .site-header__menu-btn {
@@ -507,6 +543,12 @@ const isCoachesActive  = isActive('/coaches/');
 
     .site-nav__cta {
       margin-top: 0.5rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .site-nav__register {
+      margin-top: 0.25rem;
       width: 100%;
       justify-content: center;
     }
