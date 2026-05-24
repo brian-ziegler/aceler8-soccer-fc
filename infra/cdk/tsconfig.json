@@ -18,5 +18,5 @@
     "outDir": "dist",
     "skipLibCheck": true
   },
-  "exclude": ["cdk.out", "node_modules"]
+  "exclude": ["cdk.out", "node_modules", "lambda"]
 }

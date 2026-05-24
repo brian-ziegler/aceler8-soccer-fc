@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
 import { Aceler8SiteStack } from '../lib/aceler8-site-stack';
+import { Aceler8CmsStack } from '../lib/aceler8-cms-stack';
 
 const app = new cdk.App();
 
@@ -68,6 +69,27 @@ if (nextBucketName && nextSiteDomain) {
     acmCertificateArn: nextAcmArn?.trim(),
     createGithubOidcProvider: false,
     existingGithubOidcProviderArn: nextOidcArn?.trim(),
+  });
+}
+
+// ── CMS stack ─────────────────────────────────────────────────────────────────
+const cmsSiteDomain = app.node.tryGetContext('cms:siteDomain') as string | undefined;
+
+if (cmsSiteDomain) {
+  const cmsAcmCertificateArn = app.node.tryGetContext('cms:acmCertificateArn') as string;
+  const cmsGithubOwner = app.node.tryGetContext('cms:githubOwner') as string;
+  const cmsGithubRepository = app.node.tryGetContext('cms:githubRepository') as string;
+  const cmsGithubTokenParamName = app.node.tryGetContext('cms:githubTokenParamName') as string;
+  const cmsGithubOidcProviderArn = app.node.tryGetContext('cms:githubOidcProviderArn') as string;
+
+  new Aceler8CmsStack(app, 'Aceler8CmsStack', {
+    env,
+    cmsDomain: cmsSiteDomain,
+    acmCertificateArn: cmsAcmCertificateArn,
+    githubOwner: cmsGithubOwner,
+    githubRepository: cmsGithubRepository,
+    githubTokenParamName: cmsGithubTokenParamName,
+    githubOidcProviderArn: cmsGithubOidcProviderArn,
   });
 }
 

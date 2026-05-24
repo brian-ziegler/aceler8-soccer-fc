@@ -1,0 +1,52 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { isAuthenticated } from './lib/auth';
+import Layout from './components/Layout';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import CoachesList from './features/coaches/CoachesList';
+import CoachForm from './features/coaches/CoachForm';
+import PlayersList from './features/players/PlayersList';
+import PlayerForm from './features/players/PlayerForm';
+import TeamsList from './features/teams/TeamsList';
+import TeamForm from './features/teams/TeamForm';
+import HeroSlidesList from './features/hero-slides/HeroSlidesList';
+import HeroSlideForm from './features/hero-slides/HeroSlideForm';
+
+function RequireAuth({ children }: { children: React.ReactNode }) {
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/*"
+        element={
+          <RequireAuth>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/coaches" element={<CoachesList />} />
+                <Route path="/coaches/new" element={<CoachForm />} />
+                <Route path="/coaches/:id" element={<CoachForm />} />
+                <Route path="/players" element={<PlayersList />} />
+                <Route path="/players/new" element={<PlayerForm />} />
+                <Route path="/players/:id" element={<PlayerForm />} />
+                <Route path="/teams" element={<TeamsList />} />
+                <Route path="/teams/new" element={<TeamForm />} />
+                <Route path="/teams/:id" element={<TeamForm />} />
+                <Route path="/hero-slides" element={<HeroSlidesList />} />
+                <Route path="/hero-slides/new" element={<HeroSlideForm />} />
+                <Route path="/hero-slides/:id" element={<HeroSlideForm />} />
+              </Routes>
+            </Layout>
+          </RequireAuth>
+        }
+      />
+    </Routes>
+  );
+}

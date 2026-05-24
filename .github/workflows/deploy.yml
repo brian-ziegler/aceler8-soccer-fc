@@ -4,6 +4,10 @@
 # Branches:
 #   main  → production  (uses AWS_DEPLOY_ROLE_ARN, S3_BUCKET secret, CLOUDFRONT_DISTRIBUTION_ID secret)
 #   next  → next env    (uses NEXT_* repo variables set automatically by infra.yml after CDK deploy)
+#
+# Note: the deploy roles (prod and next) also have DynamoDB:Query permission on the aceler8-cms table,
+# granted by the Aceler8CmsStack CDK stack (table.grantReadData). This allows the Fetch CMS data step
+# to read content at build time.
 name: Deploy to S3 and invalidate CloudFront
 
 on:
@@ -11,6 +15,7 @@ on:
     branches:
       - main
       - next
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -52,6 +57,18 @@ jobs:
           node-version: "20"
           cache: npm
 
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ steps.cfg.outputs.role }}
+          aws-region: us-east-1
+
+      - name: Fetch CMS data
+        env:
+          CMS_TABLE_NAME: ${{ vars.CMS_TABLE_NAME }}
+          AWS_REGION: us-east-1
+        run: node scripts/fetch-cms-data.mjs
+
       - name: Install and build
         env:
           PUBLIC_SITE_URL: ${{ steps.cfg.outputs.url }}
@@ -59,12 +76,6 @@ jobs:
         run: |
           npm ci
           npm run build
-
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ steps.cfg.outputs.role }}
-          aws-region: us-east-1
 
       - name: Sync site to S3
         run: aws s3 sync dist/ "s3://${{ steps.cfg.outputs.bucket }}/" --delete

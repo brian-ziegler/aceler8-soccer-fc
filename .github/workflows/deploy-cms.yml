@@ -1,0 +1,53 @@
+name: Deploy CMS SPA
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'cms/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-cms:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: cms/package-lock.json
+
+      - name: Build CMS
+        env:
+          VITE_API_URL: ${{ vars.CMS_API_URL }}
+          VITE_COGNITO_USER_POOL_ID: ${{ vars.CMS_USER_POOL_ID }}
+          VITE_COGNITO_APP_CLIENT_ID: ${{ vars.CMS_APP_CLIENT_ID }}
+          VITE_COGNITO_REGION: us-east-1
+        run: |
+          cd cms
+          npm ci
+          npm run build
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.CMS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Sync CMS to S3
+        run: aws s3 sync cms/dist/ "s3://${{ vars.CMS_S3_BUCKET }}/" --delete
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CMS_CLOUDFRONT_ID }}" \
+            --paths "/*"

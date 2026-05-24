@@ -17,6 +17,13 @@
     "next:acmCertificateArn": "arn:aws:acm:us-east-1:125069362169:certificate/e4c764d0-7b32-4770-98ba-977079e6a9a5",
     "next:githubOwner": "brian-ziegler",
     "next:githubRepository": "aceler8-soccer-fc",
-    "next:githubOidcProviderArn": "arn:aws:iam::125069362169:oidc-provider/token.actions.githubusercontent.com"
+    "next:githubOidcProviderArn": "arn:aws:iam::125069362169:oidc-provider/token.actions.githubusercontent.com",
+
+    "cms:siteDomain": "cms.aceler8fc.com",
+    "cms:acmCertificateArn": "arn:aws:acm:us-east-1:125069362169:certificate/e4c764d0-7b32-4770-98ba-977079e6a9a5",
+    "cms:githubOwner": "brian-ziegler",
+    "cms:githubRepository": "aceler8-soccer-fc",
+    "cms:githubTokenParamName": "/aceler8/github-token",
+    "cms:githubOidcProviderArn": "arn:aws:iam::125069362169:oidc-provider/token.actions.githubusercontent.com"
   }
 }
