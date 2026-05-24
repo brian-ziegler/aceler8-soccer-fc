@@ -119,19 +119,18 @@ const isCoachesActive  = isActive('/coaches/');
             Contact
           </a>
         </li>
-
-        <li>
-          <a
-            href="https://playmetrics.com/signup?clubToken=TG9naW4tQ2x1Yi52MS0yNjY2LTE3ODQ0MDIzMjZ8c3g4OHdJQ1pQaGszaWJNdlpLR0kvcXVHZFROUG1iUEYwYXBpZm5Nei9uOD0=&program_id=105530"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="site-nav__register"
-          >
-            Player Evaluation Registration — June 8th
-          </a>
-        </li>
       </ul>
     </nav>
+
+    <a
+      href="https://playmetrics.com/signup?clubToken=TG9naW4tQ2x1Yi52MS0yNjY2LTE3ODQ0MDIzMjZ8c3g4OHdJQ1pQaGszaWJNdlpLR0kvcXVHZFROUG1iUEYwYXBpZm5Nei9uOD0=&program_id=105530"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="site-header__register"
+    >
+      <span class="site-header__register-full">Player Evaluation Registration — June 8th</span>
+      <span class="site-header__register-short">Evaluation Registration — 6/8</span>
+    </a>
   </div>
 </header>
 
@@ -229,6 +228,7 @@ const isCoachesActive  = isActive('/coaches/');
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    flex: 1;
   }
 
   .site-nav__list {
@@ -444,10 +444,12 @@ const isCoachesActive  = isActive('/coaches/');
     color: #111320;
   }
 
-  /* Register CTA pill — filled accent */
-  .site-nav__register {
+  /* Register CTA pill — filled accent, always visible in header */
+  .site-header__register {
     display: inline-flex;
     align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -460,14 +462,15 @@ const isCoachesActive  = isActive('/coaches/');
     background: var(--color-accent);
     transition:
       background 0.2s var(--ease-out),
-      color 0.2s var(--ease-out),
       transform 0.2s var(--ease-out);
   }
 
-  .site-nav__register:hover {
+  .site-header__register:hover {
     background: color-mix(in srgb, var(--color-accent) 85%, #fff);
     transform: translateY(-1px);
   }
+
+  .site-header__register-short { display: none; }
 
   /* ── Mobile ──────────────────────────────────────────────────────────────── */
   @media (max-width: 800px) {
@@ -477,6 +480,7 @@ const isCoachesActive  = isActive('/coaches/');
 
     .site-nav {
       position: fixed;
+      flex: none;
       z-index: 49;
       inset: var(--header-h) 0 0 0;
       flex-direction: column;
@@ -547,11 +551,20 @@ const isCoachesActive  = isActive('/coaches/');
       justify-content: center;
     }
 
-    .site-nav__register {
-      margin-top: 0.25rem;
-      width: 100%;
-      justify-content: center;
+    /* Keep register button in the header bar, before the hamburger */
+    .site-header__register {
+      order: 1;
+      margin-left: auto;
+      font-size: 0.72rem;
+      padding: 0.35rem 0.7rem;
     }
+
+    .site-header__menu-btn {
+      order: 2;
+    }
+
+    .site-header__register-full { display: none; }
+    .site-header__register-short { display: inline; }
   }
 </style>
 
