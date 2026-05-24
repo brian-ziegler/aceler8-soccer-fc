@@ -56,6 +56,10 @@ export function getAccessToken(): string | null {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
+export function getIdToken(): string | null {
+  return localStorage.getItem(ID_TOKEN_KEY);
+}
+
 export function isAuthenticated(): boolean {
-  return !!getAccessToken();
+  return !!getIdToken();
 }

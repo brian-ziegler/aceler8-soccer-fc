@@ -1,8 +1,8 @@
 import { API_URL } from './config';
-import { getAccessToken } from './auth';
+import { getIdToken } from './auth';
 
 async function request(method: string, path: string, body?: unknown): Promise<unknown> {
-  const token = getAccessToken();
+  const token = getIdToken();
   const res = await fetch(`${API_URL}${path}`, {
     method,
     headers: {
