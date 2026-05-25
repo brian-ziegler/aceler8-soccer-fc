@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { listUsers, createUser, deleteUser, updateUserRole, type CmsUser } from '../../lib/api';
+import { listUsers, createUser, deleteUser, updateUserRole, resendInvite, type CmsUser } from '../../lib/api';
 import { getCurrentUserEmail } from '../../lib/auth';
 
 export default function UsersPage() {
@@ -51,6 +51,16 @@ export default function UsersPage() {
       setUsers(prev => prev.map(u => u.username === user.username ? { ...u, role } : u));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update role');
+    }
+  }
+
+  async function handleResend(user: CmsUser) {
+    try {
+      await resendInvite(user.username);
+      setError(null);
+      alert(`Invite resent to ${user.email ?? user.username}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to resend invite');
     }
   }
 
@@ -162,6 +172,17 @@ export default function UsersPage() {
                     <span className={`status-badge status-badge--${user.status === 'CONFIRMED' ? 'active' : 'invited'}`}>
                       {user.status === 'CONFIRMED' ? 'Active' : 'Invited'}
                     </span>
+                    {user.status !== 'CONFIRMED' && (
+                      <button
+                        type="button"
+                        className="btn-ghost btn-sm"
+                        style={{ marginLeft: 8 }}
+                        onClick={() => handleResend(user)}
+                        title="Resend invite email"
+                      >
+                        Resend
+                      </button>
+                    )}
                   </td>
                   <td>
                     <button

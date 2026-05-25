@@ -272,6 +272,19 @@ async function deleteUser(event: APIGatewayProxyEvent, username: string): Promis
   return respond(200, { deleted: true });
 }
 
+async function resendInvite(event: APIGatewayProxyEvent, username: string): Promise<APIGatewayProxyResult> {
+  if (!getCallerGroups(event).includes('admin')) return respondError(403, 'Forbidden');
+  await cognito.send(
+    new AdminCreateUserCommand({
+      UserPoolId: USER_POOL_ID,
+      Username: username,
+      MessageAction: 'RESEND',
+      DesiredDeliveryMediums: ['EMAIL'],
+    }),
+  );
+  return respond(200, { resent: true });
+}
+
 async function updateUserRole(event: APIGatewayProxyEvent, username: string): Promise<APIGatewayProxyResult> {
   if (!getCallerGroups(event).includes('admin')) return respondError(403, 'Forbidden');
   const data =
@@ -343,10 +356,12 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
   if (segment === 'users') {
     const username = parts[2] ? decodeURIComponent(parts[2]) : undefined;
+    const action = parts[3];
     if (method === 'GET' && !username) return listUsers(event);
     if (method === 'POST' && !username) return createUser(event);
-    if (method === 'DELETE' && username) return deleteUser(event, username);
-    if (method === 'PUT' && username) return updateUserRole(event, username);
+    if (method === 'DELETE' && username && !action) return deleteUser(event, username);
+    if (method === 'PUT' && username && !action) return updateUserRole(event, username);
+    if (method === 'POST' && username && action === 'resend') return resendInvite(event, username);
     return respondError(404, 'Not found');
   }
 

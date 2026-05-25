@@ -205,6 +205,8 @@ export class Aceler8CmsStack extends cdk.Stack {
     const singleUserResource = usersResource.addResource('{username}');
     singleUserResource.addMethod('DELETE', lambdaIntegration, authOptions);
     singleUserResource.addMethod('PUT', lambdaIntegration, authOptions);
+    const resendResource = singleUserResource.addResource('resend');
+    resendResource.addMethod('POST', lambdaIntegration, authOptions);
 
     // /api/{entity}
     const entityResource = apiResource.addResource('{entity}');

@@ -107,3 +107,7 @@ export function deleteUser(username: string): Promise<unknown> {
 export function updateUserRole(username: string, role: string): Promise<unknown> {
   return request('PUT', `api/users/${encodeURIComponent(username)}`, { role });
 }
+
+export function resendInvite(username: string): Promise<unknown> {
+  return request('POST', `api/users/${encodeURIComponent(username)}/resend`);
+}
