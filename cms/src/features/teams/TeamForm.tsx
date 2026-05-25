@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getItem, putItem, listItems } from '../../lib/api';
+import { ImageField, ImagePicker } from '../../components/ImagePicker';
 
 interface TeamData {
   name: string;
@@ -44,6 +45,7 @@ export default function TeamForm() {
   const [data, setData] = useState<TeamData>(empty);
   const [slugManual, setSlugManual] = useState(false);
   const [allPlayers, setAllPlayers] = useState<Player[]>([]);
+  const [galleryPickerOpen, setGalleryPickerOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -195,19 +197,39 @@ export default function TeamForm() {
         <div className="form-section">
           <div className="form-section-header">
             <label>Gallery Images</label>
-            <button type="button" className="btn-ghost btn-sm" onClick={addGalleryImage}>Add Image</button>
+            <div style={{ display: 'flex', gap: 6 }}>
+              <button type="button" className="btn-ghost btn-sm" onClick={() => setGalleryPickerOpen(true)}>
+                Browse & Add
+              </button>
+              <button type="button" className="btn-ghost btn-sm" onClick={addGalleryImage}>
+                Add URL
+              </button>
+            </div>
           </div>
           {data.galleryImages.map((img, idx) => (
-            <div key={idx} className="array-item">
-              <input
-                type="text"
-                value={img}
-                placeholder="/images/photo.jpg"
-                onChange={e => updateGalleryImage(idx, e.target.value)}
-              />
-              <button type="button" className="btn-danger btn-sm" onClick={() => removeGalleryImage(idx)}>Remove</button>
-            </div>
+            <ImageField
+              key={idx}
+              label={`Image ${idx + 1}`}
+              value={img}
+              onChange={url => updateGalleryImage(idx, url)}
+              placeholder="/images/photo.jpg"
+            />
           ))}
+          {data.galleryImages.length > 0 && (
+            <button type="button" className="btn-danger btn-sm" style={{ alignSelf: 'flex-start' }}
+              onClick={() => removeGalleryImage(data.galleryImages.length - 1)}>
+              Remove Last
+            </button>
+          )}
+          {galleryPickerOpen && (
+            <ImagePicker
+              onSelect={url => {
+                setData(prev => ({ ...prev, galleryImages: [...prev.galleryImages, url] }));
+                setGalleryPickerOpen(false);
+              }}
+              onClose={() => setGalleryPickerOpen(false)}
+            />
+          )}
         </div>
 
         <div className="form-actions">

@@ -519,3 +519,248 @@ textarea {
   padding: 10px;
   font-size: 14px;
 }
+
+/* ── Image field ──────────────────────────────────────────────────────────── */
+.image-field-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.image-field-row input {
+  flex: 1;
+}
+
+.image-field-preview {
+  margin-top: 8px;
+  max-width: 220px;
+  max-height: 130px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  display: block;
+}
+
+/* ── Image picker modal ───────────────────────────────────────────────────── */
+.picker-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.picker-modal {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 840px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+
+.picker-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.picker-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.picker-upload-btn {
+  cursor: pointer;
+}
+
+.picker-upload-btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.picker-error {
+  margin: 8px 16px 0;
+  flex-shrink: 0;
+}
+
+.picker-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: #8b949e;
+  font-size: 13px;
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  padding: 14px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.picker-item {
+  cursor: pointer;
+  border-radius: 7px;
+  border: 2px solid #30363d;
+  overflow: hidden;
+  background: #0d1117;
+  transition: border-color 0.15s;
+  text-align: left;
+  padding: 0;
+}
+
+.picker-item:hover {
+  border-color: #f47b0e;
+}
+
+.picker-thumb {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+.picker-item-name {
+  padding: 5px 7px;
+  font-size: 11px;
+  color: #8b949e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Media library page ───────────────────────────────────────────────────── */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.media-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.media-card:hover {
+  border-color: #8b949e;
+}
+
+.media-card-thumb-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: #0d1117;
+  cursor: pointer;
+}
+
+.media-card-thumb {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.15s;
+}
+
+.media-card-thumb-btn:hover .media-card-thumb {
+  opacity: 0.85;
+}
+
+.media-card-footer {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.media-card-name {
+  font-size: 11px;
+  color: #8b949e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+/* ── Image detail overlay ─────────────────────────────────────────────────── */
+.image-detail-modal {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.image-detail-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  background: #0d1117;
+  display: block;
+}
+
+.image-detail-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.image-detail-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e6edf3;
+}
+
+.image-detail-url {
+  font-family: monospace;
+  font-size: 11px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 4px;
+  padding: 8px 10px;
+  color: #8b949e;
+  word-break: break-all;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.image-detail-url:hover {
+  border-color: #f47b0e;
+}
+
+.image-detail-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

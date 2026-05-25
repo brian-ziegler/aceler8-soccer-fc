@@ -11,6 +11,7 @@ import TeamsList from './features/teams/TeamsList';
 import TeamForm from './features/teams/TeamForm';
 import HeroSlidesList from './features/hero-slides/HeroSlidesList';
 import HeroSlideForm from './features/hero-slides/HeroSlideForm';
+import MediaLibrary from './features/media/MediaLibrary';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   if (!isAuthenticated()) {
@@ -42,6 +43,7 @@ export default function App() {
                 <Route path="/hero-slides" element={<HeroSlidesList />} />
                 <Route path="/hero-slides/new" element={<HeroSlideForm />} />
                 <Route path="/hero-slides/:id" element={<HeroSlideForm />} />
+                <Route path="/media" element={<MediaLibrary />} />
               </Routes>
             </Layout>
           </RequireAuth>

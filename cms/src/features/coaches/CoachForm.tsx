@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getItem, putItem } from '../../lib/api';
+import { ImageField } from '../../components/ImagePicker';
 
 interface CoachData {
   name: string;
@@ -175,15 +176,12 @@ export default function CoachForm() {
           </div>
         </div>
         <div className="form-row">
-          <div className="form-group">
-            <label>Image Src</label>
-            <input
-              type="text"
-              value={data.imageSrc}
-              placeholder="/coaches/name.jpg"
-              onChange={e => setData(prev => ({ ...prev, imageSrc: e.target.value }))}
-            />
-          </div>
+          <ImageField
+            label="Image"
+            value={data.imageSrc}
+            onChange={url => setData(prev => ({ ...prev, imageSrc: url }))}
+            placeholder="/coaches/name.jpg"
+          />
           <div className="form-group">
             <label>Image Alt</label>
             <input

@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getItem, putItem } from '../../lib/api';
+import { ImageField } from '../../components/ImagePicker';
 
 interface Button {
   label: string;
@@ -117,16 +118,13 @@ export default function HeroSlideForm() {
             required
           />
         </div>
-        <div className="form-group">
-          <label>Image Src *</label>
-          <input
-            type="text"
-            value={data.src}
-            placeholder="/hero/raw/image.jpg"
-            onChange={e => setData(prev => ({ ...prev, src: e.target.value }))}
-            required
-          />
-        </div>
+        <ImageField
+          label="Image"
+          value={data.src}
+          onChange={src => setData(prev => ({ ...prev, src }))}
+          placeholder="/hero/raw/image.jpg"
+          required
+        />
         <div className="form-row">
           <div className="form-group">
             <label>Width</label>

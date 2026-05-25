@@ -12,6 +12,7 @@ const navLinks = [
   { to: '/players', label: 'Players', exact: false },
   { to: '/teams', label: 'Teams', exact: false },
   { to: '/hero-slides', label: 'Hero Slides', exact: false },
+  { to: '/media', label: 'Media', exact: false },
 ];
 
 export default function Layout({ children }: LayoutProps) {

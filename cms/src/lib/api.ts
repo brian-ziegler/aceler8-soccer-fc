@@ -39,3 +39,29 @@ export function deleteItem(entity: string, id: string): Promise<unknown> {
 export function publish(env: 'next' | 'live'): Promise<unknown> {
   return request('POST', 'api/publish', { env });
 }
+
+export interface MediaImage {
+  key: string;
+  url: string;
+  lastModified?: string;
+  size?: number;
+}
+
+export function listMedia(): Promise<MediaImage[]> {
+  return request('GET', 'api/media') as Promise<MediaImage[]>;
+}
+
+export function presignUpload(
+  filename: string,
+  contentType: string,
+): Promise<{ uploadUrl: string; publicUrl: string; key: string }> {
+  return request('POST', 'api/media/presign', { filename, contentType }) as Promise<{
+    uploadUrl: string;
+    publicUrl: string;
+    key: string;
+  }>;
+}
+
+export function deleteMedia(key: string): Promise<unknown> {
+  return request('POST', 'api/media/delete', { key });
+}

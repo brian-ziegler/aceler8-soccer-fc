@@ -68,6 +68,28 @@ export class Aceler8CmsStack extends cdk.Stack {
       },
     });
 
+    // ── Media bucket ──────────────────────────────────────────────────────────
+    const mediaBucket = new s3.Bucket(this, 'CmsMediaBucket', {
+      bucketName: 'aceler8-cms-media',
+      blockPublicAccess: new s3.BlockPublicAccess({
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      }),
+      publicReadAccess: true,
+      cors: [
+        {
+          allowedOrigins: ['*'],
+          allowedMethods: [s3.HttpMethods.GET, s3.HttpMethods.PUT],
+          allowedHeaders: ['*'],
+          maxAge: 3600,
+        },
+      ],
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    });
+
     // ── Lambda ────────────────────────────────────────────────────────────────
     const cmsLambda = new lambdaNode.NodejsFunction(this, 'CmsApiLambda', {
       functionName: 'aceler8-cms-api',
@@ -79,7 +101,12 @@ export class Aceler8CmsStack extends cdk.Stack {
         minify: true,
         sourceMap: false,
         target: 'node22',
-        externalModules: ['@aws-sdk/*'],
+        externalModules: [
+          '@aws-sdk/client-dynamodb',
+          '@aws-sdk/util-dynamodb',
+          '@aws-sdk/client-ssm',
+          '@aws-sdk/client-s3',
+        ],
       },
       environment: {
         TABLE_NAME: table.tableName,
@@ -87,10 +114,13 @@ export class Aceler8CmsStack extends cdk.Stack {
         GITHUB_REPO: githubRepository,
         GITHUB_TOKEN_PARAM: githubTokenParamName,
         CMS_DOMAIN: cmsDomain,
+        MEDIA_BUCKET: mediaBucket.bucketName,
+        MEDIA_REGION: this.region,
       },
     });
 
     table.grantReadWriteData(cmsLambda);
+    mediaBucket.grantReadWrite(cmsLambda);
 
     cmsLambda.addToRolePolicy(
       new iam.PolicyStatement({
@@ -128,6 +158,14 @@ export class Aceler8CmsStack extends cdk.Stack {
     // /api/publish
     const publishResource = apiResource.addResource('publish');
     publishResource.addMethod('POST', lambdaIntegration, authOptions);
+
+    // /api/media
+    const mediaResource = apiResource.addResource('media');
+    mediaResource.addMethod('GET', lambdaIntegration, authOptions);
+    const mediaPresignResource = mediaResource.addResource('presign');
+    mediaPresignResource.addMethod('POST', lambdaIntegration, authOptions);
+    const mediaDeleteResource = mediaResource.addResource('delete');
+    mediaDeleteResource.addMethod('POST', lambdaIntegration, authOptions);
 
     // /api/{entity}
     const entityResource = apiResource.addResource('{entity}');
@@ -266,6 +304,11 @@ export class Aceler8CmsStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'TableName', {
       value: table.tableName,
       description: 'GitHub variable CMS_TABLE_NAME',
+    });
+
+    new cdk.CfnOutput(this, 'MediaBucketName', {
+      value: mediaBucket.bucketName,
+      description: 'S3 media bucket for CMS image uploads',
     });
   }
 }

@@ -7,15 +7,25 @@ import {
 } from '@aws-sdk/client-dynamodb';
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import { SSMClient, GetParameterCommand } from '@aws-sdk/client-ssm';
+import {
+  S3Client,
+  ListObjectsV2Command,
+  DeleteObjectCommand,
+  PutObjectCommand,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 const ddb = new DynamoDBClient({});
 const ssm = new SSMClient({});
+const s3 = new S3Client({});
 
 const TABLE_NAME = process.env.TABLE_NAME!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
 const GITHUB_REPO = process.env.GITHUB_REPO!;
 const GITHUB_TOKEN_PARAM = process.env.GITHUB_TOKEN_PARAM!;
+const MEDIA_BUCKET = process.env.MEDIA_BUCKET!;
+const MEDIA_REGION = process.env.MEDIA_REGION || 'us-east-1';
 
 const VALID_ENTITY_TYPES = new Set(['coaches', 'players', 'teams', 'hero_slides']);
 
@@ -35,6 +45,8 @@ function respond(statusCode: number, body: unknown): APIGatewayProxyResult {
 function respondError(statusCode: number, message: string): APIGatewayProxyResult {
   return respond(statusCode, { error: message });
 }
+
+// ── DynamoDB entity handlers ──────────────────────────────────────────────────
 
 async function listEntities(entityType: string): Promise<APIGatewayProxyResult> {
   const result = await ddb.send(
@@ -56,9 +68,7 @@ async function getEntity(entityType: string, id: string): Promise<APIGatewayProx
       Key: marshall({ entityType, id }),
     }),
   );
-  if (!result.Item) {
-    return respondError(404, 'Not found');
-  }
+  if (!result.Item) return respondError(404, 'Not found');
   return respond(200, unmarshall(result.Item));
 }
 
@@ -89,13 +99,59 @@ async function deleteEntity(entityType: string, id: string): Promise<APIGatewayP
   return respond(200, { deleted: true });
 }
 
+// ── Media (S3) handlers ───────────────────────────────────────────────────────
+
+function mediaUrl(key: string): string {
+  return `https://${MEDIA_BUCKET}.s3.${MEDIA_REGION}.amazonaws.com/${key}`;
+}
+
+async function listMedia(): Promise<APIGatewayProxyResult> {
+  const result = await s3.send(new ListObjectsV2Command({ Bucket: MEDIA_BUCKET }));
+  const items = (result.Contents ?? []).map((obj) => ({
+    key: obj.Key!,
+    url: mediaUrl(obj.Key!),
+    lastModified: obj.LastModified?.toISOString(),
+    size: obj.Size,
+  }));
+  items.sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''));
+  return respond(200, items);
+}
+
+async function presignUpload(body: string | null): Promise<APIGatewayProxyResult> {
+  const data =
+    typeof body === 'string'
+      ? (JSON.parse(body) as { filename?: string; contentType?: string })
+      : {};
+  if (!data.filename) return respondError(400, 'filename is required');
+
+  const sanitized = data.filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const key = `${Date.now()}-${sanitized}`;
+  const contentType = data.contentType || 'image/jpeg';
+
+  const uploadUrl = await getSignedUrl(
+    s3,
+    new PutObjectCommand({ Bucket: MEDIA_BUCKET, Key: key, ContentType: contentType }),
+    { expiresIn: 300 },
+  );
+
+  return respond(200, { uploadUrl, publicUrl: mediaUrl(key), key });
+}
+
+async function deleteMedia(body: string | null): Promise<APIGatewayProxyResult> {
+  const data =
+    typeof body === 'string' ? (JSON.parse(body) as { key?: string }) : {};
+  if (!data.key) return respondError(400, 'key is required');
+  await s3.send(new DeleteObjectCommand({ Bucket: MEDIA_BUCKET, Key: data.key }));
+  return respond(200, { deleted: true });
+}
+
+// ── Publish handler ───────────────────────────────────────────────────────────
+
 async function getGithubToken(): Promise<string> {
   const result = await ssm.send(
     new GetParameterCommand({ Name: GITHUB_TOKEN_PARAM, WithDecryption: true }),
   );
-  if (!result.Parameter?.Value) {
-    throw new Error('GitHub token not found in SSM');
-  }
+  if (!result.Parameter?.Value) throw new Error('GitHub token not found in SSM');
   return result.Parameter.Value;
 }
 
@@ -126,19 +182,25 @@ async function publish(body: string | null): Promise<APIGatewayProxyResult> {
   return respond(200, { dispatched: true, branch, env });
 }
 
+// ── Router ────────────────────────────────────────────────────────────────────
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const method = event.httpMethod;
   const pathStr = event.path ?? '';
   const parts = pathStr.replace(/^\//, '').split('/');
 
-  if (parts[0] !== 'api') {
-    return respondError(404, 'Not found');
-  }
+  if (parts[0] !== 'api') return respondError(404, 'Not found');
 
   const segment = parts[1];
 
-  if (segment === 'publish' && method === 'POST') {
-    return publish(event.body);
+  if (segment === 'publish' && method === 'POST') return publish(event.body);
+
+  if (segment === 'media') {
+    const sub = parts[2];
+    if (method === 'GET' && !sub) return listMedia();
+    if (method === 'POST' && sub === 'presign') return presignUpload(event.body);
+    if (method === 'POST' && sub === 'delete') return deleteMedia(event.body);
+    return respondError(404, 'Not found');
   }
 
   const entityType = segment;
