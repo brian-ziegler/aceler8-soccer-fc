@@ -889,3 +889,89 @@ textarea {
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* ── Users page ───────────────────────────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.users-table th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8b949e;
+  border-bottom: 1px solid #30363d;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.users-table td {
+  padding: 12px;
+  border-bottom: 1px solid #21262d;
+  font-size: 14px;
+  color: #e6edf3;
+  vertical-align: middle;
+}
+
+.users-table tr:last-child td {
+  border-bottom: none;
+}
+
+.users-table tr:hover td {
+  background: #161b22;
+}
+
+.current-user-tag {
+  font-size: 11px;
+  color: #8b949e;
+}
+
+.role-select {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #e6edf3;
+  font-size: 13px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.role-select:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.status-badge--active {
+  background: #1f3a2b;
+  color: #3fb950;
+  border: 1px solid #238636;
+}
+
+.status-badge--invited {
+  background: #2d2208;
+  color: #e3b341;
+  border: 1px solid #9e6a03;
+}
+
+.add-user-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}

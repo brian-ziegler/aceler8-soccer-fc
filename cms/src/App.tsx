@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { isAuthenticated } from './lib/auth';
+import { isAuthenticated, getUserRole } from './lib/auth';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -12,11 +12,15 @@ import TeamForm from './features/teams/TeamForm';
 import HeroSlidesList from './features/hero-slides/HeroSlidesList';
 import HeroSlideForm from './features/hero-slides/HeroSlideForm';
 import MediaLibrary from './features/media/MediaLibrary';
+import UsersPage from './features/users/UsersPage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
-  if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!isAuthenticated()) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+}
+
+function RequireAdmin({ children }: { children: React.ReactNode }) {
+  if (getUserRole() !== 'admin') return <Navigate to="/" replace />;
   return <>{children}</>;
 }
 
@@ -44,6 +48,7 @@ export default function App() {
                 <Route path="/hero-slides/new" element={<HeroSlideForm />} />
                 <Route path="/hero-slides/:id" element={<HeroSlideForm />} />
                 <Route path="/media" element={<MediaLibrary />} />
+                <Route path="/users" element={<RequireAdmin><UsersPage /></RequireAdmin>} />
               </Routes>
             </Layout>
           </RequireAuth>

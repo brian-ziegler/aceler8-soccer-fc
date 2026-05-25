@@ -80,3 +80,30 @@ export function moveMedia(sourceKey: string, destFolder: string): Promise<unknow
 export function createFolder(folder: string): Promise<unknown> {
   return request('POST', 'api/media/folder', { folder });
 }
+
+// ── Users ──────────────────────────────────────────────────────────────────────
+
+export interface CmsUser {
+  username: string;
+  email?: string;
+  name?: string;
+  status?: string;
+  enabled?: boolean;
+  role: 'admin' | 'editor' | null;
+}
+
+export function listUsers(): Promise<CmsUser[]> {
+  return request('GET', 'api/users') as Promise<CmsUser[]>;
+}
+
+export function createUser(email: string, role: string, name?: string): Promise<unknown> {
+  return request('POST', 'api/users', { email, role, name });
+}
+
+export function deleteUser(username: string): Promise<unknown> {
+  return request('DELETE', `api/users/${encodeURIComponent(username)}`);
+}
+
+export function updateUserRole(username: string, role: string): Promise<unknown> {
+  return request('PUT', `api/users/${encodeURIComponent(username)}`, { role });
+}

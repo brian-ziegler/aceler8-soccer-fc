@@ -15,11 +15,21 @@ import {
   CopyObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import {
+  CognitoIdentityProviderClient,
+  ListUsersCommand,
+  AdminCreateUserCommand,
+  AdminDeleteUserCommand,
+  AdminAddUserToGroupCommand,
+  AdminRemoveUserFromGroupCommand,
+  AdminListGroupsForUserCommand,
+} from '@aws-sdk/client-cognito-identity-provider';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
 const ddb = new DynamoDBClient({});
 const ssm = new SSMClient({});
 const s3 = new S3Client({});
+const cognito = new CognitoIdentityProviderClient({});
 
 const TABLE_NAME = process.env.TABLE_NAME!;
 const GITHUB_OWNER = process.env.GITHUB_OWNER!;
@@ -27,6 +37,9 @@ const GITHUB_REPO = process.env.GITHUB_REPO!;
 const GITHUB_TOKEN_PARAM = process.env.GITHUB_TOKEN_PARAM!;
 const MEDIA_BUCKET = process.env.MEDIA_BUCKET!;
 const MEDIA_REGION = process.env.MEDIA_REGION || 'us-east-1';
+const USER_POOL_ID = process.env.USER_POOL_ID!;
+
+const VALID_ROLES = new Set(['admin', 'editor']);
 
 const VALID_ENTITY_TYPES = new Set(['coaches', 'players', 'teams', 'hero_slides']);
 
@@ -190,6 +203,94 @@ async function moveMedia(body: string | null): Promise<APIGatewayProxyResult> {
   return respond(200, { moved: true, key: destKey, url: mediaUrl(destKey) });
 }
 
+// ── User management handlers ──────────────────────────────────────────────────
+
+function getCallerGroups(event: APIGatewayProxyEvent): string[] {
+  const auth = event.headers.Authorization ?? event.headers.authorization ?? '';
+  if (!auth) return [];
+  try {
+    const payload = auth.split('.')[1];
+    const decoded = JSON.parse(Buffer.from(payload, 'base64').toString()) as Record<string, unknown>;
+    return Array.isArray(decoded['cognito:groups']) ? (decoded['cognito:groups'] as string[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+async function listUsers(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  if (!getCallerGroups(event).includes('admin')) return respondError(403, 'Forbidden');
+  const result = await cognito.send(new ListUsersCommand({ UserPoolId: USER_POOL_ID }));
+  const users = await Promise.all(
+    (result.Users ?? []).map(async (u) => {
+      const groups = await cognito.send(
+        new AdminListGroupsForUserCommand({ UserPoolId: USER_POOL_ID, Username: u.Username! }),
+      );
+      return {
+        username: u.Username,
+        email: u.Attributes?.find((a) => a.Name === 'email')?.Value,
+        name: u.Attributes?.find((a) => a.Name === 'name')?.Value,
+        status: u.UserStatus,
+        enabled: u.Enabled,
+        role: groups.Groups?.[0]?.GroupName ?? null,
+      };
+    }),
+  );
+  return respond(200, users);
+}
+
+async function createUser(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  if (!getCallerGroups(event).includes('admin')) return respondError(403, 'Forbidden');
+  const data =
+    typeof event.body === 'string'
+      ? (JSON.parse(event.body) as { email?: string; role?: string; name?: string })
+      : {};
+  if (!data.email) return respondError(400, 'email is required');
+  if (!data.role || !VALID_ROLES.has(data.role)) return respondError(400, 'role must be admin or editor');
+
+  const attrs = [
+    { Name: 'email', Value: data.email },
+    { Name: 'email_verified', Value: 'true' },
+    ...(data.name ? [{ Name: 'name', Value: data.name }] : []),
+  ];
+  await cognito.send(
+    new AdminCreateUserCommand({
+      UserPoolId: USER_POOL_ID,
+      Username: data.email,
+      UserAttributes: attrs,
+      DesiredDeliveryMediums: ['EMAIL'],
+    }),
+  );
+  await cognito.send(
+    new AdminAddUserToGroupCommand({ UserPoolId: USER_POOL_ID, Username: data.email, GroupName: data.role }),
+  );
+  return respond(201, { created: true });
+}
+
+async function deleteUser(event: APIGatewayProxyEvent, username: string): Promise<APIGatewayProxyResult> {
+  if (!getCallerGroups(event).includes('admin')) return respondError(403, 'Forbidden');
+  await cognito.send(new AdminDeleteUserCommand({ UserPoolId: USER_POOL_ID, Username: username }));
+  return respond(200, { deleted: true });
+}
+
+async function updateUserRole(event: APIGatewayProxyEvent, username: string): Promise<APIGatewayProxyResult> {
+  if (!getCallerGroups(event).includes('admin')) return respondError(403, 'Forbidden');
+  const data =
+    typeof event.body === 'string' ? (JSON.parse(event.body) as { role?: string }) : {};
+  if (!data.role || !VALID_ROLES.has(data.role)) return respondError(400, 'role must be admin or editor');
+
+  for (const group of ['admin', 'editor']) {
+    try {
+      await cognito.send(
+        new AdminRemoveUserFromGroupCommand({ UserPoolId: USER_POOL_ID, Username: username, GroupName: group }),
+      );
+    } catch { /* user may not be in this group */ }
+  }
+  await cognito.send(
+    new AdminAddUserToGroupCommand({ UserPoolId: USER_POOL_ID, Username: username, GroupName: data.role }),
+  );
+  return respond(200, { updated: true });
+}
+
 // ── Publish handler ───────────────────────────────────────────────────────────
 
 async function getGithubToken(): Promise<string> {
@@ -239,6 +340,15 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const segment = parts[1];
 
   if (segment === 'publish' && method === 'POST') return publish(event.body);
+
+  if (segment === 'users') {
+    const username = parts[2] ? decodeURIComponent(parts[2]) : undefined;
+    if (method === 'GET' && !username) return listUsers(event);
+    if (method === 'POST' && !username) return createUser(event);
+    if (method === 'DELETE' && username) return deleteUser(event, username);
+    if (method === 'PUT' && username) return updateUserRole(event, username);
+    return respondError(404, 'Not found');
+  }
 
   if (segment === 'media') {
     const sub = parts[2];

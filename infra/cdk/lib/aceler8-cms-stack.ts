@@ -68,6 +68,19 @@ export class Aceler8CmsStack extends cdk.Stack {
       },
     });
 
+    // ── Cognito groups ────────────────────────────────────────────────────────
+    new cognito.CfnUserPoolGroup(this, 'AdminGroup', {
+      userPoolId: userPool.userPoolId,
+      groupName: 'admin',
+      description: 'Administrators — full access including user management',
+    });
+
+    new cognito.CfnUserPoolGroup(this, 'EditorGroup', {
+      userPoolId: userPool.userPoolId,
+      groupName: 'editor',
+      description: 'Editors — content management access',
+    });
+
     // ── Media bucket ──────────────────────────────────────────────────────────
     const mediaBucket = new s3.Bucket(this, 'CmsMediaBucket', {
       bucketName: 'aceler8-cms-media',
@@ -106,6 +119,7 @@ export class Aceler8CmsStack extends cdk.Stack {
           '@aws-sdk/util-dynamodb',
           '@aws-sdk/client-ssm',
           '@aws-sdk/client-s3',
+          '@aws-sdk/client-cognito-identity-provider',
         ],
       },
       environment: {
@@ -116,6 +130,7 @@ export class Aceler8CmsStack extends cdk.Stack {
         CMS_DOMAIN: cmsDomain,
         MEDIA_BUCKET: mediaBucket.bucketName,
         MEDIA_REGION: this.region,
+        USER_POOL_ID: userPool.userPoolId,
       },
     });
 
@@ -125,9 +140,21 @@ export class Aceler8CmsStack extends cdk.Stack {
     cmsLambda.addToRolePolicy(
       new iam.PolicyStatement({
         actions: ['ssm:GetParameter'],
-        resources: [
-          `arn:aws:ssm:${this.region}:${this.account}:parameter${githubTokenParamName}`,
+        resources: [`arn:aws:ssm:${this.region}:${this.account}:parameter${githubTokenParamName}`],
+      }),
+    );
+
+    cmsLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: [
+          'cognito-idp:ListUsers',
+          'cognito-idp:AdminCreateUser',
+          'cognito-idp:AdminDeleteUser',
+          'cognito-idp:AdminAddUserToGroup',
+          'cognito-idp:AdminRemoveUserFromGroup',
+          'cognito-idp:AdminListGroupsForUser',
         ],
+        resources: [userPool.userPoolArn],
       }),
     );
 
@@ -170,6 +197,14 @@ export class Aceler8CmsStack extends cdk.Stack {
     mediaMoveResource.addMethod('POST', lambdaIntegration, authOptions);
     const mediaFolderResource = mediaResource.addResource('folder');
     mediaFolderResource.addMethod('POST', lambdaIntegration, authOptions);
+
+    // /api/users
+    const usersResource = apiResource.addResource('users');
+    usersResource.addMethod('GET', lambdaIntegration, authOptions);
+    usersResource.addMethod('POST', lambdaIntegration, authOptions);
+    const singleUserResource = usersResource.addResource('{username}');
+    singleUserResource.addMethod('DELETE', lambdaIntegration, authOptions);
+    singleUserResource.addMethod('PUT', lambdaIntegration, authOptions);
 
     // /api/{entity}
     const entityResource = apiResource.addResource('{entity}');

@@ -1,12 +1,12 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { logout } from '../lib/auth';
+import { logout, getUserRole } from '../lib/auth';
 import PublishBar from './PublishBar';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const navLinks = [
+const baseNavLinks = [
   { to: '/', label: 'Dashboard', exact: true },
   { to: '/coaches', label: 'Coaches', exact: false },
   { to: '/players', label: 'Players', exact: false },
@@ -15,8 +15,14 @@ const navLinks = [
   { to: '/media', label: 'Media', exact: false },
 ];
 
+const adminNavLinks = [
+  { to: '/users', label: 'Users', exact: false },
+];
+
 export default function Layout({ children }: LayoutProps) {
   const navigate = useNavigate();
+  const role = getUserRole();
+  const navLinks = role === 'admin' ? [...baseNavLinks, ...adminNavLinks] : baseNavLinks;
 
   function handleLogout() {
     logout();

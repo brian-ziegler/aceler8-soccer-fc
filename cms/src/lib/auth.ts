@@ -29,21 +29,58 @@ export async function login(email: string, password: string): Promise<void> {
   }
 
   const data = await res.json() as {
-    AuthenticationResult?: {
-      AccessToken?: string;
-      IdToken?: string;
-      RefreshToken?: string;
-    };
+    AuthenticationResult?: { AccessToken?: string; IdToken?: string; RefreshToken?: string };
+    ChallengeName?: string;
+    Session?: string;
   };
 
-  const result = data.AuthenticationResult;
-  if (!result?.AccessToken) {
-    throw new Error('No authentication result returned');
+  if (data.ChallengeName === 'NEW_PASSWORD_REQUIRED') {
+    throw Object.assign(new Error('New password required'), {
+      code: 'NEW_PASSWORD_REQUIRED',
+      session: data.Session,
+      email,
+    });
   }
 
-  localStorage.setItem(ACCESS_TOKEN_KEY, result.AccessToken);
-  if (result.IdToken) localStorage.setItem(ID_TOKEN_KEY, result.IdToken);
-  if (result.RefreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, result.RefreshToken);
+  const result = data.AuthenticationResult;
+  if (!result?.AccessToken) throw new Error('No authentication result returned');
+
+  storeTokens(result.AccessToken, result.IdToken, result.RefreshToken);
+}
+
+function storeTokens(accessToken: string, idToken?: string, refreshToken?: string) {
+  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+  if (idToken) localStorage.setItem(ID_TOKEN_KEY, idToken);
+  if (refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+}
+
+export async function completeNewPassword(email: string, session: string, newPassword: string): Promise<void> {
+  const endpoint = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/`;
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-amz-json-1.1',
+      'X-Amz-Target': 'AWSCognitoIdentityProviderService.RespondToAuthChallenge',
+    },
+    body: JSON.stringify({
+      ChallengeName: 'NEW_PASSWORD_REQUIRED',
+      ClientId: COGNITO_APP_CLIENT_ID,
+      ChallengeResponses: { USERNAME: email, NEW_PASSWORD: newPassword },
+      Session: session,
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error((body as { message?: string }).message || `Failed: ${res.status}`);
+  }
+
+  const data = await res.json() as {
+    AuthenticationResult?: { AccessToken?: string; IdToken?: string; RefreshToken?: string };
+  };
+  const result = data.AuthenticationResult;
+  if (!result?.AccessToken) throw new Error('No authentication result returned');
+  storeTokens(result.AccessToken, result.IdToken, result.RefreshToken);
 }
 
 export function logout(): void {
@@ -62,4 +99,27 @@ export function getIdToken(): string | null {
 
 export function isAuthenticated(): boolean {
   return !!getIdToken();
+}
+
+export function getUserRole(): 'admin' | 'editor' | null {
+  const token = getIdToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1])) as Record<string, unknown>;
+    const groups = payload['cognito:groups'];
+    if (Array.isArray(groups)) {
+      if (groups.includes('admin')) return 'admin';
+      if (groups.includes('editor')) return 'editor';
+    }
+  } catch { /* malformed token */ }
+  return null;
+}
+
+export function getCurrentUserEmail(): string | null {
+  const token = getIdToken();
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1])) as Record<string, unknown>;
+    return (payload.email as string) ?? null;
+  } catch { return null; }
 }
