@@ -47,15 +47,22 @@ export interface MediaImage {
   size?: number;
 }
 
-export function listMedia(): Promise<MediaImage[]> {
-  return request('GET', 'api/media') as Promise<MediaImage[]>;
+export interface MediaListing {
+  folders: string[];
+  files: MediaImage[];
+}
+
+export function listMedia(prefix?: string): Promise<MediaListing> {
+  const qs = prefix ? `?prefix=${encodeURIComponent(prefix)}` : '';
+  return request('GET', `api/media${qs}`) as Promise<MediaListing>;
 }
 
 export function presignUpload(
   filename: string,
   contentType: string,
+  folder?: string,
 ): Promise<{ uploadUrl: string; publicUrl: string; key: string }> {
-  return request('POST', 'api/media/presign', { filename, contentType }) as Promise<{
+  return request('POST', 'api/media/presign', { filename, contentType, folder }) as Promise<{
     uploadUrl: string;
     publicUrl: string;
     key: string;

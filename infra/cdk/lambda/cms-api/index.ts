@@ -105,27 +105,34 @@ function mediaUrl(key: string): string {
   return `https://${MEDIA_BUCKET}.s3.${MEDIA_REGION}.amazonaws.com/${key}`;
 }
 
-async function listMedia(): Promise<APIGatewayProxyResult> {
-  const result = await s3.send(new ListObjectsV2Command({ Bucket: MEDIA_BUCKET }));
-  const items = (result.Contents ?? []).map((obj) => ({
-    key: obj.Key!,
-    url: mediaUrl(obj.Key!),
-    lastModified: obj.LastModified?.toISOString(),
-    size: obj.Size,
-  }));
-  items.sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''));
-  return respond(200, items);
+async function listMedia(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  const prefix = event.queryStringParameters?.prefix ?? '';
+  const result = await s3.send(
+    new ListObjectsV2Command({ Bucket: MEDIA_BUCKET, Prefix: prefix, Delimiter: '/' }),
+  );
+  const folders = (result.CommonPrefixes ?? []).map((p) => p.Prefix!);
+  const files = (result.Contents ?? [])
+    .filter((obj) => obj.Key !== prefix)
+    .map((obj) => ({
+      key: obj.Key!,
+      url: mediaUrl(obj.Key!),
+      lastModified: obj.LastModified?.toISOString(),
+      size: obj.Size,
+    }));
+  files.sort((a, b) => (b.lastModified ?? '').localeCompare(a.lastModified ?? ''));
+  return respond(200, { folders, files });
 }
 
 async function presignUpload(body: string | null): Promise<APIGatewayProxyResult> {
   const data =
     typeof body === 'string'
-      ? (JSON.parse(body) as { filename?: string; contentType?: string })
+      ? (JSON.parse(body) as { filename?: string; contentType?: string; folder?: string })
       : {};
   if (!data.filename) return respondError(400, 'filename is required');
 
   const sanitized = data.filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const key = `${Date.now()}-${sanitized}`;
+  const folderPrefix = data.folder ? data.folder.replace(/\/+$/, '') + '/' : '';
+  const key = `${folderPrefix}${Date.now()}-${sanitized}`;
   const contentType = data.contentType || 'image/jpeg';
 
   const uploadUrl = await getSignedUrl(
@@ -197,7 +204,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
   if (segment === 'media') {
     const sub = parts[2];
-    if (method === 'GET' && !sub) return listMedia();
+    if (method === 'GET' && !sub) return listMedia(event);
     if (method === 'POST' && sub === 'presign') return presignUpload(event.body);
     if (method === 'POST' && sub === 'delete') return deleteMedia(event.body);
     return respondError(404, 'Not found');
