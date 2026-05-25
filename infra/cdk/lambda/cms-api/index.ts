@@ -12,6 +12,7 @@ import {
   ListObjectsV2Command,
   DeleteObjectCommand,
   PutObjectCommand,
+  CopyObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
@@ -152,6 +153,32 @@ async function deleteMedia(body: string | null): Promise<APIGatewayProxyResult> 
   return respond(200, { deleted: true });
 }
 
+async function moveMedia(body: string | null): Promise<APIGatewayProxyResult> {
+  const data =
+    typeof body === 'string'
+      ? (JSON.parse(body) as { sourceKey?: string; destFolder?: string })
+      : {};
+  if (!data.sourceKey) return respondError(400, 'sourceKey is required');
+
+  const basename = data.sourceKey.includes('/')
+    ? data.sourceKey.split('/').pop()!
+    : data.sourceKey;
+  const destFolder = (data.destFolder ?? '').replace(/\/+$/, '');
+  const destKey = destFolder ? `${destFolder}/${basename}` : basename;
+
+  if (data.sourceKey === destKey) return respond(200, { moved: false });
+
+  await s3.send(
+    new CopyObjectCommand({
+      Bucket: MEDIA_BUCKET,
+      CopySource: `${MEDIA_BUCKET}/${data.sourceKey}`,
+      Key: destKey,
+    }),
+  );
+  await s3.send(new DeleteObjectCommand({ Bucket: MEDIA_BUCKET, Key: data.sourceKey }));
+  return respond(200, { moved: true, key: destKey, url: mediaUrl(destKey) });
+}
+
 // ── Publish handler ───────────────────────────────────────────────────────────
 
 async function getGithubToken(): Promise<string> {
@@ -207,6 +234,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     if (method === 'GET' && !sub) return listMedia(event);
     if (method === 'POST' && sub === 'presign') return presignUpload(event.body);
     if (method === 'POST' && sub === 'delete') return deleteMedia(event.body);
+    if (method === 'POST' && sub === 'move') return moveMedia(event.body);
     return respondError(404, 'Not found');
   }
 

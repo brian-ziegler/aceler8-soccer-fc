@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { listMedia, presignUpload, deleteMedia, type MediaImage } from '../../lib/api';
+import { listMedia, presignUpload, deleteMedia, moveMedia, type MediaImage } from '../../lib/api';
 
 function displayName(key: string): string {
   const basename = key.includes('/') ? key.split('/').pop()! : key;
@@ -10,6 +10,13 @@ function displayName(key: string): string {
 function folderName(prefix: string): string {
   return prefix.replace(/\/$/, '').split('/').pop() ?? prefix;
 }
+
+const FolderSvg = () => (
+  <svg width="52" height="44" viewBox="0 0 48 40" fill="none">
+    <path d="M0 6a4 4 0 014-4h14l4 6h22a4 4 0 014 4v24a4 4 0 01-4 4H4a4 4 0 01-4-4V6z" fill="#30363d"/>
+    <path d="M0 12h48v22a4 4 0 01-4 4H4a4 4 0 01-4-4V12z" fill="#3d444d"/>
+  </svg>
+);
 
 export default function MediaLibrary() {
   const [folders, setFolders] = useState<string[]>([]);
@@ -22,6 +29,7 @@ export default function MediaLibrary() {
   const [copied, setCopied] = useState(false);
   const [newFolderInput, setNewFolderInput] = useState('');
   const [creatingFolder, setCreatingFolder] = useState(false);
+  const [dragOverFolder, setDragOverFolder] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const newFolderRef = useRef<HTMLInputElement>(null);
 
@@ -71,6 +79,17 @@ export default function MediaLibrary() {
     }
   }
 
+  async function handleDrop(sourceKey: string, destFolderPrefix: string) {
+    setDragOverFolder(null);
+    const destFolder = destFolderPrefix.replace(/\/$/, '');
+    try {
+      await moveMedia(sourceKey, destFolder);
+      await load(currentFolder);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Move failed');
+    }
+  }
+
   function copyUrl(url: string) {
     navigator.clipboard.writeText(url).catch(() => {});
     setCopied(true);
@@ -78,16 +97,17 @@ export default function MediaLibrary() {
   }
 
   function handleCreateFolder() {
-    const name = newFolderInput.trim().replace(/[^a-zA-Z0-9_-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    const name = newFolderInput.trim()
+      .replace(/[^a-zA-Z0-9_-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
     if (!name) return;
     setCreatingFolder(false);
     setNewFolderInput('');
     setCurrentFolder(currentFolder + name + '/');
   }
 
-  const breadcrumbs = currentFolder
-    ? currentFolder.replace(/\/$/, '').split('/')
-    : [];
+  const breadcrumbs = currentFolder ? currentFolder.replace(/\/$/, '').split('/') : [];
 
   return (
     <div>
@@ -169,23 +189,32 @@ export default function MediaLibrary() {
       ) : (
         <div className="media-grid">
           {folders.map((prefix) => (
-            <button
+            <div
               key={prefix}
-              type="button"
-              className="media-folder-card"
-              onClick={() => setCurrentFolder(prefix)}
+              className={`media-card media-card--folder${dragOverFolder === prefix ? ' drag-over' : ''}`}
+              onDragOver={e => { e.preventDefault(); setDragOverFolder(prefix); }}
+              onDragLeave={() => setDragOverFolder(null)}
+              onDrop={e => { e.preventDefault(); const key = e.dataTransfer.getData('text/plain'); if (key) handleDrop(key, prefix); }}
             >
-              <div className="media-folder-icon">
-                <svg width="48" height="40" viewBox="0 0 48 40" fill="none">
-                  <path d="M0 6a4 4 0 014-4h14l4 6h22a4 4 0 014 4v24a4 4 0 01-4 4H4a4 4 0 01-4-4V6z" fill="#30363d"/>
-                  <path d="M0 12h48v22a4 4 0 01-4 4H4a4 4 0 01-4-4V12z" fill="#3d444d"/>
-                </svg>
+              <button
+                type="button"
+                className="media-card-thumb-btn media-card-folder-btn"
+                onClick={() => setCurrentFolder(prefix)}
+              >
+                <FolderSvg />
+              </button>
+              <div className="media-card-footer">
+                <span className="media-card-name" title={folderName(prefix)}>{folderName(prefix)}</span>
               </div>
-              <div className="media-folder-name">{folderName(prefix)}</div>
-            </button>
+            </div>
           ))}
           {images.map((img) => (
-            <div key={img.key} className="media-card">
+            <div
+              key={img.key}
+              className="media-card"
+              draggable
+              onDragStart={e => e.dataTransfer.setData('text/plain', img.key)}
+            >
               <button
                 type="button"
                 className="media-card-thumb-btn"
@@ -195,12 +224,8 @@ export default function MediaLibrary() {
                 <img src={img.url} alt={displayName(img.key)} className="media-card-thumb" />
               </button>
               <div className="media-card-footer">
-                <span className="media-card-name" title={displayName(img.key)}>
-                  {displayName(img.key)}
-                </span>
-                <button type="button" className="btn-danger btn-sm" onClick={() => handleDelete(img)}>
-                  Delete
-                </button>
+                <span className="media-card-name" title={displayName(img.key)}>{displayName(img.key)}</span>
+                <button type="button" className="btn-danger btn-sm" onClick={() => handleDelete(img)}>Delete</button>
               </div>
             </div>
           ))}

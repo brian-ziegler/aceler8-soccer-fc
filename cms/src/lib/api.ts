@@ -72,3 +72,7 @@ export function presignUpload(
 export function deleteMedia(key: string): Promise<unknown> {
   return request('POST', 'api/media/delete', { key });
 }
+
+export function moveMedia(sourceKey: string, destFolder: string): Promise<unknown> {
+  return request('POST', 'api/media/move', { sourceKey, destFolder });
+}
