@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { listMedia, presignUpload, deleteMedia, moveMedia, type MediaImage } from '../../lib/api';
+import { listMedia, presignUpload, deleteMedia, moveMedia, createFolder, type MediaImage } from '../../lib/api';
 
 function displayName(key: string): string {
   const basename = key.includes('/') ? key.split('/').pop()! : key;
@@ -96,15 +96,21 @@ export default function MediaLibrary() {
     setTimeout(() => setCopied(false), 2000);
   }
 
-  function handleCreateFolder() {
+  async function handleCreateFolder() {
     const name = newFolderInput.trim()
       .replace(/[^a-zA-Z0-9_-]/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '');
     if (!name) return;
+    const folderPath = currentFolder + name;
     setCreatingFolder(false);
     setNewFolderInput('');
-    setCurrentFolder(currentFolder + name + '/');
+    try {
+      await createFolder(folderPath);
+      await load(currentFolder);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create folder');
+    }
   }
 
   const breadcrumbs = currentFolder ? currentFolder.replace(/\/$/, '').split('/') : [];

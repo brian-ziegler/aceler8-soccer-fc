@@ -113,7 +113,7 @@ async function listMedia(event: APIGatewayProxyEvent): Promise<APIGatewayProxyRe
   );
   const folders = (result.CommonPrefixes ?? []).map((p) => p.Prefix!);
   const files = (result.Contents ?? [])
-    .filter((obj) => obj.Key !== prefix)
+    .filter((obj) => obj.Key !== prefix && !obj.Key!.endsWith('.keep'))
     .map((obj) => ({
       key: obj.Key!,
       url: mediaUrl(obj.Key!),
@@ -151,6 +151,17 @@ async function deleteMedia(body: string | null): Promise<APIGatewayProxyResult> 
   if (!data.key) return respondError(400, 'key is required');
   await s3.send(new DeleteObjectCommand({ Bucket: MEDIA_BUCKET, Key: data.key }));
   return respond(200, { deleted: true });
+}
+
+async function createFolder(body: string | null): Promise<APIGatewayProxyResult> {
+  const data =
+    typeof body === 'string' ? (JSON.parse(body) as { folder?: string }) : {};
+  if (!data.folder) return respondError(400, 'folder is required');
+  const folder = data.folder.replace(/\/+$/, '');
+  await s3.send(
+    new PutObjectCommand({ Bucket: MEDIA_BUCKET, Key: `${folder}/.keep`, Body: '', ContentType: 'application/octet-stream' }),
+  );
+  return respond(200, { created: true, folder: `${folder}/` });
 }
 
 async function moveMedia(body: string | null): Promise<APIGatewayProxyResult> {
@@ -235,6 +246,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     if (method === 'POST' && sub === 'presign') return presignUpload(event.body);
     if (method === 'POST' && sub === 'delete') return deleteMedia(event.body);
     if (method === 'POST' && sub === 'move') return moveMedia(event.body);
+    if (method === 'POST' && sub === 'folder') return createFolder(event.body);
     return respondError(404, 'Not found');
   }
 

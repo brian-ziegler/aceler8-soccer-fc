@@ -168,6 +168,8 @@ export class Aceler8CmsStack extends cdk.Stack {
     mediaDeleteResource.addMethod('POST', lambdaIntegration, authOptions);
     const mediaMoveResource = mediaResource.addResource('move');
     mediaMoveResource.addMethod('POST', lambdaIntegration, authOptions);
+    const mediaFolderResource = mediaResource.addResource('folder');
+    mediaFolderResource.addMethod('POST', lambdaIntegration, authOptions);
 
     // /api/{entity}
     const entityResource = apiResource.addResource('{entity}');
