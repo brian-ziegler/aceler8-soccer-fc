@@ -9,6 +9,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNode from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as ses from 'aws-cdk-lib/aws-ses';
 import * as ssm from 'aws-cdk-lib/aws-ssm';
 import { Construct } from 'constructs';
 
@@ -43,6 +44,11 @@ export class Aceler8CmsStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
+    // ── SES domain identity ───────────────────────────────────────────────────
+    const emailIdentity = new ses.EmailIdentity(this, 'AcelerSesIdentity', {
+      identity: ses.Identity.domain('aceler8fc.com'),
+    });
+
     // ── Cognito ───────────────────────────────────────────────────────────────
     const userPool = new cognito.UserPool(this, 'CmsUserPool', {
       userPoolName: 'aceler8-cms-users',
@@ -56,8 +62,15 @@ export class Aceler8CmsStack extends cdk.Stack {
         requireDigits: true,
         requireSymbols: false,
       },
+      email: cognito.UserPoolEmail.withSES({
+        fromEmail: 'noreply@aceler8fc.com',
+        fromName: 'Aceler8 FC',
+        sesVerifiedDomain: 'aceler8fc.com',
+        sesRegion: this.region,
+      }),
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
+    userPool.node.addDependency(emailIdentity);
 
     const userPoolClient = new cognito.UserPoolClient(this, 'CmsUserPoolClient', {
       userPool,
@@ -350,6 +363,20 @@ export class Aceler8CmsStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'MediaBucketName', {
       value: mediaBucket.bucketName,
       description: 'S3 media bucket for CMS image uploads',
+    });
+
+    // ── SES DKIM records (add these CNAMEs to aceler8fc.com DNS) ─────────────
+    new cdk.CfnOutput(this, 'SesDkimRecord1', {
+      value: `${emailIdentity.dkimRecords[0].name} CNAME ${emailIdentity.dkimRecords[0].value}`,
+      description: 'DKIM CNAME record 1 — add to aceler8fc.com DNS',
+    });
+    new cdk.CfnOutput(this, 'SesDkimRecord2', {
+      value: `${emailIdentity.dkimRecords[1].name} CNAME ${emailIdentity.dkimRecords[1].value}`,
+      description: 'DKIM CNAME record 2 — add to aceler8fc.com DNS',
+    });
+    new cdk.CfnOutput(this, 'SesDkimRecord3', {
+      value: `${emailIdentity.dkimRecords[2].name} CNAME ${emailIdentity.dkimRecords[2].value}`,
+      description: 'DKIM CNAME record 3 — add to aceler8fc.com DNS',
     });
   }
 }

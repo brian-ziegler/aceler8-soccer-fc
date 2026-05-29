@@ -2,6 +2,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Aceler8SiteStack } from '../lib/aceler8-site-stack';
 import { Aceler8CmsStack } from '../lib/aceler8-cms-stack';
+import { Aceler8DnsStack } from '../lib/aceler8-dns-stack';
 
 const app = new cdk.App();
 
@@ -92,5 +93,8 @@ if (cmsSiteDomain) {
     githubOidcProviderArn: cmsGithubOidcProviderArn,
   });
 }
+
+// ── DNS stack (Route 53 hosted zone for aceler8fc.com) ────────────────────────
+new Aceler8DnsStack(app, 'Aceler8DnsStack', { env });
 
 app.synth();

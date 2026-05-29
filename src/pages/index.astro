@@ -449,6 +449,8 @@ const jsonLd = [
 
   /* ── Welcome section (mobile only below hero) ─────────────────────────────── */
   .welcome-section {
+    position: relative;
+    z-index: 2; /* above hero section so dropdown panel isn't covered by hero slides */
     padding-block: clamp(3rem, 7vw, 5rem);
     background: var(--color-bg);
   }
