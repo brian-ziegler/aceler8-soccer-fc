@@ -4,8 +4,6 @@
  * If CMS_TABLE_NAME is not set, exits 0 — the existing TS files are used as-is.
  */
 
-import { DynamoDBClient, QueryCommand } from '@aws-sdk/client-dynamodb';
-import { unmarshall } from '@aws-sdk/util-dynamodb';
 import { writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -20,6 +18,10 @@ if (!TABLE_NAME) {
   console.log('[fetch-cms-data] CMS_TABLE_NAME not set — using existing src/data/*.ts files.');
   process.exit(0);
 }
+
+// Dynamic imports so this script can gracefully exit above when SDK isn't installed
+const { DynamoDBClient, QueryCommand } = await import('@aws-sdk/client-dynamodb');
+const { unmarshall } = await import('@aws-sdk/util-dynamodb');
 
 const ddb = new DynamoDBClient({ region: process.env.AWS_REGION || 'us-east-1' });
 
