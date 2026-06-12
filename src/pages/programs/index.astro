@@ -247,69 +247,6 @@ const jsonLd = [
           </div>
         </div>
 
-        <div class="prog-actions">
-          <a href="#evaluations" class="btn btn--primary">Registration &amp; Evaluation Info →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Player Evaluations ────────────────────────────────────────────────── -->
-  <section class="section section--surface" id="evaluations">
-    <div class="wrap eval-section">
-      <div class="eval-header" data-reveal>
-        <p class="tag">Pathway Program</p>
-        <h2>Player Evaluations</h2>
-        <p class="prog-notice eval-notice">Registration is open — secure your spot for the June 8th evaluation.</p>
-        <p class="lead">
-          The June 8th player evaluation is open to <strong>2015 girls</strong> for the
-          Aceler8 FC Pathway Program. This is the first step toward joining our structured
-          development program starting August 2026.
-        </p>
-      </div>
-
-      <div class="eval-layout">
-        <div class="card eval-details" data-reveal style="--reveal-delay: 0.05s">
-          <p class="prog-focus__label">Evaluation Details</p>
-          <dl class="detail-list">
-            <dt>Date</dt>
-            <dd>Monday, June 8th</dd>
-            <dt>Time</dt>
-            <dd>5:00–6:30 PM</dd>
-            <dt>Location</dt>
-            <dd>Grace &amp; Truth</dd>
-            <dt>Open to</dt>
-            <dd>2015 girls</dd>
-            <dt>Program</dt>
-            <dd>Aceler8 FC Pathway</dd>
-            <dt>Acceptance</dt>
-            <dd>Week of June 15th</dd>
-            <dt>Season start</dt>
-            <dd>August 2026</dd>
-          </dl>
-        </div>
-
-        <div class="eval-steps" data-reveal style="--reveal-delay: 0.1s">
-          <h3>What Families Can Expect</h3>
-          <ul class="enroll-steps" style="margin-bottom: 1.75rem;">
-            <li>Technical assessments at the start and end of each phase</li>
-            <li>Regular updates on your player's progress and next steps</li>
-            <li>Phase completion recognition at our showcases</li>
-            <li>League and tournament play</li>
-            <li>A clear path into the Aceler8 FC Elite Program</li>
-          </ul>
-
-          <h3>How to Enroll</h3>
-          <ol class="enroll-steps">
-            <li>Register online to claim your spot</li>
-            <li>Attend the evaluation: Monday June 8th, 5:00–6:30 PM at Grace &amp; Truth</li>
-            <li>Meet with a coach for personalized feedback</li>
-            <li>Acceptance communicated week of June 15th</li>
-            <li>Season starts August 2026</li>
-          </ol>
-          <p class="eval-note">Open to 2015 girls. Spots are limited.</p>
-          <span class="btn btn--accent btn--disabled" aria-disabled="true">Registration Closed</span>
-        </div>
       </div>
     </div>
   </section>
@@ -720,72 +657,6 @@ const jsonLd = [
     padding-top: 1.25rem;
   }
 
-  /* ── Player Evaluations ──────────────────────────────────────────────────── */
-  .eval-section {
-    padding-block: 3rem 4rem;
-  }
-
-  .eval-header {
-    max-width: 44rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .eval-header h2 {
-    margin: 0.25rem 0 0.75rem;
-  }
-
-  .eval-notice {
-    margin: 0 0 1rem;
-  }
-
-  .eval-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-
-  .eval-details {
-    padding: 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .eval-steps h3 {
-    margin: 0 0 1rem;
-    font-size: 1.2rem;
-  }
-
-  .enroll-steps {
-    margin: 0 0 1.25rem;
-    padding-left: 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
-    line-height: 1.55;
-  }
-
-  .enroll-steps li::marker {
-    color: var(--color-accent);
-    font-weight: 700;
-  }
-
-  .eval-note {
-    margin: 0 0 1.25rem;
-    font-style: italic;
-    font-size: 0.88rem;
-    color: var(--color-text-muted);
-  }
-
-  @media (max-width: 640px) {
-    .eval-layout {
-      grid-template-columns: 1fr;
-    }
-  }
-
   /* ── Training Sessions ────────────────────────────────────────────────────── */
   .training-section {
     padding-block: 3rem 4rem;
@@ -1114,10 +985,6 @@ const jsonLd = [
     .prog-col--elite {
       border-right: none;
       border-bottom: 1px solid var(--color-border);
-    }
-
-    .eval-layout {
-      grid-template-columns: 1fr;
     }
 
     .training-grid {
