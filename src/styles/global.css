@@ -184,6 +184,12 @@ img {
   transition-duration: 0.08s;
 }
 
+.btn--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--color-text);
