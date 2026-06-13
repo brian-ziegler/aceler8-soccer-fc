@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy-cms:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,6 +36,23 @@ jobs:
           cd cms
           npm ci
           npm run build
+
+      - name: Upload CMS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cms-dist
+          path: cms/dist/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download CMS artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: cms-dist
+          path: cms/dist/
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4

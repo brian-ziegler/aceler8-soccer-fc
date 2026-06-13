@@ -5,6 +5,11 @@
 #   main  → production  (uses AWS_DEPLOY_ROLE_ARN, S3_BUCKET secret, CLOUDFRONT_DISTRIBUTION_ID secret)
 #   next  → next env    (uses NEXT_* repo variables set automatically by infra.yml after CDK deploy)
 #
+# Trigger rules:
+#   push to next  → build + deploy to staging (always auto-deploy staging)
+#   push to main  → build only (deploy to live must come from the CMS publish tool)
+#   workflow_dispatch → build + deploy (used by the CMS publish button for both envs)
+#
 # Note: the deploy roles (prod and next) also have DynamoDB:Query permission on the aceler8-cms table,
 # granted by the Aceler8CmsStack CDK stack (table.grantReadData). This allows the Fetch CMS data step
 # to read content at build time.
@@ -22,8 +27,13 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      role: ${{ steps.cfg.outputs.role }}
+      bucket: ${{ steps.cfg.outputs.bucket }}
+      dist: ${{ steps.cfg.outputs.dist }}
+      url: ${{ steps.cfg.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -78,11 +88,35 @@ jobs:
           PUBLIC_GA_ID: ${{ github.ref_name == 'main' && 'G-LVLVF42VRM' || '' }}
         run: npm run build
 
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: dist/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.ref_name == 'next'
+    steps:
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: dist/
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ needs.build.outputs.role }}
+          aws-region: us-east-1
+
       - name: Sync site to S3
-        run: aws s3 sync dist/ "s3://${{ steps.cfg.outputs.bucket }}/" --delete
+        run: aws s3 sync dist/ "s3://${{ needs.build.outputs.bucket }}/" --delete
 
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id "${{ steps.cfg.outputs.dist }}" \
+            --distribution-id "${{ needs.build.outputs.dist }}" \
             --paths "/*"

@@ -144,6 +144,8 @@ export class Aceler8CmsStack extends cdk.Stack {
         MEDIA_BUCKET: mediaBucket.bucketName,
         MEDIA_REGION: this.region,
         USER_POOL_ID: userPool.userPoolId,
+        NEXT_SITE_URL: 'https://next-version.aceler8fc.com',
+        LIVE_SITE_URL: 'https://aceler8fc.com',
       },
     });
 
@@ -198,6 +200,10 @@ export class Aceler8CmsStack extends cdk.Stack {
     // /api/publish
     const publishResource = apiResource.addResource('publish');
     publishResource.addMethod('POST', lambdaIntegration, authOptions);
+
+    // /api/deploy-status
+    const deployStatusResource = apiResource.addResource('deploy-status');
+    deployStatusResource.addMethod('GET', lambdaIntegration, authOptions);
 
     // /api/media
     const mediaResource = apiResource.addResource('media');

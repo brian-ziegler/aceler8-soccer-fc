@@ -38,6 +38,8 @@ const GITHUB_TOKEN_PARAM = process.env.GITHUB_TOKEN_PARAM!;
 const MEDIA_BUCKET = process.env.MEDIA_BUCKET!;
 const MEDIA_REGION = process.env.MEDIA_REGION || 'us-east-1';
 const USER_POOL_ID = process.env.USER_POOL_ID!;
+const NEXT_SITE_URL = process.env.NEXT_SITE_URL!;
+const LIVE_SITE_URL = process.env.LIVE_SITE_URL!;
 
 const VALID_ROLES = new Set(['admin', 'editor']);
 
@@ -341,6 +343,48 @@ async function publish(body: string | null): Promise<APIGatewayProxyResult> {
   return respond(200, { dispatched: true, branch, env });
 }
 
+// ── Deploy status handler ─────────────────────────────────────────────────────
+
+interface GhRun {
+  status: string;
+  conclusion: string | null;
+  created_at: string;
+  html_url: string;
+}
+
+async function deployStatus(): Promise<APIGatewayProxyResult> {
+  const token = await getGithubToken();
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+  const baseUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/deploy.yml/runs`;
+
+  const [nextRes, liveRes] = await Promise.all([
+    fetch(`${baseUrl}?branch=next&per_page=1`, { headers }),
+    fetch(`${baseUrl}?branch=main&per_page=1`, { headers }),
+  ]);
+
+  const [nextData, liveData] = await Promise.all([
+    nextRes.json() as Promise<{ workflow_runs?: GhRun[] }>,
+    liveRes.json() as Promise<{ workflow_runs?: GhRun[] }>,
+  ]);
+
+  function parseRun(data: { workflow_runs?: GhRun[] }) {
+    const run = data.workflow_runs?.[0];
+    if (!run) return null;
+    return { status: run.status, conclusion: run.conclusion, createdAt: run.created_at, htmlUrl: run.html_url };
+  }
+
+  return respond(200, {
+    next: parseRun(nextData),
+    live: parseRun(liveData),
+    nextUrl: NEXT_SITE_URL,
+    liveUrl: LIVE_SITE_URL,
+  });
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -353,6 +397,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const segment = parts[1];
 
   if (segment === 'publish' && method === 'POST') return publish(event.body);
+  if (segment === 'deploy-status' && method === 'GET') return deployStatus();
 
   if (segment === 'users') {
     const username = parts[2] ? decodeURIComponent(parts[2]) : undefined;

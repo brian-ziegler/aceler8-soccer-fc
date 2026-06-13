@@ -40,6 +40,24 @@ export function publish(env: 'next' | 'live'): Promise<unknown> {
   return request('POST', 'api/publish', { env });
 }
 
+export interface DeployRunInfo {
+  status: string;
+  conclusion: string | null;
+  createdAt: string;
+  htmlUrl: string;
+}
+
+export interface DeployStatus {
+  next: DeployRunInfo | null;
+  live: DeployRunInfo | null;
+  nextUrl: string;
+  liveUrl: string;
+}
+
+export function getDeployStatus(): Promise<DeployStatus> {
+  return request('GET', 'api/deploy-status') as Promise<DeployStatus>;
+}
+
 export interface MediaImage {
   key: string;
   url: string;
