@@ -50,6 +50,13 @@ export class Aceler8DnsStack extends cdk.Stack {
       ttl: cdk.Duration.minutes(5),
     });
 
+    new route53.CnameRecord(this, 'Cms', {
+      zone,
+      recordName: 'cms',
+      domainName: 'd267eyixg0qw14.cloudfront.net.',
+      ttl: cdk.Duration.minutes(5),
+    });
+
     new route53.CnameRecord(this, 'Pay', {
       zone,
       recordName: 'pay',
