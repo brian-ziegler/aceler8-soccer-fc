@@ -64,7 +64,35 @@ const jsonLd = {
     width: 100%;
     height: clamp(520px, 85svh, 900px);
     overflow: clip;
-    background: #020d1a;
+    background: var(--color-primary);
+  }
+
+  /* Large ring — soccer ball circle motif, upper-right */
+  .player-hero::after {
+    content: '';
+    position: absolute;
+    right: -8%;
+    top: -60%;
+    width: 55vw;
+    max-width: 640px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 90px solid rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+  }
+
+  /* Inner ring — orange accent */
+  .player-hero::before {
+    content: '';
+    position: absolute;
+    right: 4%;
+    top: -20%;
+    width: 32vw;
+    max-width: 380px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid rgba(244, 123, 14, 0.18);
+    pointer-events: none;
   }
 
   .player-hero__photo {
