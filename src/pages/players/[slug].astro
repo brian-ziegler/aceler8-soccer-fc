@@ -30,113 +30,101 @@ const jsonLd = {
   description={`${player.name}, #${player.number}${player.position ? ` · ${player.position}` : ''} at Aceler8 FC — a player-first youth soccer club in Rochester, NY.`}
   jsonLd={jsonLd}
 >
-  <article class="wrap player-page">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/teams/">Teams</a>
-      <span aria-hidden="true">/</span>
-      <span>{player.name}</span>
-    </nav>
-
-    <div class="player-page__grid">
-      <figure class:list={['card player-page__figure', { 'player-page__figure--no-photo': !player.imageSrc }]}>
-        {player.imageSrc ? (
-          <img src={player.imageSrc} alt={player.name} width="600" height="800" loading="lazy" />
-        ) : (
-          <div class="player-page__number-placeholder" aria-hidden="true">
-            <span>{player.number}</span>
-          </div>
-        )}
-      </figure>
-
-      <div class="player-page__info">
-        <span class="player-page__number" aria-label={`Jersey number ${player.number}`}>
-          #{player.number}
+  <!-- ── Player hero ────────────────────────────────────────────────────────── -->
+  <section class="player-hero" aria-label={`${player.name} profile`}>
+    {player.imageSrc
+      ? <img class="player-hero__photo" src={player.imageSrc} alt={player.name} aria-hidden="true" />
+      : <div class="player-hero__photo photo-placeholder" aria-hidden="true"></div>
+    }
+    <div class="player-hero__scrim" aria-hidden="true" />
+    <div class="player-hero__overlay">
+      <div class="wrap player-hero__content">
+        <span class="player-hero__number" aria-label={`Jersey number ${player.number}`}>
+          {player.number}
         </span>
-        <h1 class="player-page__name">{player.name}</h1>
-        {player.position && <p class="player-page__position">{player.position}</p>}
-        <p class="player-page__club">Aceler8 FC · Rochester, NY</p>
+        <h1 class="player-hero__name">{player.name}</h1>
+        {player.position && <p class="player-hero__position">{player.position}</p>}
+        <p class="player-hero__club">Aceler8 FC · Rochester, NY</p>
       </div>
     </div>
-  </article>
+  </section>
+
+  <!-- ── Back navigation ────────────────────────────────────────────────────── -->
+  <div class="wrap player-nav">
+    <a href="/teams/" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Teams
+    </a>
+  </div>
 </BaseLayout>
 
 <style>
-  .player-page {
-    padding-bottom: 4rem;
-  }
-
-  .breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.65rem;
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    padding-block: 1.5rem 1rem;
-  }
-
-  .breadcrumb a {
-    font-weight: 600;
-  }
-
-  .player-page__grid {
-    display: grid;
-    gap: 2.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    align-items: start;
-  }
-
-  .player-page__figure {
-    margin: 0;
-  }
-
-  .player-page__figure img {
+  .player-hero {
+    position: relative;
     width: 100%;
-    height: auto;
-    display: block;
+    height: clamp(520px, 85svh, 900px);
+    overflow: clip;
+    background: #020d1a;
   }
 
-  .player-page__number-placeholder {
-    aspect-ratio: 3 / 4;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-muted) 100%);
+  .player-hero__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  .player-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(3, 9, 20, 0.95) 0%,
+      rgba(3, 9, 20, 0.5) 28%,
+      rgba(3, 9, 20, 0.1) 55%,
+      transparent 75%
+    );
+  }
+
+  .player-hero__overlay {
+    position: absolute;
+    inset: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
   }
 
-  .player-page__number-placeholder span {
-    font-family: var(--font-display);
-    font-size: 8rem;
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.15);
-    letter-spacing: -0.04em;
-    user-select: none;
-  }
-
-  .player-page__info {
+  .player-hero__content {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding-top: 0.5rem;
+    gap: 0.4rem;
   }
 
-  .player-page__number {
+  .player-hero__number {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(4rem, 12vw, 9rem);
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.04em;
     color: var(--color-accent);
+    opacity: 0.9;
+    text-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
   }
 
-  .player-page__name {
-    font-size: clamp(1.8rem, 4vw, 3rem);
+  .player-hero__name {
+    font-size: clamp(2rem, 5.5vw, 4rem);
     font-weight: 750;
+    color: #ffffff;
     margin: 0;
     line-height: 1.05;
     letter-spacing: -0.03em;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
   }
 
-  .player-page__position {
+  .player-hero__position {
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -145,12 +133,33 @@ const jsonLd = {
     margin: 0.1rem 0 0;
   }
 
-  .player-page__club {
+  .player-hero__club {
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: rgba(246, 243, 236, 0.55);
     margin: 0.15rem 0 0;
+  }
+
+  .player-nav {
+    padding-block: 2rem 1rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
   }
 </style>
