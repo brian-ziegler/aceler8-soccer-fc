@@ -91,21 +91,8 @@ const jsonLd = {
 
   .player-page__figure img {
     width: 100%;
-    object-fit: cover;
-    object-position: center top;
-    max-height: 520px;
-  }
-
-  @media (max-width: 600px) {
-    .player-page__figure {
-      background: #020d1a;
-    }
-
-    .player-page__figure img {
-      aspect-ratio: 2 / 3;
-      max-height: unset;
-      object-fit: contain;
-    }
+    height: auto;
+    display: block;
   }
 
   .player-page__number-placeholder {
