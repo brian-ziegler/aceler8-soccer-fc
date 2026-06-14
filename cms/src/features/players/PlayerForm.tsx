@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getItem, putItem } from '../../lib/api';
+import { ImageField } from '../../components/ImagePicker';
 
 interface PlayerData {
   name: string;
@@ -8,6 +9,7 @@ interface PlayerData {
   number: string;
   position: string;
   order: number;
+  imageSrc: string;
 }
 
 function toKebab(str: string): string {
@@ -19,7 +21,7 @@ function toKebab(str: string): string {
     .replace(/-+/g, '-');
 }
 
-const empty: PlayerData = { name: '', slug: '', number: '', position: '', order: 0 };
+const empty: PlayerData = { name: '', slug: '', number: '', position: '', order: 0, imageSrc: '' };
 
 export default function PlayerForm() {
   const { id } = useParams<{ id?: string }>();
@@ -42,6 +44,7 @@ export default function PlayerForm() {
             number: (r.number as string) || '',
             position: (r.position as string) || '',
             order: typeof r.order === 'number' ? r.order : 0,
+            imageSrc: (r.imageSrc as string) || '',
           });
           setSlugManual(true);
         })
@@ -121,6 +124,12 @@ export default function PlayerForm() {
             />
           </div>
         </div>
+        <ImageField
+          label="Profile Image"
+          value={data.imageSrc}
+          onChange={url => setData(prev => ({ ...prev, imageSrc: url }))}
+          placeholder="/players/name.png"
+        />
         <div className="form-group">
           <label>Order</label>
           <input
