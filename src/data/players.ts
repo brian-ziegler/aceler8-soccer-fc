@@ -3,6 +3,7 @@ export type Player = {
   name: string;
   number: string;
   position: string;
+  imageSrc?: string;
 };
 
 export const players: Player[] = [

@@ -93,6 +93,7 @@ function generatePlayersTs(players) {
     `  name: string;`,
     `  number: string;`,
     `  position: string;`,
+    `  imageSrc?: string;`,
     `};`,
     ``,
     `export const players: Player[] = [`,
@@ -104,6 +105,7 @@ function generatePlayersTs(players) {
     lines.push(`    name: ${jsonStr(p.name)},`);
     lines.push(`    number: ${jsonStr(p.number)},`);
     lines.push(`    position: ${jsonStr(p.position)},`);
+    if (p.imageSrc) lines.push(`    imageSrc: ${jsonStr(p.imageSrc)},`);
     lines.push(`  },`);
   }
 

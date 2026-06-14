@@ -32,7 +32,10 @@ const jsonLd = {
 >
   <!-- ── Player hero ────────────────────────────────────────────────────────── -->
   <section class="player-hero" aria-label={`${player.name} profile`}>
-    <div class="player-hero__photo photo-placeholder" aria-hidden="true"></div>
+    {player.imageSrc
+      ? <img class="player-hero__photo" src={player.imageSrc} alt={player.name} aria-hidden="true" />
+      : <div class="player-hero__photo photo-placeholder" aria-hidden="true"></div>
+    }
     <div class="player-hero__scrim" aria-hidden="true" />
     <div class="player-hero__overlay">
       <div class="wrap player-hero__content">
@@ -68,6 +71,8 @@ const jsonLd = {
     width: 100%;
     height: 100%;
     border-radius: 0;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .player-hero__scrim {
