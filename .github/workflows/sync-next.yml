@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync:
@@ -18,3 +19,8 @@ jobs:
 
       - name: Sync next with main
         run: git push origin HEAD:next --force
+
+      - name: Trigger staging deploy
+        run: gh workflow run deploy.yml --ref next
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
