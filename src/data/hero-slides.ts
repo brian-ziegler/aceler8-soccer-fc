@@ -16,42 +16,44 @@ export interface HeroSlide {
   }[];
 }
 
+const media = 'https://aceler8-cms-media.s3.us-east-1.amazonaws.com/hero-slides';
+
 export const heroSlides: HeroSlide[] = [
-  { 
-    src: '/hero/raw/3323.jpg', 
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480861520-3323.jpg`,
+    width: 1620, height: 1080,
   },
-  { 
-    src: '/hero/raw/3343-web.jpg',
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480862719-3343-web.jpg`,
+    width: 1620, height: 1080,
     title: 'The Family',
   },
-  { 
-    src: '/hero/raw/3335-web.jpg',
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480863744-3335-web.jpg`,
+    width: 1620, height: 1080,
   },
-  { 
-    src: '/hero/raw/3339-landscape.jpg', 
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480864406-3339-landscape.jpg`,
+    width: 1620, height: 1080,
     heading: 'Player Spotlight',
     title: 'Lauren Hoenk, Midfielder 16',
     buttons: [{ label: 'Player Info', href: '/players/lauren-hoenk/' }],
   },
-  { 
-    src: '/hero/raw/3329-web.jpg',
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480865351-3329-web.jpg`,
+    width: 1620, height: 1080,
   },
-  { 
-    src: '/hero/raw/3337-landscape.jpg', 
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480865995-3337-landscape.jpg`,
+    width: 1620, height: 1080,
     heading: 'Player Spotlight',
     title: 'Payton Ziegler, Goal Keeper 19',
     buttons: [{ label: 'Player Info', href: '/players/payton-ziegler/' }],
   },
-  { 
-    src: '/hero/raw/3325-landscape.jpg', 
-    width: 1620, height: 1080, 
-    heading: 'Player Spotlight', 
+  {
+    src: `${media}/1781480867639-3325-landscape.jpg`,
+    width: 1620, height: 1080,
+    heading: 'Player Spotlight',
     title: 'Natalie Jones, Defender 8 & Sophia Edozien, Mid-fielder 10',
     description: 'Planning their next move',
     buttons: [
@@ -59,48 +61,44 @@ export const heroSlides: HeroSlide[] = [
       { label: 'Sophia Edozien', href: '/players/sophia-edozien/' },
     ],
   },
-  { 
-    src: '/hero/raw/3347-web.jpg',
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480869116-3347-web.jpg`,
+    width: 1620, height: 1080,
     title: 'Celebrating',
   },
-  { 
-    src: '/hero/raw/3341-web.jpg',
-    width: 1620, height: 1080, 
-    heading: 'Player Spotlight', 
+  {
+    src: `${media}/1781480870048-3341-web.jpg`,
+    width: 1620, height: 1080,
+    heading: 'Player Spotlight',
     title: 'Olivia Norselli, Forward 23',
     buttons: [{ label: 'Player Info', href: '/players/olivia-norselli/' }],
   },
-  { 
-    src: '/hero/raw/3346-web.jpg',
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480870920-3346-web.jpg`,
+    width: 1620, height: 1080,
   },
-  { 
-    src: '/hero/raw/3340-landscape-web.jpg',
-    width: 1620, height: 1080, 
-    heading: 'Player Spotlight', 
+  {
+    src: `${media}/1781480871468-3340-landscape-web.jpg`,
+    width: 1620, height: 1080,
+    heading: 'Player Spotlight',
     title: 'Ellie Seaman, Forward / Mid-fielder 18',
     buttons: [{ label: 'Player Info', href: '/players/ellie-seaman/' }],
   },
-  { 
-    src: '/hero/raw/3336-web.jpg',
-    width: 1620, height: 1080, 
+  {
+    src: `${media}/1781480872246-3336-web.jpg`,
+    width: 1620, height: 1080,
   },
-  { 
-    src: '/hero/raw/adrianna.jpg', 
-    width: 1620, height: 1080, 
-    heading: 'Player Spotlight', 
+  {
+    src: `${media}/1781480872958-adrianna.jpg`,
+    width: 1620, height: 1080,
+    heading: 'Player Spotlight',
     title: 'Adrianna Hauck, Forward / Mid-fielder 20',
     buttons: [{ label: 'Player Info', href: '/players/adrianna-hauck/' }],
   },
-  // { 
-  //   src: '/hero/raw/3348.jpg', 
-  //   width: 1620, height: 1080, 
-  // },
-  { 
-    src: '/hero/raw/bryn.jpg', 
-    width: 1620, height: 1080, 
-    heading: 'Player Spotlight', 
+  {
+    src: `${media}/1781480874408-bryn.jpg`,
+    width: 1620, height: 1080,
+    heading: 'Player Spotlight',
     title: 'Bryn Ingraham, Forward 1',
     buttons: [{ label: 'Player Info', href: '/players/bryn-ingraham/' }],
   },
