@@ -76,16 +76,12 @@ jobs:
           role-to-assume: ${{ steps.cfg.outputs.role }}
           aws-region: us-east-1
 
-      - name: Fetch CMS data
-        env:
-          CMS_TABLE_NAME: ${{ vars.CMS_TABLE_NAME }}
-          AWS_REGION: us-east-1
-        run: node scripts/fetch-cms-data.mjs
-
       - name: Build
         env:
           PUBLIC_SITE_URL: ${{ steps.cfg.outputs.url }}
           PUBLIC_GA_ID: ${{ github.ref_name == 'main' && 'G-LVLVF42VRM' || '' }}
+          CMS_TABLE_NAME: ${{ vars.CMS_TABLE_NAME }}
+          AWS_REGION: us-east-1
         run: npm run build
 
       - name: Upload site artifact
