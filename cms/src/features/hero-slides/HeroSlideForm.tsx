@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { getItem, putItem, listItems } from '../../lib/api';
+import { getItem, putItem, listItems, reorderItems } from '../../lib/api';
 import { ImageField } from '../../components/ImagePicker';
 
 interface Button {
@@ -76,17 +76,14 @@ export default function HeroSlideForm() {
       if (buttons.length > 0) payload.buttons = buttons;
 
       if (isNew) {
-        // Shift all existing slides up by 1 then insert new slide at order 0
-        const existing = await listItems('hero_slides') as Array<Record<string, unknown>>;
-        await Promise.all(
-          existing.map(s => {
-            const { id, entityType: _et, ...fields } = s as Record<string, unknown>;
-            return putItem('hero_slides', id as string, {
-              ...fields,
-              order: typeof fields.order === 'number' ? fields.order + 1 : 1,
-            });
-          })
-        );
+        // Shift all existing slides up by 1 using the bulk reorder endpoint
+        const existing = await listItems('hero_slides') as Array<{ id: string; order?: number }>;
+        if (existing.length > 0) {
+          await reorderItems('hero_slides', existing.map(s => ({
+            id: s.id,
+            order: (typeof s.order === 'number' ? s.order : 0) + 1,
+          })));
+        }
         payload.order = 0;
       }
 

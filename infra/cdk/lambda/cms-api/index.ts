@@ -415,6 +415,15 @@ async function deployStatus(): Promise<APIGatewayProxyResult> {
 // ── Router ────────────────────────────────────────────────────────────────────
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    return await _handler(event);
+  } catch (err) {
+    console.error('Unhandled error:', err);
+    return respondError(500, err instanceof Error ? err.message : 'Internal server error');
+  }
+};
+
+const _handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const method = event.httpMethod;
   const pathStr = event.path ?? '';
   const parts = pathStr.replace(/^\//, '').split('/');
