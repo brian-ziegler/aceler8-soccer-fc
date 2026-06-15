@@ -53,7 +53,11 @@ function SortableRow({
         </span>
       </td>
       <td>{slide.order}</td>
-      <td className="slide-src">{slide.src}</td>
+      <td>
+        {slide.src
+          ? <img src={slide.src} alt="" className="slide-thumb" />
+          : <em className="muted">—</em>}
+      </td>
       <td>{slide.title || <em className="muted">—</em>}</td>
       <td className="table-actions">
         <Link to={`/hero-slides/${slide.id}`} className="btn-ghost btn-sm">Edit</Link>
@@ -136,7 +140,7 @@ export default function HeroSlidesList() {
                 <tr>
                   <th style={{ width: '2rem' }} />
                   <th>Order</th>
-                  <th>Image</th>
+                  <th style={{ width: '8rem' }}>Image</th>
                   <th>Title</th>
                   <th>Actions</th>
                 </tr>

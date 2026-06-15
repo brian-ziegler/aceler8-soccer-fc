@@ -389,6 +389,14 @@ button:disabled {
   cursor: grabbing;
 }
 
+.slide-thumb {
+  width: 7.5rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
 .saving-indicator {
   font-size: 0.72rem;
   font-weight: 400;
