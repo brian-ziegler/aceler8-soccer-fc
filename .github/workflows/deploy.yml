@@ -48,8 +48,8 @@ jobs:
             echo "url=${{ vars.NEXT_PUBLIC_SITE_URL }}"                   >> "$GITHUB_OUTPUT"
           else
             echo "role=${{ vars.AWS_DEPLOY_ROLE_ARN }}"                   >> "$GITHUB_OUTPUT"
-            echo "bucket=${{ secrets.S3_BUCKET }}"                        >> "$GITHUB_OUTPUT"
-            echo "dist=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}"         >> "$GITHUB_OUTPUT"
+            echo "bucket=${{ vars.S3_BUCKET }}"                            >> "$GITHUB_OUTPUT"
+            echo "dist=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}"            >> "$GITHUB_OUTPUT"
             echo "url=${{ vars.PUBLIC_SITE_URL }}"                        >> "$GITHUB_OUTPUT"
           fi
 
