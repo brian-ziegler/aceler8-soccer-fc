@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { getItem, putItem } from '../../lib/api';
+import { getItem, putItem, listItems } from '../../lib/api';
 import { ImageField } from '../../components/ImagePicker';
 
 interface Button {
@@ -74,6 +74,22 @@ export default function HeroSlideForm() {
       if (title) payload.title = title;
       if (description) payload.description = description;
       if (buttons.length > 0) payload.buttons = buttons;
+
+      if (isNew) {
+        // Shift all existing slides up by 1 then insert new slide at order 0
+        const existing = await listItems('hero_slides') as Array<Record<string, unknown>>;
+        await Promise.all(
+          existing.map(s => {
+            const { id, entityType: _et, ...fields } = s as Record<string, unknown>;
+            return putItem('hero_slides', id as string, {
+              ...fields,
+              order: typeof fields.order === 'number' ? fields.order + 1 : 1,
+            });
+          })
+        );
+        payload.order = 0;
+      }
+
       await putItem('hero_slides', slideId, payload);
       navigate('/hero-slides');
     } catch (err) {
@@ -140,14 +156,6 @@ export default function HeroSlideForm() {
               type="number"
               value={data.height}
               onChange={e => setData(prev => ({ ...prev, height: Number(e.target.value) }))}
-            />
-          </div>
-          <div className="form-group">
-            <label>Order</label>
-            <input
-              type="number"
-              value={data.order}
-              onChange={e => setData(prev => ({ ...prev, order: Number(e.target.value) }))}
             />
           </div>
         </div>

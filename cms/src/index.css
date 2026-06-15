@@ -366,6 +366,37 @@ button:disabled {
   font-style: normal;
 }
 
+.drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #484f58;
+  cursor: grab;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  user-select: none;
+  touch-action: none;
+}
+
+.drag-handle:hover {
+  color: #8b949e;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.saving-indicator {
+  font-size: 0.72rem;
+  font-weight: 400;
+  margin-left: 0.75rem;
+  color: #8b949e;
+  vertical-align: middle;
+}
+
 /* ── Forms ─────────────────────────────────────────────────────────────────── */
 .cms-form {
   max-width: 700px;
