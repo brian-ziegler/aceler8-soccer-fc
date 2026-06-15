@@ -17,7 +17,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { listItems, deleteItem, putItem } from '../../lib/api';
+import { listItems, deleteItem, reorderItems } from '../../lib/api';
 
 interface HeroSlide {
   id: string;
@@ -108,9 +108,7 @@ export default function HeroSlidesList() {
     setSlides(reordered);
     setSaving(true);
     try {
-      await Promise.all(
-        reordered.map(({ id, ...rest }) => putItem('hero_slides', id, rest))
-      );
+      await reorderItems('hero_slides', reordered.map(s => ({ id: s.id, order: s.order })));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save order');
     } finally {

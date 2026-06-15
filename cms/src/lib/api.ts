@@ -36,6 +36,10 @@ export function deleteItem(entity: string, id: string): Promise<unknown> {
   return request('DELETE', `api/${entity}/${id}`);
 }
 
+export function reorderItems(entity: string, order: { id: string; order: number }[]): Promise<unknown> {
+  return request('PUT', `api/${entity}/reorder`, { order });
+}
+
 export function publish(env: 'next' | 'live'): Promise<unknown> {
   return request('POST', 'api/publish', { env });
 }

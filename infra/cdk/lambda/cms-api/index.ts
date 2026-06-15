@@ -4,6 +4,7 @@ import {
   GetItemCommand,
   PutItemCommand,
   DeleteItemCommand,
+  UpdateItemCommand,
 } from '@aws-sdk/client-dynamodb';
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import { SSMClient, GetParameterCommand } from '@aws-sdk/client-ssm';
@@ -306,6 +307,32 @@ async function updateUserRole(event: APIGatewayProxyEvent, username: string): Pr
   return respond(200, { updated: true });
 }
 
+// ── Bulk reorder handler ──────────────────────────────────────────────────────
+
+async function reorderEntities(entityType: string, body: string | null): Promise<APIGatewayProxyResult> {
+  const data = typeof body === 'string'
+    ? (JSON.parse(body) as { order?: { id: string; order: number }[] })
+    : {};
+  const items = data.order;
+  if (!Array.isArray(items) || items.length === 0) return respondError(400, 'order array is required');
+
+  await Promise.all(
+    items.map(({ id, order }) =>
+      ddb.send(
+        new UpdateItemCommand({
+          TableName: TABLE_NAME,
+          Key: marshall({ entityType, id }),
+          UpdateExpression: 'SET #ord = :order',
+          ExpressionAttributeNames: { '#ord': 'order' },
+          ExpressionAttributeValues: marshall({ ':order': order }),
+        }),
+      ),
+    ),
+  );
+
+  return respond(200, { reordered: items.length });
+}
+
 // ── Publish handler ───────────────────────────────────────────────────────────
 
 async function getGithubToken(): Promise<string> {
@@ -434,6 +461,8 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     if (method === 'GET') return listEntities(entityType);
     return respondError(405, 'Method not allowed');
   }
+
+  if (id === 'reorder' && method === 'PUT') return reorderEntities(entityType, event.body);
 
   if (method === 'GET') return getEntity(entityType, id);
   if (method === 'PUT') return putEntity(entityType, id, event.body);
