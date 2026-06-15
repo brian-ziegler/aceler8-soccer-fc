@@ -104,7 +104,7 @@ const jsonLd = [
   <!-- ── Full-bleed hero carousel ─────────────────────────────────────────────── -->
   <section class="hero" id="hero" aria-label="Aceler8 FC highlights">
     {slides.map((slide, i) => (
-      <div class="hero-slide" data-index={i} aria-hidden={i !== 0 ? 'true' : 'false'}>
+      <div class="hero-slide" data-index={i} data-duration={slide.duration ?? 6000} aria-hidden={i !== 0 ? 'true' : 'false'}>
         <img
           src={slide.src}
           alt="Aceler8 FC players in action"
@@ -363,7 +363,7 @@ const jsonLd = [
     background: var(--color-accent);
     transform: scaleX(0);
     transform-origin: left center;
-    animation: dot-progress 6s linear forwards;
+    animation: dot-progress var(--dot-duration, 6s) linear forwards;
   }
 
   @keyframes dot-progress {
@@ -667,7 +667,11 @@ const jsonLd = [
 
   if (slides.length) {
     let current = 0;
-    let timer: ReturnType<typeof setInterval> | null = null;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    function slideDuration(): number {
+      return parseInt(slides[current].dataset.duration ?? '6000', 10);
+    }
 
     function goTo(n: number) {
       slides[current].classList.remove('is-active');
@@ -679,13 +683,17 @@ const jsonLd = [
 
       slides[current].classList.add('is-active');
       slides[current].setAttribute('aria-hidden', 'false');
-      dots[current]?.classList.add('is-active');
-      dots[current]?.setAttribute('aria-selected', 'true');
+      const activeDot = dots[current];
+      if (activeDot) {
+        activeDot.style.setProperty('--dot-duration', `${slideDuration() / 1000}s`);
+        activeDot.classList.add('is-active');
+        activeDot.setAttribute('aria-selected', 'true');
+      }
     }
 
     function startTimer() {
-      if (timer) clearInterval(timer);
-      timer = setInterval(() => goTo(current + 1), 6000);
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => { goTo(current + 1); startTimer(); }, slideDuration());
     }
 
     goTo(0);

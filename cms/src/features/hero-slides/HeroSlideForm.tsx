@@ -18,6 +18,7 @@ interface SlideData {
   description: string;
   buttons: Button[];
   order: number;
+  duration: number;
 }
 
 const empty: SlideData = {
@@ -30,6 +31,7 @@ const empty: SlideData = {
   description: '',
   buttons: [],
   order: 0,
+  duration: 6000,
 };
 
 export default function HeroSlideForm() {
@@ -56,6 +58,7 @@ export default function HeroSlideForm() {
             description: (r.description as string) || '',
             buttons: Array.isArray(r.buttons) ? r.buttons as Button[] : [],
             order: typeof r.order === 'number' ? r.order : 0,
+            duration: typeof r.duration === 'number' ? r.duration : 6000,
           });
         })
         .catch(err => setError(err instanceof Error ? err.message : 'Failed to load'))
@@ -153,6 +156,17 @@ export default function HeroSlideForm() {
               type="number"
               value={data.height}
               onChange={e => setData(prev => ({ ...prev, height: Number(e.target.value) }))}
+            />
+          </div>
+          <div className="form-group">
+            <label>Duration (seconds)</label>
+            <input
+              type="number"
+              min={1}
+              max={30}
+              step={0.5}
+              value={data.duration / 1000}
+              onChange={e => setData(prev => ({ ...prev, duration: Math.round(Number(e.target.value) * 1000) }))}
             />
           </div>
         </div>

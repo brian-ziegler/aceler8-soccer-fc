@@ -14,6 +14,8 @@ export interface HeroSlide {
     label: string;
     href: string;
   }[];
+  /** How long this slide stays on screen in milliseconds (default 6000) */
+  duration?: number;
 }
 
 const media = 'https://aceler8-cms-media.s3.us-east-1.amazonaws.com/hero-slides';
