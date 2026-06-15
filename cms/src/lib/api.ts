@@ -1,9 +1,9 @@
 import { API_URL } from './config';
-import { getIdToken } from './auth';
+import { getIdToken, refreshTokens, logout } from './auth';
 
-async function request(method: string, path: string, body?: unknown): Promise<unknown> {
+async function fetchWithAuth(method: string, url: string, body?: unknown): Promise<Response> {
   const token = getIdToken();
-  const res = await fetch(`${API_URL}${path}`, {
+  return fetch(url, {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -11,6 +11,22 @@ async function request(method: string, path: string, body?: unknown): Promise<un
     },
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
   });
+}
+
+async function request(method: string, path: string, body?: unknown): Promise<unknown> {
+  const url = `${API_URL}${path}`;
+  let res = await fetchWithAuth(method, url, body);
+
+  if (res.status === 401) {
+    const refreshed = await refreshTokens();
+    if (refreshed) {
+      res = await fetchWithAuth(method, url, body);
+    } else {
+      logout();
+      window.location.href = '/';
+      throw new Error('Session expired. Please log in again.');
+    }
+  }
 
   if (!res.ok) {
     const text = await res.text();

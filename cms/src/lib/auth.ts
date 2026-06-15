@@ -83,6 +83,41 @@ export async function completeNewPassword(email: string, session: string, newPas
   storeTokens(result.AccessToken, result.IdToken, result.RefreshToken);
 }
 
+export async function refreshTokens(): Promise<boolean> {
+  const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+  if (!refreshToken) return false;
+
+  const endpoint = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/`;
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-amz-json-1.1',
+        'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
+      },
+      body: JSON.stringify({
+        AuthFlow: 'REFRESH_TOKEN_AUTH',
+        ClientId: COGNITO_APP_CLIENT_ID,
+        AuthParameters: { REFRESH_TOKEN: refreshToken },
+      }),
+    });
+
+    if (!res.ok) return false;
+
+    const data = await res.json() as {
+      AuthenticationResult?: { AccessToken?: string; IdToken?: string };
+    };
+    const result = data.AuthenticationResult;
+    if (!result?.AccessToken) return false;
+
+    // Refresh flow only returns new access + id tokens (not a new refresh token)
+    storeTokens(result.AccessToken, result.IdToken);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function logout(): void {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(ID_TOKEN_KEY);
