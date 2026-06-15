@@ -168,6 +168,8 @@ function generateSlidesTs(slides) {
     `    label: string;`,
     `    href: string;`,
     `  }[];`,
+    `  /** How long this slide stays on screen in milliseconds (default 6000) */`,
+    `  duration?: number;`,
     `}`,
     ``,
     `export const heroSlides: HeroSlide[] = [`,
@@ -184,6 +186,7 @@ function generateSlidesTs(slides) {
     if (s.buttons !== undefined && s.buttons.length > 0) {
       lines.push(`    buttons: ${jsonStr(s.buttons)},`);
     }
+    if (s.duration !== undefined) lines.push(`    duration: ${s.duration},`);
     lines.push(`  },`);
   }
 
