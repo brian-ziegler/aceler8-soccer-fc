@@ -11,6 +11,10 @@ function folderName(prefix: string): string {
   return prefix.replace(/\/$/, '').split('/').pop() ?? prefix;
 }
 
+function isVideo(url: string): boolean {
+  return /\.(mp4|webm|mov)$/i.test(url);
+}
+
 const FolderSvg = () => (
   <svg width="52" height="44" viewBox="0 0 48 40" fill="none">
     <path d="M0 6a4 4 0 014-4h14l4 6h22a4 4 0 014 4v24a4 4 0 01-4 4H4a4 4 0 01-4-4V6z" fill="#30363d"/>
@@ -131,8 +135,8 @@ export default function MediaLibrary() {
             New Folder
           </button>
           <label className={`btn-primary${uploading ? ' disabled' : ''}`} style={{ cursor: 'pointer' }}>
-            {uploading ? 'Uploading…' : 'Upload Image'}
-            <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} hidden disabled={uploading} />
+            {uploading ? 'Uploading…' : 'Upload'}
+            <input ref={fileRef} type="file" accept="image/*,video/*" onChange={handleUpload} hidden disabled={uploading} />
           </label>
         </div>
       </div>
@@ -227,7 +231,9 @@ export default function MediaLibrary() {
                 onClick={() => setSelected(img)}
                 title={displayName(img.key)}
               >
-                <img src={img.url} alt={displayName(img.key)} className="media-card-thumb" />
+                {isVideo(img.url)
+                  ? <video src={img.url} className="media-card-thumb" muted playsInline preload="metadata" />
+                  : <img src={img.url} alt={displayName(img.key)} className="media-card-thumb" />}
               </button>
               <div className="media-card-footer">
                 <span className="media-card-name" title={displayName(img.key)}>{displayName(img.key)}</span>
@@ -241,7 +247,9 @@ export default function MediaLibrary() {
       {selected && (
         <div className="picker-overlay" onClick={() => setSelected(null)}>
           <div className="image-detail-modal" onClick={(e) => e.stopPropagation()}>
-            <img src={selected.url} alt={displayName(selected.key)} className="image-detail-img" />
+            {isVideo(selected.url)
+              ? <video src={selected.url} className="image-detail-img" controls muted playsInline />
+              : <img src={selected.url} alt={displayName(selected.key)} className="image-detail-img" />}
             <div className="image-detail-info">
               <div className="image-detail-name">{displayName(selected.key)}</div>
               <div className="image-detail-url" onClick={() => copyUrl(selected.url)} title="Click to copy URL">

@@ -11,6 +11,10 @@ function folderName(prefix: string): string {
   return prefix.replace(/\/$/, '').split('/').pop() ?? prefix;
 }
 
+function isVideo(url: string): boolean {
+  return /\.(mp4|webm|mov)$/i.test(url);
+}
+
 // ── Modal picker ──────────────────────────────────────────────────────────────
 
 interface ImagePickerProps {
@@ -96,8 +100,8 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
           </div>
           <div className="picker-actions">
             <label className={`btn-ghost btn-sm picker-upload-btn${uploading ? ' disabled' : ''}`}>
-              {uploading ? 'Uploading…' : 'Upload Image'}
-              <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} hidden disabled={uploading} />
+              {uploading ? 'Uploading…' : 'Upload'}
+              <input ref={fileRef} type="file" accept="image/*,video/*" onChange={handleUpload} hidden disabled={uploading} />
             </label>
             <button type="button" className="btn-ghost btn-sm" onClick={onClose}>✕</button>
           </div>
@@ -135,7 +139,9 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
                 onClick={() => onSelect(img.url)}
                 title={displayName(img.key)}
               >
-                <img src={img.url} alt={displayName(img.key)} className="picker-thumb" />
+                {isVideo(img.url)
+                  ? <video src={img.url} className="picker-thumb" muted playsInline preload="metadata" />
+                  : <img src={img.url} alt={displayName(img.key)} className="picker-thumb" />}
                 <div className="picker-item-name">{displayName(img.key)}</div>
               </button>
             ))}
@@ -175,13 +181,15 @@ export function ImageField({ label, value, onChange, placeholder, required }: Im
         </button>
       </div>
       {value && (
-        <img
-          src={value}
-          alt="preview"
-          className="image-field-preview"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-          onLoad={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'block'; }}
-        />
+        isVideo(value)
+          ? <video src={value} className="image-field-preview" controls muted playsInline style={{ display: 'block' }} />
+          : <img
+              src={value}
+              alt="preview"
+              className="image-field-preview"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              onLoad={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'block'; }}
+            />
       )}
       {pickerOpen && (
         <ImagePicker

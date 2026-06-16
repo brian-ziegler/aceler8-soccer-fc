@@ -103,16 +103,30 @@ const jsonLd = [
 
   <!-- ── Full-bleed hero carousel ─────────────────────────────────────────────── -->
   <section class="hero" id="hero" aria-label="Aceler8 FC highlights">
-    {slides.map((slide, i) => (
+    {slides.map((slide, i) => {
+      const videoSrc = /\.(mp4|webm|mov)$/i.test(slide.src);
+      return (
       <div class="hero-slide" data-index={i} data-duration={slide.duration ?? 6000} aria-hidden={i !== 0 ? 'true' : 'false'}>
-        <img
-          src={slide.src}
-          alt="Aceler8 FC players in action"
-          width={slide.width}
-          height={slide.height}
-          fetchpriority={i === 0 ? 'high' : 'auto'}
-          loading={i === 0 ? 'eager' : 'lazy'}
-        />
+        {videoSrc ? (
+          <video
+            src={slide.src}
+            class="hero-slide__video"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload={i === 0 ? 'auto' : 'none'}
+          />
+        ) : (
+          <img
+            src={slide.src}
+            alt="Aceler8 FC players in action"
+            width={slide.width}
+            height={slide.height}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        )}
         <div class="hero-slide__scrim" aria-hidden="true" />
         {(slide.heading || slide.title || slide.description || slide.buttons?.length) && (
           <div class="hero-slide__content">
@@ -129,7 +143,7 @@ const jsonLd = [
           </div>
         )}
       </div>
-    ))}
+    );})}
 
     <!-- Hero content overlay — desktop only, welcome section handles mobile -->
     <div class="hero-overlay">
@@ -217,7 +231,8 @@ const jsonLd = [
     pointer-events: auto;
   }
 
-  .hero-slide img {
+  .hero-slide img,
+  .hero-slide__video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -674,11 +689,16 @@ const jsonLd = [
       return parseInt(slides[current].dataset.duration ?? '6000', 10);
     }
 
+    function slideVideo(slide: HTMLElement): HTMLVideoElement | null {
+      return slide.querySelector<HTMLVideoElement>('video');
+    }
+
     function goTo(n: number) {
       slides[current].classList.remove('is-active');
       slides[current].setAttribute('aria-hidden', 'true');
       dots[current]?.classList.remove('is-active');
       dots[current]?.setAttribute('aria-selected', 'false');
+      slideVideo(slides[current])?.pause();
 
       current = ((n % slides.length) + slides.length) % slides.length;
 
@@ -690,6 +710,8 @@ const jsonLd = [
         activeDot.classList.add('is-active');
         activeDot.setAttribute('aria-selected', 'true');
       }
+      const vid = slideVideo(slides[current]);
+      if (vid) { vid.currentTime = 0; vid.play().catch(() => {}); }
     }
 
     function startTimer() {
